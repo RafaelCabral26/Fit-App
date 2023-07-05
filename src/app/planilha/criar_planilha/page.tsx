@@ -8,27 +8,27 @@ export type TExercise = {
     sets: number,
     quantity: number,
     muscleGroup?: "Peitoral" | "Costas" | "Bíceps" | "Tríceps" | "Ombros" | "Pernas" | "",
-    createdAt:Date
+    createdAt: Date
 }
 export type TDays = {
-    day:number,
-    exerciseArray:TExercise[]
-} 
+    day: number,
+    exerciseArray: TExercise[]
+}
 
 
 export type SpreadsheetContextType = {
-    daysArray:TDays[],
+    daysArray: TDays[],
     setNewDay: Dispatch<React.SetStateAction<TDays[]>>
 }
 
 const SpreadsheetContext = createContext<SpreadsheetContextType>({} as SpreadsheetContextType)
 
 const NovaPlanilha = () => {
-    const [daysArray, setNewDay] = useState<TDays[]>([{day:1,exerciseArray:[]}])
+    const [daysArray, setNewDay] = useState<TDays[]>([{ day: 1, exerciseArray: [] }])
 
     const handleAddDay = () => {
         if (daysArray.length + 1 > 7) return alert("Número máximo de dias atingido.")
-        daysArray.push({day:daysArray.length+1, exerciseArray:[]})
+        daysArray.push({ day: daysArray.length + 1, exerciseArray: [] })
         localStorage.setItem("days", JSON.stringify([...daysArray]))
         setNewDay([...daysArray]);
     }
@@ -39,7 +39,7 @@ const NovaPlanilha = () => {
             <div className="grid grid-cols-4 grid-rows-6 h-[80vh] my-20">
                 <div className="col-span-3 row-span-6 bg-teal-400 grid grid-cols-4 grid-rows-6 gap-4 " >
                     {daysArray.map((e: any) => {
-                        
+
                         return (
                             <div key={e.day} className="tableday">
                                 <ExerciseDay key={e.day} dayObject={e}></ExerciseDay>
@@ -57,31 +57,36 @@ const NovaPlanilha = () => {
     )
 }
 
-const ExerciseDay = ({ dayObject }: {  dayObject: TDays }) => {
+const ExerciseDay = ({ dayObject }: { dayObject: TDays }) => {
     const { daysArray, setNewDay } = useContext(SpreadsheetContext)
     const [addExerciseModal, setAddExerciseModal] = useState<boolean>(false)
-    const ref = useRef(null)
+    const dragItem = useRef(null);
+    const dragOverItem = useRef(null);
     const handleDelete = (e: any) => {
-        if (daysArray.length === 0) return setNewDay([{day:1,exerciseArray:[],}])
+        if (daysArray.length === 0) return setNewDay([{ day: 1, exerciseArray: [], }])
         const filteredDaysArray = daysArray.filter((e: TDays) => {
-            return dayObject.day !== e.day 
+            return dayObject.day !== e.day
         });
 
         const reorderedArray = filteredDaysArray.map((e: TDays) => {
             if (e.day > dayObject.day) {
-                  e.day = e.day - 1   
+                e.day = e.day - 1
             }
             return e
         })
         setNewDay([...reorderedArray])
     }
 
-    const handleDragStart = (e: any) => {
+    const handleDragStart = (e: any, position:any) => {
         e.target.classList.add("opacity-50")
+        dragItem.current = position;
     }
-
+    const handleDragEnter = (e:any,position:any) => {
+        dragOverItem.current = position
+    }
     const handleDragEnd = (e: any) => {
         e.target.classList.remove("opacity-50");
+        
     }
 
     const getNewPosition = (column: any, posY: any) => {
@@ -92,22 +97,35 @@ const ExerciseDay = ({ dayObject }: {  dayObject: TDays }) => {
             const boxCenterY = box.y + box.height / 2;
             if (posY >= boxCenterY) result = referCard
         }
-        
+
         return result
     }
 
-    const handleDragOver = (e: any) => {
-        const dragging = document.querySelector(".opacity-50");
-        const applyAfter = getNewPosition(e.target.parentNode, e.clientY)
-        
-        if (applyAfter) {
-            applyAfter.insertAdjacentElement("afterend", dragging)
-            
-        } else if (!e.target) {
-            e.target.insertAdjacentElement("beforebegin", dragging)
-        }
-    }
+   // const handleDragOver = (e: any) => {
+   //     const dragging = document.querySelector(".opacity-50");
+   //     const applyAfter = getNewPosition(e.target.parentNode, e.clientY)
 
+   //     if (applyAfter) {
+   //         applyAfter.insertAdjacentElement("afterend", dragging)
+
+   //     } else if (!e.target) {
+   //         e.target.insertAdjacentElement("beforebegin", dragging)
+   //     }
+   // }
+    const handleDrop = (e:any) => {
+    const copyExerciseList = dayObject.exerciseArray
+        if (dragItem.current !== null && dragOverItem.current !== null) {
+            const draggedItem = copyExerciseList[dragItem.current]
+            copyExerciseList.splice(dragItem.current,1);
+            copyExerciseList.splice(dragOverItem.current, 0, draggedItem);
+            dragItem.current = null;
+            dragOverItem.current = null;
+            daysArray.forEach((e:any) => {
+               if (e.day === dayObject.day) 
+            })
+        }
+        
+    }
     return (
         <div className="row-span-3 bg-slate-100" key={dayObject.day}>
             <div className="flex justify-between">
@@ -120,12 +138,13 @@ const ExerciseDay = ({ dayObject }: {  dayObject: TDays }) => {
                 </button>
             </div>
             <div className="day flex flex-col gap-4 p-4">
-                <div className="placeholder exercise order-first h-6 border-b-2" onDragOver={handleDragOver} >
+                <div className="placeholder exercise order-first h-6 border-b-2"  >
                 </div>
                 {dayObject.exerciseArray.map((e: any, index: any) => {
-                    return <div ref={ref} onDragEnd={(e) => { handleDragEnd(e) }}
-                        onDragOver={(e) => { handleDragOver(e) }}
-                        onDragStart={(e) => { handleDragStart(e) }}
+                    return <div  onDragEnter={(e) => { handleDragEnter(e,index) }}
+                       // onDragOver={(e) => { handleDragOver(e) }}
+                        onDragEnd={handleDrop}
+                       onDragStart={(e) => {handleDragStart(e,index) }}
                         key={index}
                         className="exercise border-2 border-black p-4 " draggable>{e.name}</div>
                 })}

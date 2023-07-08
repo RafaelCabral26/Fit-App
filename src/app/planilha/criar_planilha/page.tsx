@@ -76,6 +76,7 @@ const ExerciseDay = ({ dayObject, parentDragRef }: { dayObject: TDays, parentDra
     const handleDragStart = (e: any, position: any) => {
         draggedItemIndex.current = position;
         draggedItem.current = dayObject.exerciseArray[position]
+        
     }
 
     const handleDragEnter = (e: any, position: any) => {
@@ -88,24 +89,24 @@ const ExerciseDay = ({ dayObject, parentDragRef }: { dayObject: TDays, parentDra
     }
     const handleEnd = (e: any) => {
         const copyExerciseList = dayObject.exerciseArray;
-        if (draggedItemIndex.current !== null && draggedOverItemIndex.current !== null) {
-            const draggedItem = copyExerciseList[draggedItemIndex.current]
+        console.log("day repeats?",dayObject);
+        if (draggedItemIndex.current !== null && draggedOverItemIndex.current !== null && parentDragRef.current !== null) {
+            //const draggedItem = copyExerciseList[draggedItemIndex.current]
             copyExerciseList.splice(draggedItemIndex.current, 1);
-            parentDragRef.current.exerciseArray.splice(draggedOverItemIndex.current, 0, draggedItem);
+            parentDragRef.current.exerciseArray.splice(draggedOverItemIndex.current, 0, draggedItem.current);
+    //        daysArray.forEach((e: any) => {
+    //            if (e.day === dayObject.day) {
+    //                e.exerciseArray = copyExerciseList
+    //            }
+    //            return e
+    //        })
+            draggedOverItemIndex.current = null;
             draggedItemIndex.current = null;
             draggedOverItemIndex.current = null;
-            daysArray.forEach((e: any) => {
-                if (e.day === dayObject.day) {
-                    e.exerciseArray = copyExerciseList
-                }
-                return e
-            })
             setNewDay([...daysArray]);
-            return     
         }
     }
     const handleDragLeave = (e:any) => {
-        draggedOverItemIndex.current = null 
     }
     return (
         <div className="row-span-3 bg-slate-100" key={dayObject.day}>

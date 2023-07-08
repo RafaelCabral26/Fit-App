@@ -1,6 +1,6 @@
 'use client'
 import TrashSvg from "@/svgs/trashsvg"
-import React, { Dispatch, createContext, useContext, useRef, useState, } from "react"
+import React, { Dispatch, createContext, useContext, useEffect, useRef, useState, } from "react"
 import { AddExerciseFormModal } from "./addExerciseFormModal"
 
 export type TExercise = {
@@ -25,7 +25,7 @@ const SpreadsheetContext = createContext<SpreadsheetContextType>({} as Spreadshe
 
 const NovaPlanilha = () => {
     const [daysArray, setNewDay] = useState<TDays[]>([{ day: 1, exerciseArray: [] }])
-
+    const parentDragRef = useRef(null)
     const handleAddDay = () => {
         if (daysArray.length + 1 > 7) return alert("Número máximo de dias atingido.")
         daysArray.push({ day: daysArray.length + 1, exerciseArray: [] })
@@ -33,35 +33,31 @@ const NovaPlanilha = () => {
         setNewDay([...daysArray]);
     }
 
-
     return (
         <SpreadsheetContext.Provider value={{ daysArray, setNewDay }}>
             <div className="grid grid-cols-4 grid-rows-6 h-[80vh] my-20">
                 <div className="col-span-3 row-span-6 bg-teal-400 grid grid-cols-4 grid-rows-6 gap-4 " >
                     {daysArray.map((e: any) => {
-
                         return (
                             <div key={e.day} className="tableday">
-                                <ExerciseDay key={e.day} dayObject={e}></ExerciseDay>
+                                <ExerciseDay key={e.day} dayObject={e} parentDragRef={parentDragRef}></ExerciseDay>
                             </div>);
                     })}
                     <button className="btn" onClick={handleAddDay}>
                         Botão
                     </button>
                 </div>
-                <div className="btn">
-                    Opa2
-                </div>
             </div>
         </SpreadsheetContext.Provider>
     )
 }
 
-const ExerciseDay = ({ dayObject }: { dayObject: TDays }) => {
+const ExerciseDay = ({ dayObject, parentDragRef }: { dayObject: TDays, parentDragRef: any }) => {
     const { daysArray, setNewDay } = useContext(SpreadsheetContext)
     const [addExerciseModal, setAddExerciseModal] = useState<boolean>(false)
-    const dragItem = useRef(null);
-    const dragOverItem = useRef(null);
+    const draggedItemIndex = useRef(null);
+    const draggedOverItemIndex = useRef(null);
+    const draggedItem = useRef<TExercise | null>(null);
     const handleDelete = (e: any) => {
         if (daysArray.length === 0) return setNewDay([{ day: 1, exerciseArray: [], }])
         const filteredDaysArray = daysArray.filter((e: TDays) => {
@@ -77,54 +73,39 @@ const ExerciseDay = ({ dayObject }: { dayObject: TDays }) => {
         setNewDay([...reorderedArray])
     }
 
-    const handleDragStart = (e: any, position:any) => {
-        e.target.classList.add("opacity-50")
-        dragItem.current = position;
+    const handleDragStart = (e: any, position: any) => {
+        draggedItemIndex.current = position;
+        draggedItem.current = dayObject.exerciseArray[position]
     }
-    const handleDragEnter = (e:any,position:any) => {
-        dragOverItem.current = position
-    }
-    const handleDragEnd = (e: any) => {
+
+    const handleDragEnter = (e: any, position: any) => {
+        draggedOverItemIndex.current = position;
         e.target.classList.remove("opacity-50");
-        
     }
 
-    const getNewPosition = (column: any, posY: any) => {
-        const cards = column.querySelectorAll(".exercise:not(.opacity-50)")
-        let result;
-        for (let referCard of cards) {
-            const box = referCard.getBoundingClientRect()
-            const boxCenterY = box.y + box.height / 2;
-            if (posY >= boxCenterY) result = referCard
-        }
-
-        return result
+    const handleDragOver = (e: any) => {
+        parentDragRef.current = dayObject
     }
-
-   // const handleDragOver = (e: any) => {
-   //     const dragging = document.querySelector(".opacity-50");
-   //     const applyAfter = getNewPosition(e.target.parentNode, e.clientY)
-
-   //     if (applyAfter) {
-   //         applyAfter.insertAdjacentElement("afterend", dragging)
-
-   //     } else if (!e.target) {
-   //         e.target.insertAdjacentElement("beforebegin", dragging)
-   //     }
-   // }
-    const handleDrop = (e:any) => {
-    const copyExerciseList = dayObject.exerciseArray
-        if (dragItem.current !== null && dragOverItem.current !== null) {
-            const draggedItem = copyExerciseList[dragItem.current]
-            copyExerciseList.splice(dragItem.current,1);
-            copyExerciseList.splice(dragOverItem.current, 0, draggedItem);
-            dragItem.current = null;
-            dragOverItem.current = null;
-            daysArray.forEach((e:any) => {
-               if (e.day === dayObject.day) 
+    const handleEnd = (e: any) => {
+        const copyExerciseList = dayObject.exerciseArray;
+        if (draggedItemIndex.current !== null && draggedOverItemIndex.current !== null) {
+            const draggedItem = copyExerciseList[draggedItemIndex.current]
+            copyExerciseList.splice(draggedItemIndex.current, 1);
+            parentDragRef.current.exerciseArray.splice(draggedOverItemIndex.current, 0, draggedItem);
+            draggedItemIndex.current = null;
+            draggedOverItemIndex.current = null;
+            daysArray.forEach((e: any) => {
+                if (e.day === dayObject.day) {
+                    e.exerciseArray = copyExerciseList
+                }
+                return e
             })
+            setNewDay([...daysArray]);
+            return     
         }
-        
+    }
+    const handleDragLeave = (e:any) => {
+        draggedOverItemIndex.current = null 
     }
     return (
         <div className="row-span-3 bg-slate-100" key={dayObject.day}>
@@ -138,13 +119,14 @@ const ExerciseDay = ({ dayObject }: { dayObject: TDays }) => {
                 </button>
             </div>
             <div className="day flex flex-col gap-4 p-4">
-                <div className="placeholder exercise order-first h-6 border-b-2"  >
+                <div className="placeholder exercise order-first h-10 border-t-2" onDragOver={(e) => { handleDragOver(e) }}  >
                 </div>
                 {dayObject.exerciseArray.map((e: any, index: any) => {
-                    return <div  onDragEnter={(e) => { handleDragEnter(e,index) }}
-                       // onDragOver={(e) => { handleDragOver(e) }}
-                        onDragEnd={handleDrop}
-                       onDragStart={(e) => {handleDragStart(e,index) }}
+                    return <div onDragEnter={(e) => { handleDragEnter(e, index) }}
+                        onDragOver={(e) => { handleDragOver(e) }}
+                        onDragEnd={handleEnd}
+                        onDragStart={(e) => { handleDragStart(e, index) }}
+                        onDragLeave={(e) => {handleDragLeave(e)}}
                         key={index}
                         className="exercise border-2 border-black p-4 " draggable>{e.name}</div>
                 })}

@@ -2,7 +2,7 @@
 import TrashSvg from "@/svgs/trashsvg"
 import React, { Dispatch, createContext, useContext, useEffect, useRef, useState, } from "react"
 import { AddExerciseFormModal } from "./addExerciseFormModal"
-
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 export type TExercise = {
     name: string,
     sets: number,
@@ -32,17 +32,21 @@ const NovaPlanilha = () => {
         localStorage.setItem("days", JSON.stringify([...daysArray]))
         setNewDay([...daysArray]);
     }
+    //---------------------------
+    const onDragEnd = () => {
+        console.log("onDragEnd");
 
+    }
     return (
         <SpreadsheetContext.Provider value={{ daysArray, setNewDay }}>
             <div className="grid grid-cols-4 grid-rows-6 h-[80vh] my-20">
                 <div className="col-span-3 row-span-6 bg-teal-400 grid grid-cols-4 grid-rows-6 gap-4 " >
-                    {daysArray.map((e: any) => {
-                        return (
-                            <div key={e.day} className="tableday">
-                                <ExerciseDay key={e.day} dayObject={e} parentDragRef={parentDragRef}></ExerciseDay>
-                            </div>);
-                    })}
+                        {daysArray.map((e: any) => {
+                            return (
+                                <div key={e.day} className="tableday">
+                                    <ExerciseDay key={e.day} dayObject={e} parentDragRef={parentDragRef}></ExerciseDay>
+                                </div>);
+                        })}
                     <button className="btn" onClick={handleAddDay}>
                         Botão
                     </button>
@@ -76,7 +80,7 @@ const ExerciseDay = ({ dayObject, parentDragRef }: { dayObject: TDays, parentDra
     const handleDragStart = (e: any, position: any) => {
         draggedItemIndex.current = position;
         draggedItem.current = dayObject.exerciseArray[position]
-        
+
     }
 
     const handleDragEnter = (e: any, position: any) => {
@@ -89,24 +93,17 @@ const ExerciseDay = ({ dayObject, parentDragRef }: { dayObject: TDays, parentDra
     }
     const handleEnd = (e: any) => {
         const copyExerciseList = dayObject.exerciseArray;
-        console.log("day repeats?",dayObject);
         if (draggedItemIndex.current !== null && draggedOverItemIndex.current !== null && parentDragRef.current !== null) {
-            //const draggedItem = copyExerciseList[draggedItemIndex.current]
             copyExerciseList.splice(draggedItemIndex.current, 1);
             parentDragRef.current.exerciseArray.splice(draggedOverItemIndex.current, 0, draggedItem.current);
-    //        daysArray.forEach((e: any) => {
-    //            if (e.day === dayObject.day) {
-    //                e.exerciseArray = copyExerciseList
-    //            }
-    //            return e
-    //        })
             draggedOverItemIndex.current = null;
             draggedItemIndex.current = null;
             draggedOverItemIndex.current = null;
+
             setNewDay([...daysArray]);
         }
     }
-    const handleDragLeave = (e:any) => {
+    const handleDragLeave = (e: any) => {
     }
     return (
         <div className="row-span-3 bg-slate-100" key={dayObject.day}>
@@ -122,15 +119,15 @@ const ExerciseDay = ({ dayObject, parentDragRef }: { dayObject: TDays, parentDra
             <div className="day flex flex-col gap-4 p-4">
                 <div className="placeholder exercise order-first h-10 border-t-2" onDragOver={(e) => { handleDragOver(e) }}  >
                 </div>
-                {dayObject.exerciseArray.map((e: any, index: any) => {
-                    return <div onDragEnter={(e) => { handleDragEnter(e, index) }}
-                        onDragOver={(e) => { handleDragOver(e) }}
-                        onDragEnd={handleEnd}
-                        onDragStart={(e) => { handleDragStart(e, index) }}
-                        onDragLeave={(e) => {handleDragLeave(e)}}
-                        key={index}
-                        className="exercise border-2 border-black p-4 " draggable>{e.name}</div>
-                })}
+                    {dayObject.exerciseArray.map((e: any, index: any) => {
+                        return <div onDragEnter={(e) => { handleDragEnter(e, index) }}
+                            onDragOver={(e) => { handleDragOver(e) }}
+                            onDragEnd={handleEnd}
+                            onDragStart={(e) => { handleDragStart(e, index) }}
+                            onDragLeave={(e) => { handleDragLeave(e) }}
+                            key={index}
+                            className="exercise border-2 border-black p-4 " draggable>{e.name}</div>
+                    })}
             </div>
             {addExerciseModal &&
                 <AddExerciseFormModal setAddExerciseModal={setAddExerciseModal} dayObject={dayObject} daysArray={daysArray} setNewDay={setNewDay} ></AddExerciseFormModal>

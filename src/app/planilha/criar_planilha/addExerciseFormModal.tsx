@@ -8,7 +8,6 @@ export const AddExerciseFormModal = ({  setAddExerciseModal,dayObject,daysArray,
         sets: 0,
         quantity: 0,
         muscleGroup: "",
-        createdAt: new Date()
     })
 
     const handleNewExerciseInput = (e: any) => {

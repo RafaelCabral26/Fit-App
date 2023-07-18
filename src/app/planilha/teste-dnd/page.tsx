@@ -2,6 +2,7 @@
 import TrashSvg from "@/svgs/trashsvg"
 import React, { useState } from "react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import { AddExerciseFormModal } from "./modalAddNewExercise"
 
 export type TExercise = {
     name: string,
@@ -9,10 +10,9 @@ export type TExercise = {
     quantity: number,
     muscleGroup?: "Peitoral" | "Costas" | "Bíceps" | "Tríceps" | "Ombros" | "Pernas" | "",
 }
-export type TDays = {
-    day: string,
-    exerciseArray: TExercise[]
-}
+
+export type TDays = [TExercise] | []
+
 const move = (source: any, destination: any, droppableSource: any, droppableDestination: any) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
@@ -31,8 +31,9 @@ const reorder = (list: any, startIndex: any, endIndex: any) => {
     return result
 }
 
-const ExerciseSpreadsheet: React.FC = () => {
-    const [daysArray, setNewDayArray] = useState<any>([[{ name: "supino" }], [{ name: "remada" }, { name: "leg" }]]);
+const SpreadsheetBuilder: React.FC = () => {
+    const  EmptyDay:TDays[] = [];
+    const [daysArray, setNewDayArray] = useState<TDays[]>([[{ name: "supino", sets: 0, quantity: 0 }]]);
     const addNewDay = () => {
         if (daysArray.length < 7) {
 
@@ -49,15 +50,14 @@ const ExerciseSpreadsheet: React.FC = () => {
         if (sourceId === destinationId) {
             const items = reorder(daysArray[sourceId], source.index, destination.index);
             const newDayArray = [...daysArray];
-            newDayArray[sourceId] = items;
-            setNewDayArray(newDayArray)
+            newDayArray[sourceId] = items as TDays;
+            setNewDayArray(newDayArray);
         } else {
             const result = move(daysArray[sourceId], daysArray[destinationId], source, destination);
             const newDayArray = [...daysArray];
             newDayArray[sourceId] = result[sourceId];
             newDayArray[destinationId] = result[destinationId];
-
-            setNewDayArray(newDayArray)
+            setNewDayArray(newDayArray);
         }
 
     }
@@ -71,7 +71,7 @@ const ExerciseSpreadsheet: React.FC = () => {
                     <div className="container  bg-stone-200 flex flex-wrap justify-start gap-4 ">
                         {daysArray.map((e: any, index: any) => {
                             return (
-                                <ExerciseDay day={e} index={index}></ExerciseDay>
+                                <ExerciseDay setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index}></ExerciseDay>
                             )
                         })}
                     </div>
@@ -81,24 +81,39 @@ const ExerciseSpreadsheet: React.FC = () => {
     )
 }
 
-const ExerciseDay = ({ index, day }: { index: any, day: any }) => {
+const ExerciseDay = ({ index, day, daysArray, setNewDayArray }: { index: any, day: any, daysArray: any, setNewDayArray: any }) => {
+    const [newExerciseModal, showNewExerciseModal] = React.useState(false)
+    const handleDeleteDay = (e: any) => {
+        e.currentTarget.blur()
+        daysArray.splice(index, 1)
+        setNewDayArray([...daysArray])
 
+    }
     return (
         <Droppable key={index} droppableId={`${index}`}>
             {(provided, snapshot) => {
-                return <div className={` bg-white rounded-lg basis-[90%] md:basis-1/5 shrink-0 shadow-lg m-2 border-2 border-secondary
-                        ${snapshot.isDraggingOver ? "bg-sky-500 bg-opacity-30" : "bg-white"}`} {...provided.droppableProps} ref={provided.innerRef}>
+                return <div className={` bg-white rounded-lg basis-[50%] max-h-[50%]   md:basis-1/5 shrink-0 shadow-lg m-2
+                        border-2 border-secondary ${snapshot.isDraggingOver ? "bg-sky-500 bg-opacity-30" : "bg-white"}`} {...provided.droppableProps} ref={provided.innerRef}>
                     <div className="flex justify-between p-2 bg-sky-500 rounded-t-sm  border-secondary">
                         <h2>{"Dia " + (index + 1)}</h2>
-                        <button className="hover:scale-110">
-                            <TrashSvg />
-                        </button>
+                        <div className="dropdown dropdown-end">
+                            <label  tabIndex={0} className="text-2xl cursor-pointer">...</label>
+                            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                <li onClick={() => { showNewExerciseModal(true) }}><a>Adicionar</a></li>
+                                <li><a>Item 2</a></li>
+                                <li onClick={handleDeleteDay} className="text-red-500 hover:text-red-400"><a>Deletar</a></li>
+                            </ul>
+                        </div>
 
                     </div>
                     {day.map((e: any, index: any) => {
                         return <ExerciseComponent key={index} item={e} index={index}></ExerciseComponent>
                     })}
                     {provided.placeholder}
+                    {newExerciseModal &&
+                        <AddExerciseFormModal showNewExerciseModal={showNewExerciseModal} dayObject={day} daysArray={daysArray} setNewDayArray={setNewDayArray} ></AddExerciseFormModal>
+                    }
+
                 </div>
             }}
         </Droppable>
@@ -117,5 +132,5 @@ const ExerciseComponent = ({ item, index }: { item: any, index: any }) => {
         </Draggable>
     )
 }
-export default ExerciseSpreadsheet
+export default SpreadsheetBuilder
 

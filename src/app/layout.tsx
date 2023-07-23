@@ -16,7 +16,7 @@ export default function RootLayout({
         <html lang="en" data-theme="corporate">
             <body>
                 <Navbar></Navbar>
-                <div className='container m-auto'>
+                <div className=''>
                     {children}
                 </div>
             </body>

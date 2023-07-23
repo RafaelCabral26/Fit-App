@@ -5,10 +5,9 @@ export default function MyApp() {
 
     return (
         <>
-            <div className='container m-auto'>
-
+            <div className='container'>
             </div>
-        </>
+       </>
     )
 }
 

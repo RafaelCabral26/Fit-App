@@ -1,6 +1,6 @@
 'use client'
 import TrashSvg from "@/svgs/trashsvg"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { AddExerciseFormModal } from "./modalAddNewExercise"
 
@@ -35,10 +35,12 @@ const reorder = (list: any, startIndex: any, endIndex: any) => {
 }
 
 const SpreadsheetBuilder: React.FC = () => {
-    const [daysArray, setNewDayArray] = useState<TDays[]>([{ day: "day1", exercises: [{ name: "supino", sets: 0, quantity: 0 }, { name: "remada", sets: 0, quantity: 0 }] },]);
+    const [daysArray, setNewDayArray] = useState<TDays[]>([]);
+
+
     const addNewDay = () => {
         if (daysArray.length < 7) {
-            const dayNumber = "day" + daysArray.length + 1 as TPossibleDays
+            const dayNumber = "day" + Number(daysArray.length + 1) as TPossibleDays
             const newDay: TDays = { day: dayNumber, exercises: [] }
             setNewDayArray([...daysArray, newDay]);
         }
@@ -79,34 +81,33 @@ const SpreadsheetBuilder: React.FC = () => {
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-            <div className="flex h-screen w-screen border-2 border-black">
+            <div className="flex h-screen w-screen ">
                 <div className="flex flex-col w-full h-full ">
-                    <div className="flex  w-10 h-10 basis-[3%] justify-center rounded-xl">
+                    <div className="flex bg-sky-400  w-10 h-10  justify-center rounded-xl">
                         <button onClick={addNewDay} className="text-4xl leading-none ">+</button>
                     </div>
-                    <div>
-                        <Droppable direction="horizontal" type="droppableDay" droppableId="droppableContainer">
-                            {(provided) => {
-                                return (
-                                    <div ref={provided.innerRef} {...provided.droppableProps} className="flex">
-                                        {daysArray.map((e: any, index: any) => {
-                                            return (
-                                                <Draggable key={e.day} draggableId={e.day} index={index}>
-                                                    {(provided, snapshot) => {
-                                                        return (
-                                                            <div className="bg-red-300 flex  basis-[15%] min-h-[300px] " ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                                <ExerciseDay setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index}></ExerciseDay>
-                                                            </div>)
-                                                    }}
-                                                </Draggable>
-                                            )
-                                        })
-                                        }
-                                        {provided.placeholder}
-                                    </div>)
-                            }}
-                        </Droppable>
-                    </div>
+                    <Droppable direction="horizontal" type="droppableDay" droppableId="droppableContainer">
+                        {(provided) => {
+                            return (
+                                <div ref={provided.innerRef} {...provided.droppableProps} className="flex w-full justify-center">
+                                    {daysArray.map((e: any, index: any) => {
+                                        return (
+                                            <Draggable key={e.day} draggableId={e.day} index={index}>
+                                                {(provided, snapshot) => {
+                                                    return (
+                                                        <div className="bg-red-600 flex basis-[90%] justify-center  md:basis-[15%] min-h-[300px] "
+                                                            ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                            <ExerciseDay setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index}></ExerciseDay>
+                                                        </div>)
+                                                }}
+                                            </Draggable>
+                                        )
+                                    })
+                                    }
+                                    {provided.placeholder}
+                                </div>)
+                        }}
+                    </Droppable>
                 </div>
             </div>
         </DragDropContext>
@@ -116,6 +117,7 @@ const SpreadsheetBuilder: React.FC = () => {
 const ExerciseDay = ({ index, day, daysArray, setNewDayArray }: { index: any, day: any, daysArray: any, setNewDayArray: any }) => {
     const [optionsDropdown, showOptions] = useState(false);
     const [newExerciseModal, showNewExerciseModal] = React.useState(false);
+    const dayIndex = index
     const handleDeleteDay = (e: any) => {
         e.currentTarget.blur();
         daysArray.splice(index, 1);
@@ -143,7 +145,7 @@ const ExerciseDay = ({ index, day, daysArray, setNewDayArray }: { index: any, da
                             </button>
                         </div>
                         {day.exercises.map((e: any, index: any) => {
-                            return <ExerciseComponent key={index} item={e} index={index}></ExerciseComponent>
+                            return <ExerciseComponent daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} key={index} item={e} index={index}></ExerciseComponent>
                         })}
                         {provided.placeholder}
                         {newExerciseModal &&
@@ -155,13 +157,22 @@ const ExerciseDay = ({ index, day, daysArray, setNewDayArray }: { index: any, da
         </Droppable>
     )
 }
-const ExerciseComponent = ({ item, index }: { item: any, index: any }) => {
+const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: any, index: any, daysArray: any, dayIndex: any, setNewDayArray: any }) => {
+    const handleDeleteExercise = () => {
+        const newArray = daysArray
+        newArray[dayIndex].exercises.splice(index, 1)
+        setNewDayArray([...newArray])
+    }
     return (
         <Draggable draggableId={item.name} key={item.name} index={index}>
             {(provided, snapshot) => {
                 return (
-                    <div className={`p-2 m-2 shadow-sm bg-white border-2 border-stone-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`} ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}>
+                    <div className={`p-2 m-2 shadow-sm bg-white border-2 border-stone-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
+                        ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}>
                         {item.name}
+                        <button onClick={handleDeleteExercise}>
+                            <TrashSvg />
+                        </button>
                     </div>
                 )
             }}

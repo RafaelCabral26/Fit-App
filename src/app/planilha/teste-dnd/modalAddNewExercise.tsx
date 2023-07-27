@@ -25,7 +25,7 @@ export const AddExerciseFormModal = ({  showNewExerciseModal,dayObject,daysArray
         showNewExerciseModal(false);
     }
     return (
-        <form  className="w-96 h-96 p-8 rounded-xl border-secondary border-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+        <form   className="w-96 h-96 p-8 rounded-xl border-secondary border-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
             <div className="flex justify-end">
                 <button onClick={() => { showNewExerciseModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
             </div>
@@ -51,4 +51,4 @@ export const AddExerciseFormModal = ({  showNewExerciseModal,dayObject,daysArray
         </form>
     )
 }
- 
+export default AddExerciseFormModal 

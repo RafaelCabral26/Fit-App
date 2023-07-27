@@ -1,25 +1,120 @@
+import { Draggable } from "react-beautiful-dnd"
+import TrashSvg from "@/svgs/trashsvg"
+import EditPencilSvg from "@/svgs/editpencil"
+import { useState } from "react"
+import { TExercise } from "./page"
+import { validateAddExercise } from "../criar_planilha/formValidators"
 
 const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: any, index: any, daysArray: any, dayIndex: any, setNewDayArray: any }) => {
+    const [editModal, openEditModal] = useState<boolean>(false);
+    const [confirmDeleteModal, showDeleteModal] = useState<boolean>(false);
     const handleDeleteExercise = () => {
-        const newArray = daysArray
-        newArray[dayIndex].exercises.splice(index, 1)
-        setNewDayArray([...newArray])
-    }
+        const newArray = daysArray;
+        newArray[dayIndex].exercises.splice(index, 1);
+        setNewDayArray([...newArray]);
+    };
     return (
         <Draggable draggableId={item.name} key={item.name} index={index}>
             {(provided, snapshot) => {
                 return (
-                    <div className={`p-2 m-2 shadow-sm bg-white border-2 border-stone-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
+                    <div className={`flex justify-between p-2 m-2 shadow-sm bg-white border-2 border-stone-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
                         ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}>
                         {item.name}
-                        <button onClick={handleDeleteExercise}>
-                            <TrashSvg />
-                        </button>
+                        <div className="">
+                            <button onClick={() => { openEditModal(true) }} className="">
+                                <EditPencilSvg />
+                            </button>
+                            <button onClick={() => {showDeleteModal(true)}}>
+                                <TrashSvg />
+                            </button>
+                        </div>
+                        {editModal &&
+                            <EditExerciseForm openEditModal={openEditModal} index={index} daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} item={item}></EditExerciseForm>
+                        }
+                        {confirmDeleteModal &&
+                            <ConfirmDelete provided={provided} itemName={item.name} handleDeleteExercise={handleDeleteExercise} showDeleteModal={showDeleteModal}></ConfirmDelete>
+                        }
                     </div>
                 )
             }}
         </Draggable>
     )
 }
-export default SpreadsheetBuilder
+
+const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, setNewDayArray }: { openEditModal: any, item: any, index: any, daysArray: any, dayIndex: any, setNewDayArray: any }) => {
+    const [newExercise, setNewExercise] = useState<TExercise>({
+        name: item.name,
+        sets: item.sets,
+        quantity: item.quantity,
+        muscleGroup: "",
+    })
+    const handleNewExerciseInput = (e: any) => {
+        const name = e.target.name
+        const value = e.target.value
+        setNewExercise((prev: any) => {
+            return { ...prev, [name]: value }
+        })
+    }
+    const updateExercise = () => {
+        const isExerciseValid = validateAddExercise(newExercise)
+        if (!isExerciseValid) return;
+        const newArray = daysArray;
+        newArray[dayIndex].exercises.splice(index, 1, newExercise)
+        setNewDayArray([...newArray])
+        openEditModal(false);
+    }
+    return (
+        <form className="w-96 h-96 p-8 rounded-xl border-secondary border-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            <div className="flex justify-end">
+                <button onClick={() => { openEditModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
+            </div>
+            <label className="label">
+                <span className="label-text">Exercício</span>
+            </label>
+            <input onChange={handleNewExerciseInput} autoFocus name="name" className="my-input" type="text" value={newExercise.name} />
+
+            <label className="label">
+                <span className="label-text">Séries</span>
+            </label>
+            <input name="sets" type="number" className="my-input" value={newExercise.sets} />
+
+            <label className="label">
+                <span className="label-text">Repetições</span>
+            </label>
+            <input name="quantity" type="number" className="my-input" value={newExercise.quantity} />
+            <div>
+                <button onClick={updateExercise} type="button" className="btn btn-primary rounded-2xl my-2">
+                    Atualizar
+                </button>
+            </div>
+        </form>
+    )
+}
+const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteModal }: { provided: any, itemName: any, handleDeleteExercise:any, showDeleteModal:any }) => {
+    return (
+        <div data-rbd-drag-handle-context-id={provided.dragHandleProps?.["data-rbd-drag-handle-context-id"]}
+            autoFocus
+            onBlur={() => { showDeleteModal(false)}}
+            className="bg-white border-2 border-stone-300 rounded-md cursor-pointer
+            absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+            <div className="flex flex-col justify-between p-2  w-52 h-28 cursor-auto">
+                <div>
+                    <h1>
+                        Deseja deletar
+                    </h1>
+                    <span className="font-bold">{itemName}?</span>
+                </div>
+                <div className="flex justify-between ">
+                    <button onClick={handleDeleteExercise} className="btn btn-sm rounded-md btn-warning">
+                        deletar
+                    </button>
+                    <button onClick={() => {showDeleteModal(false)}} className="btn btn-sm rounded-md btn-info">
+                        cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default ExerciseComponent
 

@@ -7,6 +7,8 @@ export type TExercise = {
     sets: number,
     quantity: number,
     muscleGroup?: "Peitoral" | "Costas" | "Bíceps" | "Tríceps" | "Ombros" | "Pernas" | "",
+    createdAt?:Date
+    uId?:string
 }
 export type TPossibleDays = "day1" | "day2" | "day3" | "day4" | "day5" | "day6" | "day7"
 export type TDays = {

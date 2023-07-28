@@ -13,18 +13,35 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
         newArray[dayIndex].exercises.splice(index, 1);
         setNewDayArray([...newArray]);
     };
+
     return (
-        <Draggable draggableId={item.name} key={item.name} index={index}>
+        <Draggable draggableId={item.uId} key={item.uId} index={index}>
             {(provided, snapshot) => {
                 return (
                     <div className={`flex justify-between p-2 m-2 shadow-sm bg-white border-2 border-stone-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
                         ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}>
-                        {item.name}
+                        <div className="flex flex-col">
+                            <span>
+                                {item.name}
+                            </span>
+                            <span className="flex gap-2">
+                                <span>
+                                    Séries
+                                </span>
+                                {item.sets}
+                            </span>
+                            <span className="flex gap-2">
+                                <span>
+                                    Repetições
+                                </span>
+                                {item.quantity}
+                            </span>
+                        </div>
                         <div className="">
                             <button onClick={() => { openEditModal(true) }} className="">
                                 <EditPencilSvg />
                             </button>
-                            <button onClick={() => {showDeleteModal(true)}}>
+                            <button onClick={() => { showDeleteModal(true) }}>
                                 <TrashSvg />
                             </button>
                         </div>
@@ -90,14 +107,14 @@ const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, set
         </form>
     )
 }
-const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteModal }: { provided: any, itemName: any, handleDeleteExercise:any, showDeleteModal:any }) => {
+const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteModal }: { provided: any, itemName: any, handleDeleteExercise: any, showDeleteModal: any }) => {
     return (
         <div data-rbd-drag-handle-context-id={provided.dragHandleProps?.["data-rbd-drag-handle-context-id"]}
             autoFocus
-            onBlur={() => { showDeleteModal(false)}}
+            onBlur={() => { showDeleteModal(false) }}
             className="bg-white border-2 border-stone-300 rounded-md cursor-pointer
             absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-            <div className="flex flex-col justify-between p-2  w-52 h-28 cursor-auto">
+            <div className="flex flex-col justify-between p-4 w-56 h-32 cursor-auto">
                 <div>
                     <h1>
                         Deseja deletar
@@ -108,7 +125,7 @@ const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteMod
                     <button onClick={handleDeleteExercise} className="btn btn-sm rounded-md btn-warning">
                         deletar
                     </button>
-                    <button onClick={() => {showDeleteModal(false)}} className="btn btn-sm rounded-md btn-info">
+                    <button onClick={() => { showDeleteModal(false) }} className="btn btn-sm rounded-md btn-info">
                         cancelar
                     </button>
                 </div>

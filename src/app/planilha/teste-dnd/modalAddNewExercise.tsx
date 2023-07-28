@@ -15,7 +15,7 @@ export const AddExerciseFormModal = ({  showNewExerciseModal,dayObject,daysArray
         const name = e.target.name
         const value = e.target.value
         setNewExercise((prev: any) => {
-            return { ...prev, [name]: value }
+            return { ...prev, [name]: value, dateId: new Date(Date.now()), uId:String(Date.now()) }
         })
     }
     const handleAddNewExercise = () => {

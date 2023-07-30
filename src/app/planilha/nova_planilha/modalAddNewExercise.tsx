@@ -1,7 +1,7 @@
 
 import { Dispatch, useState  } from "react"
 import { TExercise, TDays,  } from "./page"
-import {validateAddExercise} from "../criar_planilha/formValidators"
+import { validateAddExercise } from "./formValidator"
 
 export const AddExerciseFormModal = ({  showNewExerciseModal,dayObject,daysArray, setNewDayArray }: {  showNewExerciseModal:any, dayObject:any, daysArray:any,setNewDayArray:any }) => {
     const [newExercise, setNewExercise] = useState<TExercise>({

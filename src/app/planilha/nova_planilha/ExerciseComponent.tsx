@@ -3,8 +3,7 @@ import TrashSvg from "@/svgs/trashsvg"
 import EditPencilSvg from "@/svgs/editpencil"
 import { useState } from "react"
 import { TExercise } from "./page"
-import { validateAddExercise } from "../criar_planilha/formValidators"
-
+import { ValidateAddExercise } from "./formValidator"
 const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: any, index: any, daysArray: any, dayIndex: any, setNewDayArray: any }) => {
     const [editModal, openEditModal] = useState<boolean>(false);
     const [confirmDeleteModal, showDeleteModal] = useState<boolean>(false);
@@ -73,7 +72,7 @@ const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, set
         })
     }
     const updateExercise = () => {
-        const isExerciseValid = validateAddExercise(newExercise)
+        const isExerciseValid = ValidateAddExercise(newExercise)
         if (!isExerciseValid) return;
         const newArray = daysArray;
         newArray[dayIndex].exercises.splice(index, 1, newExercise)

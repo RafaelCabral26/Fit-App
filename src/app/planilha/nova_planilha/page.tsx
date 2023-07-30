@@ -2,6 +2,7 @@
 import React, {  useState } from "react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import DayComponent from "./DayComponent"
+
 export type TExercise = {
     name: string,
     sets: number,
@@ -83,9 +84,9 @@ const SpreadsheetBuilder: React.FC = () => {
                                             <Draggable key={e.day} draggableId={e.day} index={index}>
                                                 {(provided, snapshot) => {
                                                     return (
-                                                        <div className="flex basis-[90%] justify-center  md:basis-[15%] min-h-[300px] "
+                                                        <div className="flex basis-[90%] justify-center  md:basis-[15%] min-h-[300px]"
                                                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                            <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index}></DayComponent>
+                                                            <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index}/>
                                                         </div>)
                                                 }}
                                             </Draggable>

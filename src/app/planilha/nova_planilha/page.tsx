@@ -17,8 +17,8 @@ export type TDays = {
     exercises: TExercise[] | []
 }
 
-const reorder = (list: any, startIndex: any, endIndex: any) => {
-    const result = Array.from(list);
+const reorder = (list:any[], startIndex: number, endIndex: number) => {
+    const result = list;
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     return result
@@ -45,16 +45,17 @@ const SpreadsheetBuilder: React.FC = () => {
         if (type === "droppableExercise") {
             if (sourceId === destinationId) {
                 const tempExercises = daysArray.find((e: any) => e.day === sourceId)?.exercises;
-                const newExerciseOrder = reorder(tempExercises, source.index, destination.index);
+                if (tempExercises){
+                    const newExerciseOrder = reorder(tempExercises, source.index, destination.index);
                 const newDayOrder = daysArray.map((e: any) =>
                     e.day !== sourceId
                         ? e
-                        : { ...e, exercises: newExerciseOrder }
-                )
-                setNewDayArray(newDayOrder);
+                        : { ...e, exercises: newExerciseOrder })
+                    setNewDayArray(newDayOrder);
+                } 
             } else {
-                const sourceOrder = daysArray.find((e: any) => e.day === sourceId)?.exercises;
-                const destinationOrder = daysArray.find((e: any) => e.day === destinationId)?.exercises;
+                const sourceOrder = daysArray.find((e: TDays) => e.day === sourceId)?.exercises;
+                const destinationOrder = daysArray.find((e: TDays) => e.day === destinationId)?.exercises;
                 if (sourceOrder && destinationOrder) {
                     const [removed] = sourceOrder.splice(source.index, 1);
                     destinationOrder?.splice(destination.index, 0, removed);

@@ -1,7 +1,7 @@
 
 import { Dispatch, useState  } from "react"
 import { TExercise, TDays,  } from "./page"
-import { validateAddExercise } from "./formValidator"
+import { ValidateAddExercise } from "./formValidator"
 
 export const AddExerciseFormModal = ({  showNewExerciseModal,dayObject,daysArray, setNewDayArray }: {  showNewExerciseModal:any, dayObject:any, daysArray:any,setNewDayArray:any }) => {
     const [newExercise, setNewExercise] = useState<TExercise>({
@@ -19,7 +19,7 @@ export const AddExerciseFormModal = ({  showNewExerciseModal,dayObject,daysArray
         })
     }
     const handleAddNewExercise = () => {
-        const isExerciseValid = validateAddExercise(newExercise);
+        const isExerciseValid = ValidateAddExercise(newExercise);
         if (!isExerciseValid) return;
         dayObject.push(newExercise);
         showNewExerciseModal(false);

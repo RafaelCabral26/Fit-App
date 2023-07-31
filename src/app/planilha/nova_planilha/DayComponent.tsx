@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { MouseEventHandler, SetStateAction, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import ExerciseComponent from "./ExerciseComponent"
 import AddExerciseFormModal from "./modalAddNewExercise"
+import { TDays, TExercise, TPossibleDays } from "./page";
 
-const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: any, day: any, daysArray: any, setNewDayArray: any }) => {
+const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number, day: TDays, daysArray: TDays[], setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
     const [optionsDropdown, showOptions] = useState(false);
     const [newExerciseModal, showNewExerciseModal] = useState(false);
     const dayIndex = index
-    const handleDeleteDay = (e: any) => {
-        e.currentTarget.blur();
+    const handleDeleteDay = (e:React.SyntheticEvent ) => {
+        (e.currentTarget as HTMLInputElement).blur();
         daysArray.splice(index, 1);
         setNewDayArray([...daysArray]);
 
@@ -29,13 +30,13 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: any, d
                                             <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                                 <li onClick={() => { showNewExerciseModal(true) }}><a>Adicionar</a></li>
                                                 <li><a>Item 2</a></li>
-                                                <li onClick={handleDeleteDay} className="text-red-500 hover:text-red-400"><a>Deletar</a></li>
+                                               <li onClick={handleDeleteDay} className="text-red-500 hover:text-red-400"><a>Deletar</a></li>
                                             </ul>
                                         </div>
                                     }
                                 </button>
                             </div>
-                            {day.exercises.map((e: any, index: any) => {
+                            {day.exercises.map((e: TExercise, index: number) => {
                                 return <ExerciseComponent daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} key={index} item={e} index={index}></ExerciseComponent>
                             })}
                             {provided.placeholder}

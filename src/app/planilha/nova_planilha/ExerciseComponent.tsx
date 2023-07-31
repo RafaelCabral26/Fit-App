@@ -58,7 +58,7 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
 }
 
 const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, setNewDayArray }: { openEditModal: any, item: any, index: any, daysArray: any, dayIndex: any, setNewDayArray: any }) => {
-    const [newExercise, setNewExercise] = useState<TExercise>({
+    const [newExercise, setNewExercise] = useState<TExercise | null>({
         name: item.name,
         sets: item.sets,
         quantity: item.quantity,

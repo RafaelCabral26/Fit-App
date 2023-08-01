@@ -1,15 +1,15 @@
 'use client'
-import React, {  useState } from "react"
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import React, { useState } from "react"
+import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd"
 import DayComponent from "./DayComponent"
 
 export type TExercise = {
     name: string,
     sets: number,
     quantity: number,
+    uId:  string,
     muscleGroup?: "Peitoral" | "Costas" | "Bíceps" | "Tríceps" | "Ombros" | "Pernas" | "",
-    createdAt?:Date
-    uId?:string
+    createdAt?: string,
 }
 export type TPossibleDays = "day1" | "day2" | "day3" | "day4" | "day5" | "day6" | "day7"
 export type TDays = {
@@ -17,7 +17,7 @@ export type TDays = {
     exercises: TExercise[] | []
 }
 
-const reorder = (list:any[], startIndex: number, endIndex: number) => {
+const reorder = (list: any[] , startIndex: number, endIndex: number) => {
     const result = list;
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -35,7 +35,7 @@ const SpreadsheetBuilder: React.FC = () => {
             setNewDayArray([...daysArray, newDay]);
         }
     }
-    const onDragEnd = (result: any) => {
+    const onDragEnd = (result: DropResult) => {
         const { source, destination, type } = result;
         if (!destination) {
             return;
@@ -44,15 +44,15 @@ const SpreadsheetBuilder: React.FC = () => {
         const destinationId = destination.droppableId
         if (type === "droppableExercise") {
             if (sourceId === destinationId) {
-                const tempExercises = daysArray.find((e: any) => e.day === sourceId)?.exercises;
-                if (tempExercises){
+                const tempExercises = daysArray.find((e: TDays) => e.day === sourceId)?.exercises;
+                if (tempExercises) {
                     const newExerciseOrder = reorder(tempExercises, source.index, destination.index);
-                const newDayOrder = daysArray.map((e: any) =>
-                    e.day !== sourceId
-                        ? e
-                        : { ...e, exercises: newExerciseOrder })
+                    const newDayOrder = daysArray.map((e: TDays) =>
+                        e.day !== sourceId
+                            ? e
+                            : { ...e, exercises: newExerciseOrder })
                     setNewDayArray(newDayOrder);
-                } 
+                }
             } else {
                 const sourceOrder = daysArray.find((e: TDays) => e.day === sourceId)?.exercises;
                 const destinationOrder = daysArray.find((e: TDays) => e.day === destinationId)?.exercises;
@@ -80,14 +80,14 @@ const SpreadsheetBuilder: React.FC = () => {
                         {(provided) => {
                             return (
                                 <div ref={provided.innerRef} {...provided.droppableProps} className="flex w-full justify-center">
-                                    {daysArray.map((e: any, index: any) => {
+                                    {daysArray.map((e: TDays, index: number) => {
                                         return (
                                             <Draggable key={e.day} draggableId={e.day} index={index}>
                                                 {(provided, snapshot) => {
                                                     return (
                                                         <div className="flex basis-[90%] justify-center  md:basis-[15%] min-h-[300px]"
                                                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                            <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index}/>
+                                                            <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
                                                         </div>)
                                                 }}
                                             </Draggable>

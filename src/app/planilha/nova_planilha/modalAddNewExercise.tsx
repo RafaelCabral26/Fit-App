@@ -1,21 +1,23 @@
 
-import { Dispatch, useState  } from "react"
-import { TExercise, TDays,  } from "./page"
+import { SetStateAction, useState } from "react"
+import { TExercise, TDays, } from "./page"
 import { ValidateAddExercise } from "./formValidator"
 
-export const AddExerciseFormModal = ({  showNewExerciseModal,dayObject,daysArray, setNewDayArray }: {  showNewExerciseModal:any, dayObject:any, daysArray:any,setNewDayArray:any }) => {
+const AddExerciseFormModal = ({ showNewExerciseModal, dayObject  }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[]  }) => {
     const [newExercise, setNewExercise] = useState<TExercise>({
         name: "",
         sets: 0,
         quantity: 0,
         muscleGroup: "",
+        uId: String(new Date(Date.now())),
+        createdAt: new Date().toLocaleString()
     })
 
-    const handleNewExerciseInput = (e: any) => {
+    const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name
         const value = e.target.value
-        setNewExercise((prev: any) => {
-            return { ...prev, [name]: value, dateId: new Date(Date.now()), uId:String(Date.now()) }
+        setNewExercise((prev: TExercise) => {
+            return { ...prev, [name]: value  };
         })
     }
     const handleAddNewExercise = () => {
@@ -25,7 +27,7 @@ export const AddExerciseFormModal = ({  showNewExerciseModal,dayObject,daysArray
         showNewExerciseModal(false);
     }
     return (
-        <form   className="w-96 h-96 p-8 rounded-xl border-secondary border-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+        <form className="w-96 h-96 p-8 rounded-xl border-secondary border-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
             <div className="flex justify-end">
                 <button onClick={() => { showNewExerciseModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
             </div>

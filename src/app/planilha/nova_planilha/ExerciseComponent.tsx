@@ -1,10 +1,11 @@
-import { Draggable } from "react-beautiful-dnd"
+import { Draggable, DraggableProvided,  } from "react-beautiful-dnd"
 import TrashSvg from "@/svgs/trashsvg"
 import EditPencilSvg from "@/svgs/editpencil"
-import { useState } from "react"
-import { TExercise } from "./page"
+import { SetStateAction, useState } from "react"
+import { TDays, TExercise } from "./page"
 import { ValidateAddExercise } from "./formValidator"
-const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: any, index: any, daysArray: any, dayIndex: any, setNewDayArray: any }) => {
+
+const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: TExercise, index: number, daysArray: TDays[], dayIndex: number, setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
     const [editModal, openEditModal] = useState<boolean>(false);
     const [confirmDeleteModal, showDeleteModal] = useState<boolean>(false);
     const handleDeleteExercise = () => {
@@ -57,17 +58,18 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
     )
 }
 
-const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, setNewDayArray }: { openEditModal: any, item: any, index: any, daysArray: any, dayIndex: any, setNewDayArray: any }) => {
-    const [newExercise, setNewExercise] = useState<TExercise | null>({
+const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, setNewDayArray }: { openEditModal: React.Dispatch<SetStateAction<boolean>>, item: TExercise, index: number, daysArray: TDays[], dayIndex: number, setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
+    const [newExercise, setNewExercise] = useState<TExercise>({
         name: item.name,
         sets: item.sets,
         quantity: item.quantity,
         muscleGroup: "",
+        uId:item.uId
     })
-    const handleNewExerciseInput = (e: any) => {
+    const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name
         const value = e.target.value
-        setNewExercise((prev: any) => {
+        setNewExercise((prev: TExercise) => {
             return { ...prev, [name]: value }
         })
     }
@@ -92,12 +94,12 @@ const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, set
             <label className="label">
                 <span className="label-text">Séries</span>
             </label>
-            <input name="sets" type="number" className="my-input" value={newExercise.sets} />
+            <input onChange={handleNewExerciseInput} name="sets" type="number" className="my-input" value={newExercise.sets} />
 
             <label className="label">
                 <span className="label-text">Repetições</span>
             </label>
-            <input name="quantity" type="number" className="my-input" value={newExercise.quantity} />
+            <input onChange={handleNewExerciseInput} name="quantity" type="number" className="my-input" value={newExercise.quantity} />
             <div>
                 <button onClick={updateExercise} type="button" className="btn btn-primary rounded-2xl my-2">
                     Atualizar
@@ -106,7 +108,7 @@ const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, set
         </form>
     )
 }
-const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteModal }: { provided: any, itemName: any, handleDeleteExercise: any, showDeleteModal: any }) => {
+const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteModal }: { provided: DraggableProvided, itemName: string, handleDeleteExercise: () => void, showDeleteModal: React.Dispatch<SetStateAction<boolean>> }) => {
     return (
         <div data-rbd-drag-handle-context-id={provided.dragHandleProps?.["data-rbd-drag-handle-context-id"]}
             autoFocus

@@ -1,8 +1,8 @@
-import { MouseEventHandler, SetStateAction, useState } from "react";
+import { SetStateAction, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import ExerciseComponent from "./ExerciseComponent"
 import AddExerciseFormModal from "./modalAddNewExercise"
-import { TDays, TExercise, TPossibleDays } from "./page";
+import { TDays, TExercise  } from "./page";
 
 const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number, day: TDays, daysArray: TDays[], setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
     const [optionsDropdown, showOptions] = useState(false);
@@ -42,7 +42,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
                             {provided.placeholder}
                             {newExerciseModal &&
                                 <div >
-                                    <AddExerciseFormModal showNewExerciseModal={showNewExerciseModal} dayObject={day.exercises} daysArray={daysArray} setNewDayArray={setNewDayArray} ></AddExerciseFormModal>
+                                    <AddExerciseFormModal showNewExerciseModal={showNewExerciseModal} dayObject={day.exercises}></AddExerciseFormModal>
                                 </div>
                             }
                         </div>

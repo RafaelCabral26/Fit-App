@@ -1,11 +1,22 @@
-const {Sequelize, DataTypes} = require("sequelize")
+"use strict"
+
+import { Sequelize, DataTypes } from "sequelize"
 const mySequelize = require("./index.ts")
-await mySequelize.sync({force:true})
+ mySequelize.sync({force:true})
 const User = mySequelize.define("user", {
-    id_user= {
+    id : {
     type:DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
     },
-    name:DataTypes.STRING
+    name:{
+        type:DataTypes.STRING,
+        allowNull:false,
+    },
+    email:{
+        type:DataTypes.STRING,
+        isEmail:true,
+        min:8,
+    }
 })
 module.exports = User

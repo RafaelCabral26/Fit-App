@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 require("dotenv").config()
 const mySequelize = require("./models/index.ts");
+const User = require("./models/user.model.ts")
 const express = require("express");
 const cors = require('cors');
 
@@ -15,6 +16,8 @@ app.use(express.json());
 mySequelize.authenticate()
     .then(() => console.log("Connected to DB"))
     .catch((err: any) => console.log(err))
+mySequelize.sync({force:true})
+.then(console.log("db syncado"));
 
 app.get("/", (req: Request, res: Response) => {
     res.json({ msg: "teste API" })

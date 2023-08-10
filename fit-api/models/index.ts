@@ -1,5 +1,4 @@
-import { Sequelize } from "sequelize"
-
+import { Sequelize } from "sequelize";
 const dbConfig = require("../config/db.config.ts")
 
 const mySequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {

@@ -17,7 +17,7 @@ mySequelize.authenticate()
     .then(() => console.log("Connected to DB"))
     .catch((err: any) => console.log(err))
 mySequelize.sync({force:true})
-.then(console.log("db syncado"));
+.then(console.log("db syncado teste"));
 
 app.get("/", (req: Request, res: Response) => {
     res.json({ msg: "teste API" })

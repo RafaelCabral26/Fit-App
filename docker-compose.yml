@@ -15,7 +15,7 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: fitdb
-      MYSQL_ROOT_PASSWORD: 5oT4^82O8#90
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
     ports:
       - "3306:3306"    
     volumes:

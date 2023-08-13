@@ -14,7 +14,7 @@ export const Navbar = () => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className=" m-1 cursor-pointer hover:text-secondary">Planilha</label>
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><a href="/planilha/criar_planilha">Minhas Planilhas</a></li>
+                            <li><a href="/planilha/nova_planilha">Nova Planilha</a></li>
                             <li><a>Nova Planilha</a></li>
                         </ul>
                     </div>

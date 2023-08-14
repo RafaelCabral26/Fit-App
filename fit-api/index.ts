@@ -6,6 +6,7 @@ const express = require("express");
 const cors = require('cors');
 
 const app = express();
+console.log("NODE_DOCKER_PORT",process.env.NODE_DOCKER_PORT);
 
 const corsOptions = {
     origin: "http://localhost:3000"
@@ -16,13 +17,12 @@ app.use(express.json());
 mySequelize.authenticate()
     .then(() => console.log("Connected to DB"))
     .catch((err: any) => console.log(err))
-mySequelize.sync({force:true})
-.then(console.log("db syncado teste"));
 
 app.get("/", (req: Request, res: Response) => {
     res.json({ msg: "teste API" })
 })
-app.listen(4000, () => {
-    console.log('Server listening on port 4000');
+const PORT = process.env.NODE_DOCKER_PORT || 8080;
+app.listen(PORT, () => {
+    console.log('Server listening on port ${PORT}');
 
 })

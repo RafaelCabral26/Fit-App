@@ -2,7 +2,7 @@
 
 import { Sequelize, DataTypes } from "sequelize"
 const mySequelize = require("./index.ts")
- mySequelize.sync({force:true})
+// mySequelize.sync({force:true})
 const User = mySequelize.define("user", {
     id : {
     type:DataTypes.UUID,

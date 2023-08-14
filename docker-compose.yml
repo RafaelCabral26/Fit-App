@@ -1,26 +1,55 @@
-version: "2.19.1"
+version: "3.8"
 services:
+  mysqldb:
+    image: mysql:8.0
+    restart: unless-stopped 
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DB_PASSWORD} 
+      MYSQL_DATABASE: fitdb
+    ports:
+      - "3307:3306"    
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+        - backend
+
+  fit-api:
+    depends_on:
+      - mysqldb 
+    build: ./fit-api
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - ${NODE_LOCAL_PORT}:${NODE_DOCKER_PORT}
+    environment:
+      DB_HOST: mysqldb
+      DB_PASSWORD: ${MYSQL_DB_PASSWORD}
+      DB_NAME: ${MYSQL_DB_NAME}
+      DB_PORT: ${MYSQL_PORT}
+      DB_USER: ${MYSQL_DB_USER}
+      CLIENT_ORIGIN: ${CLIENT_ORIGIN}
+    networks:
+        - backend
+        - frontend
+    volumes:
+      - ./fit-api:/fit-api
+      - /fit-api/node_modules
   frontend:
-    build: ./
+    depends_on:
+      - fit-api
+    build: 
+      context: ./fit-app
+      args: 
+        - REACT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
     container_name: fitapp-react_c
     ports:
       - '3000:3000'
     volumes:
-      - ./fit-app:/app
+      - ./fit-app:/fit-app
       - /app/node_modules
-  db:
-    image: mysql:8.0
-    cap_add:
-        - SYS_NICE
-    restart: always
-    environment:
-      MYSQL_DATABASE: fitdb
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
-    ports:
-      - "3306:3306"    
-    volumes:
-      - db:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
   db:
-    driver: local
+networks:
+  backend:
+  frontend:

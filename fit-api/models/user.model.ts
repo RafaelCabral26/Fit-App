@@ -15,6 +15,7 @@ const User = mySequelize.define("user", {
     },
     email:{
         type:DataTypes.STRING,
+        allowNull: false,
         isEmail:true,
         min:8,
     }

@@ -5,7 +5,7 @@ import  LoginModal  from "./LoginModal"
 import RegisterModal from "./RegisterModal"
 export const Navbar = () => {
     const [loginModal, showLoginModal] = useState<boolean>(false)
-    const [registerModal, showRegisterModal] = useState<boolean>(true)
+    const [registerModal, showRegisterModal] = useState<boolean>(false)
     return (
 
         <div className='navbar border-b-2  p-4 drop-shadow-lg'>

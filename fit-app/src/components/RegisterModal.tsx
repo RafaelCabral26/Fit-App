@@ -1,21 +1,30 @@
-import { SetStateAction, useState } from "react"
+import { ToastContext } from "@/services/MyToast";
+import myHTTP from "@/services/axiosconfig";
+import { SetStateAction, useContext, useState } from "react"
 
 const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const [registerInput, setRegisterInput] = useState({
-        name:"",
-        email:"",
-        password:"",
-        password_confirm:""
+        name: "",
+        email: "",
+        password: "",
+        password_confirm: ""
     })
-    const handleRegisterInput =(e:React.ChangeEvent<HTMLInputElement>) => {
+    const toastState = useContext(ToastContext);
+    const handleRegisterInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         const value = e.target.value;
-        setRegisterInput((prev:any) => {
-            return {...prev, [name]:value};
+        setRegisterInput((prev: any) => {
+            return { ...prev, [name]: value };
         })
     }
     const tryRegister = () => {
-        console.log(registerInput)
+        myHTTP.post("/register", registerInput)
+            .then(res => {
+                toastState?.setToast({type:"success",message:"Cadastro realizado com sucesso."})
+            })
+            .catch(err => {
+                toastState?.setToast({type:"error", message:err.response.data.msg.errors[0].message})
+            })
     }
     return (
         <div className="absolute h-screen w-screen">

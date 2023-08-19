@@ -29,6 +29,7 @@ services:
       DB_PORT: ${MYSQL_PORT}
       DB_USER: ${MYSQL_DB_USER}
       CLIENT_ORIGIN: ${CLIENT_ORIGIN}
+      SECRET: ${SECRET}
     networks:
         - backend
         - frontend
@@ -41,7 +42,7 @@ services:
     build: 
       context: ./fit-app
       args: 
-        - REACT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
+        - NEXT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
     container_name: fitapp-react_c
     ports:
       - '3000:3000'

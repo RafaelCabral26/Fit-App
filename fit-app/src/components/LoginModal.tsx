@@ -1,16 +1,19 @@
-import React, { SetStateAction, useState } from "react"
+import myHTTP from "@/services/axiosconfig";
+import React, { SetStateAction, useContext, useState } from "react"
+import { ToastContext } from "@/services/MyToast";
 
-const LoginModal = ({showLoginModal}:{showLoginModal:React.Dispatch<SetStateAction<boolean>>}) => {
-    const [loginInput, setLoginInput] = useState({email:"", password:""});
-    const handleLoginInput = (e:React.ChangeEvent<HTMLInputElement>) => {
+const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStateAction<boolean>> }) => {
+    const [loginInput, setLoginInput] = useState({ email: "", password: "" });
+    const toastState = useContext(ToastContext)
+    const handleLoginInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         const value = e.target.value;
-        setLoginInput((prev:any) => {
-            return {...prev, [name]: value };
+        setLoginInput((prev: any) => {
+            return { ...prev, [name]: value };
         })
     }
     const tryLogin = () => {
-        console.log(loginInput);
+        toastState?.setToast({type:"success", message:"mudando"});
     }
     return (
         <div className="absolute h-screen w-screen">
@@ -25,7 +28,7 @@ const LoginModal = ({showLoginModal}:{showLoginModal:React.Dispatch<SetStateActi
                     <label className="label">
                         <span className="label-text">Email</span>
                     </label>
-                    <input name="email" onChange={handleLoginInput} type="text" className="my-input" autoFocus/>
+                    <input name="email" onChange={handleLoginInput} type="text" className="my-input" autoFocus />
                     <label className="label">
                         <span className="label-text">Senha</span>
                     </label>

@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { allRoutes } from "./routes/routes";
 require("dotenv").config()
 const sequelize = require("./models/index.ts");

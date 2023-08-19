@@ -1,9 +1,15 @@
 import { ToastContext } from "@/services/MyToast";
 import myHTTP from "@/services/axiosconfig";
 import { SetStateAction, useContext, useState } from "react"
-
+import { ValidateRegisterInput } from "./ValidationUserInput";
+export type TRegisterInput = {
+    name:string,
+    email:string,
+    password:string,
+    password_confirm:string,
+}
 const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatch<SetStateAction<boolean>> }) => {
-    const [registerInput, setRegisterInput] = useState({
+    const [registerInput, setRegisterInput] = useState<TRegisterInput>({
         name: "",
         email: "",
         password: "",
@@ -18,12 +24,16 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         })
     }
     const tryRegister = () => {
+        const validation = ValidateRegisterInput(registerInput);
+        if (validation.valid === false) {
+            return toastState?.setToast({type:"warning", message:validation.message})
+        }
         myHTTP.post("/register", registerInput)
             .then(res => {
-                toastState?.setToast({type:"success",message:"Cadastro realizado com sucesso."})
+                return toastState?.setToast({type:"success",message:"Cadastro realizado com sucesso."})
             })
             .catch(err => {
-                toastState?.setToast({type:"error", message:err.response.data.msg.errors[0].message})
+                return toastState?.setToast({type:"error", message:err.response.data.msg.errors[0].message})
             })
     }
     return (
@@ -37,14 +47,14 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                         <button onClick={() => { showRegisterModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
                     <label className="label">
-                        <span className="label-text">Email</span>
-                    </label>
-                    <input name="email" onChange={handleRegisterInput} type="text" className="my-input" />
-
-                    <label className="label">
                         <span className="label-text">Nome</span>
                     </label>
                     <input name="name" onChange={handleRegisterInput} type="text" className="my-input" />
+
+                    <label className="label">
+                        <span className="label-text">Email</span>
+                    </label>
+                    <input name="email" onChange={handleRegisterInput} type="text" className="my-input" />
 
                     <label className="label">
                         <span className="label-text">Senha</span>

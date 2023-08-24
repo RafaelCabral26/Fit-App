@@ -1,11 +1,39 @@
 "use client"
 import { ProfileSvg } from "@/svgs/profilecircle"
-import { useState } from "react"
-import  LoginModal  from "./LoginModal"
+import { useContext, useEffect, useState } from "react"
+import LoginModal from "./LoginModal"
 import RegisterModal from "./RegisterModal"
+import myHTTP from "@/services/axiosconfig"
+import { ToastContext } from "@/services/MyToast"
 export const Navbar = () => {
+    const toastState = useContext(ToastContext);
     const [loginModal, showLoginModal] = useState<boolean>(false)
     const [registerModal, showRegisterModal] = useState<boolean>(false)
+    const [userState, setUserState] = useState<"user" | "trainer" | null>(null)
+    useEffect(() => {
+        myHTTP.post("/check_user")
+            .then(res => {
+                if (res.data.logged) {
+                    return setUserState(res.data.profile)
+                }
+                setUserState(null)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    })
+    const handleLogout = () => {
+        myHTTP.get("/logout")
+            .then(res => {
+                toastState?.setToast({ type: "success", message: res.data.msg })
+            })
+            .then(() => {
+                showLoginModal(false)
+            })
+            .catch(err => {
+                toastState?.setToast({ type: "error", message: err.response.data.msg })
+            })
+    }
     return (
 
         <div className='navbar border-b-2  p-4 drop-shadow-lg'>
@@ -20,21 +48,38 @@ export const Navbar = () => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className=" m-1 cursor-pointer hover:text-secondary">Planilha</label>
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><a href="/planilha/nova_planilha">Nova Planilha</a></li>
-                            <li><a>Teste Planilha</a></li>
+                            <li><a href="/planilha/nova_planilha">Criar Planilha</a></li>
+                            <li><a>Minhas Planilhas</a></li>
                         </ul>
                     </div>
                     <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="cursor-pointer"><ProfileSvg/></label>
+                        <label tabIndex={0} className="cursor-pointer"><ProfileSvg /></label>
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><button onClick={()=>{showLoginModal(true)}}>Login</button></li>
-                            <li><button onClick={()=> showRegisterModal(true)} >Cadastrar</button></li>
+                            {userState === null &&
+                                <>
+                                    <li><button onClick={() => { showLoginModal(true) }}>Login</button></li>
+                                    <li><button onClick={() => showRegisterModal(true)} >Cadastrar</button></li>
+                                </>
+                            }
+                            {userState === "user" &&
+                                (<>
+                                    <li><button>Perfil</button></li>
+                                    <li><button onClick={handleLogout}>Sair</button></li>
+                                </>)
+                            }
+                            {userState === "trainer" &&
+                                (<>
+                                    <li><button>Perfil</button></li>
+                                    <li><button>Alunos</button></li>
+                                    <li><button onClick={handleLogout}>Sair</button></li>
+                                </>)
+                            }
                         </ul>
                     </div>
                 </div>
             </div>
-            {loginModal &&<LoginModal showLoginModal={showLoginModal}></LoginModal> }
-            {registerModal && <RegisterModal showRegisterModal={showRegisterModal}></RegisterModal> } 
+            {loginModal && <LoginModal showLoginModal={showLoginModal}></LoginModal>}
+            {registerModal && <RegisterModal showRegisterModal={showRegisterModal}></RegisterModal>}
         </div>
     )
 }

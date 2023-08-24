@@ -34,7 +34,6 @@ export const MyToast = () => {
         }
 
         setToastClass(("translate-x-0 " + color))
-        console.log(toastClass);
         setTimeout(() => {
             setToastClass("translate-x-[120%]")
         }, 2000)

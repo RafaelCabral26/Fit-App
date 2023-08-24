@@ -1,5 +1,15 @@
 import { Sequelize, DataTypes } from "sequelize"
 const sequelize = require("./index.ts")
+export type TUser =  {
+    id?:string,
+    name?:string,
+    password?:string,
+    email:string,
+    profile?:number,
+    active?:boolean
+}
+
+
 const User = sequelize.define("user", {
     id: {
         type: DataTypes.UUID,
@@ -13,9 +23,13 @@ const User = sequelize.define("user", {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: {
+                args: true,
+                msg:"Email já cadastrado."
+            },
         validate: {
             isEmail: {
-                msg:"Formato de email inválido"
+                msg:"Fomato do email inválido." 
             },
         },
     },
@@ -24,8 +38,11 @@ const User = sequelize.define("user", {
         allowNull: false,
     },
     profile:{
-        type:DataTypes.INTEGER,
-        defaultValue:0,
+        type:DataTypes.STRING,
+        defaultValue:"user",
+        validate: {
+            isIn:[["user", "trainer"]]
+        }
     },
     active:{
         type:DataTypes.BOOLEAN,

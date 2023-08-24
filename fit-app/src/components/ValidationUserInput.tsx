@@ -14,7 +14,8 @@ export const ValidateRegisterInput = (registerInput: TRegisterInput): { valid: b
     } else if (registerInput.password !== registerInput.password_confirm) {
         return { valid: false, message: "Erro na confirmação de senha." }
 
-    } else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(registerInput.email) === false){
+    } 
+    else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(registerInput.email) === false){
         return {valid:false, message:"Formato do Email inválido."}
     }
     return {valid:true, message:"Cadastro realizado."}

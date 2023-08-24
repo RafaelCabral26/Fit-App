@@ -42,12 +42,11 @@ services:
       context: ./fit-app
       args: 
         - REACT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
-    container_name: fitapp-react_c
     ports:
       - '3000:3000'
     volumes:
       - ./fit-app:/fit-app
-      - /app/node_modules
+      - /fit-app/node_modules
 volumes:
   db:
 networks:

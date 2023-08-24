@@ -117,9 +117,9 @@ const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteMod
             absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
             <div className="flex flex-col justify-between p-4 w-56 h-32 cursor-auto">
                 <div>
-                    <h1>
+                    <h2>
                         Deseja deletar
-                    </h1>
+                    </h2>
                     <span className="font-bold">{itemName}?</span>
                 </div>
                 <div className="flex justify-between ">

@@ -1,22 +1,53 @@
-"use strict"
-
 import { Sequelize, DataTypes } from "sequelize"
-const mySequelize = require("./index.ts")
-// mySequelize.sync({force:true})
-const User = mySequelize.define("user", {
-    id : {
-    type:DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
+const sequelize = require("./index.ts")
+export type TUser =  {
+    id?:string,
+    name?:string,
+    password?:string,
+    email:string,
+    profile?:number,
+    active?:boolean
+}
+
+
+const User = sequelize.define("user", {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
     },
-    name:{
-        type:DataTypes.STRING,
-        allowNull:false,
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
-    email:{
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+                args: true,
+                msg:"Email já cadastrado."
+            },
+        validate: {
+            isEmail: {
+                msg:"Fomato do email inválido." 
+            },
+        },
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    profile:{
         type:DataTypes.STRING,
-        isEmail:true,
-        min:8,
+        defaultValue:"user",
+        validate: {
+            isIn:[["user", "trainer"]]
+        }
+    },
+    active:{
+        type:DataTypes.BOOLEAN,
+        defaultValue:true
     }
 })
-module.exports = User
+User.sync()
+export default User

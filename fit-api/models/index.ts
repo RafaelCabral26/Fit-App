@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 const dbConfig = require("../config/db.config.ts")
 
-const mySequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host:dbConfig.HOST,
     dialect:dbConfig.dialect,
     port: dbConfig.PORT,
@@ -14,4 +14,4 @@ const mySequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD,
     }
 })
 
-module.exports = mySequelize;
+module.exports = sequelize;

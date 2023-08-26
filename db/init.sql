@@ -1,0 +1,3 @@
+INSERT INTO exercises
+VALUES
+    

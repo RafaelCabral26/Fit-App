@@ -23,11 +23,13 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
     try {
-        const userInput: { email: string, password: string } = req.body;
+
+        const userInput: TUser = req.body;
         if (!userInput.email || !userInput.password) {
             throw new Error("Preencha todos os campos.");
         }
         const dbUser = await User.findOne({ where: { email: userInput.email } });
+        console.log(dbUser);
         if (!dbUser) throw new Error("Usuário não encontrado");
         await auth.comparePasswords(userInput.password, dbUser.password);
         const token = await auth.createToken(dbUser);

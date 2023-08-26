@@ -1,29 +1,35 @@
-import { Sequelize, DataTypes } from "sequelize";
+import {  DataTypes } from "sequelize";
+import { defaultExercisesList } from "../config/exercises_list";
 const sequelize = require("./index.ts")
 
 export type TExercise = {
     id?:string,
     exercise_name:string,
-} & (TArm | TBack | TChest | TLegs) 
+} & (TArm | TBack | TChest | TLegs | TShoulder) 
 type TArm = {
     muscle_group:"arm",
-    subgroup:"biceps" | "triceps" | "forearms",
+    subgroup?:"biceps" | "triceps" | "forearms",
 }
 type TBack ={
     muscle_group:"back",
-    subgroup: "upperback" | "lats";}
+    subgroup?: "upperback" | "lats" | "lowerback";}
 type TChest ={
     muscle_group:"chest",
-    subgroup:  "upperchest" | "middlechest" | "lowerchest"
+    subgroup?:  "upperchest" | "middlechest" | "lowerchest"
 }
 type TLegs ={
     muscle_group:"leg",
-    subgroup: "hamstring" | "glutes" | "quadriceps" | "calf"
+    subgroup?: "hamstring" | "glutes" | "quadriceps" | "calf"
 }
-const Exrcise = sequelize.define("exercise", {
+type TShoulder = {
+    muscle_group:"shoulder",
+    subgroup?: "anterior" | "posterior" | "lateral",
+}
+const Exercise = sequelize.define("exercises", {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        unique:true,
         primaryKey:true,
     },
     exercise_name: {
@@ -42,3 +48,15 @@ const Exrcise = sequelize.define("exercise", {
     }
 
 })
+ Exercise.sync()
+
+export const setExercisesList = async (defaultExercisesList:TExercise[]) => {
+    try {
+    defaultExercisesList.forEach(async (element) => {
+       await Exercise.create(element) 
+})        
+    } catch (err) {
+        
+    }
+}
+export default Exercise

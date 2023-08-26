@@ -16,11 +16,12 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
     }
     const tryLogin = () => {
         myHTTP.post("/login", loginInput)
-            .then(res => {
+            .then((res:any) => {
                 toastState?.setToast({type:"success", message:res.data.msg})
                 showLoginModal(false);
             })
-            .catch(err => {
+            .catch((err:any) => {
+                console.log(err);
                 toastState?.setToast({type:"warning", message:err.response.data.msg})
             })
     }

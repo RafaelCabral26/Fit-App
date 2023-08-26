@@ -13,5 +13,4 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
         idle: dbConfig.pool.idle,
     }
 })
-
-module.exports = sequelize;
+module.exports = sequelize

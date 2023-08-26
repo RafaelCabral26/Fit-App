@@ -1,12 +1,13 @@
 import { Sequelize, DataTypes } from "sequelize"
+import Exercise from "./exercise.model"
 const sequelize = require("./index.ts")
-export type TUser =  {
-    id?:string,
-    name?:string,
-    password?:string,
-    email:string,
-    profile?:number,
-    active?:boolean
+export type TUser = {
+    id?: string,
+    name?: string,
+    password?: string,
+    email: string,
+    profile?: "user" | "trainer",
+    active?: boolean
 }
 
 
@@ -23,13 +24,10 @@ const User = sequelize.define("user", {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: {
-                args: true,
-                msg:"Email já cadastrado."
-            },
+        unique: true,
         validate: {
             isEmail: {
-                msg:"Fomato do email inválido." 
+                msg: "Fomato do email inválido."
             },
         },
     },
@@ -37,17 +35,17 @@ const User = sequelize.define("user", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    profile:{
-        type:DataTypes.STRING,
-        defaultValue:"user",
+    profile: {
+        type: DataTypes.STRING,
+        defaultValue: "user",
         validate: {
-            isIn:[["user", "trainer"]]
+            isIn: [["user", "trainer"]]
         }
     },
-    active:{
-        type:DataTypes.BOOLEAN,
-        defaultValue:true
-    }
+    active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+    },
 })
 User.sync()
 export default User

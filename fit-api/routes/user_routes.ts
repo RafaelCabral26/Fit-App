@@ -23,7 +23,6 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
     try {
-
         const userInput: { email: string, password: string } = req.body;
         if (!userInput.email || !userInput.password) {
             throw new Error("Preencha todos os campos.");
@@ -40,6 +39,7 @@ router.post("/login", async (req, res, next) => {
     })
 router.post("/check_user", async (req, res, next) => {
     try {
+        console.log("request bateu");
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {

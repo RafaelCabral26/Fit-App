@@ -1,6 +1,5 @@
 import { Sequelize, DataTypes } from "sequelize";
 const sequelize = require("./index.ts")
-
 export type TExercise = {
     id?:string,
     exercise_name:string,
@@ -20,7 +19,7 @@ type TLegs ={
     muscle_group:"leg",
     subgroup: "hamstring" | "glutes" | "quadriceps" | "calf"
 }
-const Exrcise = sequelize.define("exercise", {
+const Exercise = sequelize.define("exercises", {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -42,3 +41,5 @@ const Exrcise = sequelize.define("exercise", {
     }
 
 })
+Exercise.sync();
+export default Exercise;

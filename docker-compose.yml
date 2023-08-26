@@ -42,12 +42,9 @@ services:
     build: 
       context: ./fit-app
       args: 
-<<<<<<< HEAD
         - REACT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
-=======
         - NEXT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
     container_name: fitapp-react_c
->>>>>>> d212707a17b4dbf0c1ea5135d52afc93caf16470
     ports:
       - '3000:3000'
     volumes:

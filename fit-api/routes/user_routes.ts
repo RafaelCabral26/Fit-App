@@ -41,7 +41,6 @@ router.post("/login", async (req, res, next) => {
     })
 router.post("/check_user", async (req, res, next) => {
     try {
-        console.log("request bateu");
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {

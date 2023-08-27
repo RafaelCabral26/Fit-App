@@ -204,6 +204,52 @@ export const defaultExercisesList: TExercise[] = [
     },
     //---------------- Braços ---------------
         // --- Triceps ----
+    {
+        exercise_name:"Tríceps Polia",
+        muscle_group:"arm",
+        subgroup:"triceps"
+    },
+    {
+        exercise_name:"Tríceps Invertido Polia",
+        muscle_group:"arm",
+        subgroup:"triceps"
+    },
+    {
+        exercise_name:"Tríceps Coice Polia",
+        muscle_group:"arm",
+        subgroup:"triceps"
+    },
+    {
+        exercise_name:"Tríceps Corda Polia",
+        muscle_group:"arm",
+        subgroup:"triceps"
+    },
+    {
+        exercise_name:"Tríceps Testa Polia",
+        muscle_group:"arm",
+        subgroup:"triceps"
+    },
+    {
+        exercise_name:"Tríceps Coice Halter",
+        muscle_group:"arm",
+        subgroup:"triceps"
+    },
+    {
+        exercise_name:"Tríceps Testa Halter",
+        muscle_group:"arm",
+        subgroup:"triceps"
+    },
+    {
+        exercise_name:"Tríceps Banco",
+        muscle_group:"arm",
+        subgroup:"triceps"
+    },
+    {
+        exercise_name:"Paralela",
+        muscle_group:"arm",
+        subgroup:"triceps"
+    },
+        //-------Biceps--------
 ];
 
 

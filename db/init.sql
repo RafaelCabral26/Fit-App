@@ -311,4 +311,3 @@ VALUES
         "arm",
         "triceps"
     );
-    

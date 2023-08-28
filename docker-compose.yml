@@ -22,7 +22,8 @@ services:
 
   fit-api:
     depends_on:
-      - mysqldb 
+      mysqldb:
+        condition: service_healthy
     build: ./fit-api
     restart: on-failure 
     env_file: ./.env

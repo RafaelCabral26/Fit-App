@@ -1,4 +1,4 @@
-import { TExercise } from "./page";
+import { TExercise } from "./nova_planilha_Types"
 
 export const ValidateAddExercise = (exercise:TExercise)  => {
    if (!exercise.name || !exercise.quantity || !exercise.sets) {

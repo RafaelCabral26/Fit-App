@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautif
 import DayComponent from "./DayComponent"
 import myHTTP from "@/services/axiosconfig"
 import { TExercise, TPossibleDays, TDays } from "./nova_planilha_Types"
+import { formatExercisesStorage } from "./nova_planilha_Utilities"
 
 
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
@@ -21,7 +22,7 @@ const SpreadsheetBuilder: React.FC = () => {
         if (listOfExercises === null) {
             myHTTP.get("/list_exercises")
                 .then(res => {
-                    localStorage.setItem("Exercises_list", JSON.stringify(res.data.exercises))
+                    formatExercisesStorage(res.data.exercises)
                 })
                 .catch(err => {
                     console.log(err);

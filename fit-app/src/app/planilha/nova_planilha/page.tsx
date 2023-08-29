@@ -1,23 +1,12 @@
 'use client'
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd"
 import DayComponent from "./DayComponent"
+import myHTTP from "@/services/axiosconfig"
+import { TExercise, TPossibleDays, TDays } from "./nova_planilha_Types"
 
-export type TExercise = {
-    name: string,
-    sets: number,
-    quantity: number,
-    uId:  string,
-    muscleGroup?: "Peitoral" | "Costas" | "Bíceps" | "Tríceps" | "Ombros" | "Pernas" | "",
-    createdAt?: string,
-}
-export type TPossibleDays = "day1" | "day2" | "day3" | "day4" | "day5" | "day6" | "day7"
-export type TDays = {
-    day: TPossibleDays,
-    exercises: TExercise[] | []
-}
 
-const reorder = (list: any[] , startIndex: number, endIndex: number) => {
+const reorder = (list: any[], startIndex: number, endIndex: number) => {
     const result = list;
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -27,6 +16,18 @@ const reorder = (list: any[] , startIndex: number, endIndex: number) => {
 const SpreadsheetBuilder: React.FC = () => {
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
 
+    useEffect(() => {
+        const listOfExercises = localStorage.getItem("Exercises_list");
+        if (listOfExercises === null) {
+            myHTTP.get("/list_exercises")
+                .then(res => {
+                    localStorage.setItem("Exercises_list", JSON.stringify(res.data.exercises))
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }, [])
 
     const addNewDay = () => {
         if (daysArray.length < 7) {

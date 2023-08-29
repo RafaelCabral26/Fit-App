@@ -261,49 +261,49 @@ VALUES
     ),
     (
 		 uuid_v4(),
-        "Tríceps Polia",
+        "Triceps Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Tríceps Invertido Polia",
+        "Triceps Invertido Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Tríceps Coice Polia",
+        "Triceps Coice Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Tríceps Corda Polia",
+        "Triceps Corda Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Tríceps Testa Polia",
+        "Triceps Testa Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Tríceps Coice Halter",
+        "Triceps Coice Halter",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Tríceps Testa Halter",
+        "Triceps Testa Halter",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Tríceps Banco",
+        "Triceps Banco",
         "arm",
         "triceps"
     ),

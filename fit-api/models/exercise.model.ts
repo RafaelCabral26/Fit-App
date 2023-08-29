@@ -25,7 +25,7 @@ type TShoulder = {
     subgroup?: "anterior" | "posterior" | "lateral",
 }
 const Exercise = sequelize.define("exercises", {
-    id: {
+    exercise_id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         unique:true,
@@ -44,9 +44,12 @@ const Exercise = sequelize.define("exercises", {
     subgroup: {
         type:DataTypes.STRING,
 
+    },
+},
+    {
+        timestamps:false,
     }
-
-})
+)
  Exercise.sync()
 
 export const setExercisesList = async (defaultExercisesList:TExercise[]) => {

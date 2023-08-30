@@ -1,5 +1,4 @@
 import {  DataTypes } from "sequelize";
-import { defaultExercisesList } from "../config/exercises_list";
 const sequelize = require("./index.ts")
 export type TExercise = {
     id?:string,
@@ -51,14 +50,4 @@ const Exercise = sequelize.define("exercises", {
     }
 )
  Exercise.sync()
-
-export const setExercisesList = async (defaultExercisesList:TExercise[]) => {
-    try {
-    defaultExercisesList.forEach(async (element) => {
-       await Exercise.create(element) 
-})        
-    } catch (err) {
-        
-    }
-}
 export default Exercise

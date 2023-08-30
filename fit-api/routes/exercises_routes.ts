@@ -1,7 +1,6 @@
 import { Router } from "express";
 import Exercise from "../models/exercise.model";
 import { TExercise } from "../models/exercise.model";
-import { defaultExercisesList } from "../config/exercises_list";
 
 const router = Router();
 

@@ -2,8 +2,8 @@ import { Draggable, DraggableProvided,  } from "react-beautiful-dnd"
 import TrashSvg from "@/svgs/trashsvg"
 import EditPencilSvg from "@/svgs/editpencil"
 import { SetStateAction, useState } from "react"
-import { TDays, TExercise } from "./page"
-import { ValidateAddExercise } from "./formValidator"
+import { TDays, TExercise } from "./nova_planilha_Types"
+import { ValidateAddExercise } from "./nova_planilha_Utilities"
 
 const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: TExercise, index: number, daysArray: TDays[], dayIndex: number, setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
     const [editModal, openEditModal] = useState<boolean>(false);

@@ -1,7 +1,7 @@
 
 import { SetStateAction, useEffect, useState } from "react"
 import { TExercise, TMuscleGroups } from "./nova_planilha_Types"
-import { ValidateAddExercise } from "./formValidator"
+import { ValidateAddExercise } from "./nova_planilha_Utilities"
 
 const AddExerciseFormModal = ({ showNewExerciseModal, dayObject  }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[]  }) => {
     const [exerciseList, setExerciseList] = useState<string | null>();

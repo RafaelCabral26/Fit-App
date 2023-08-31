@@ -21,7 +21,7 @@ export const ToastProvider = ({ children }: { children: JSX.Element[] }) => {
 
 export const MyToast = () => {
     const toastState = useContext(ToastContext)
-    const [toastClass, setToastClass] = useState("translate-x-[120%]")
+    const [toastClass, setToastClass] = useState("translate-y-[-320%]")
     useEffect(() => {
         if (toastState?.toast.type === null) return
         let color: string;
@@ -33,9 +33,9 @@ export const MyToast = () => {
             color = "bg-error"
         }
 
-        setToastClass(("translate-x-0 " + color))
+        setToastClass(("translate-y-0 " + color))
         setTimeout(() => {
-            setToastClass("translate-x-[120%]")
+            setToastClass("translate-y-[-320%]")
         }, 2000)
     }, [toastState])
     return (

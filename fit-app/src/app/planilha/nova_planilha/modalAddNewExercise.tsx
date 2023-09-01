@@ -15,7 +15,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
         muscle_group: "",
         subgroup: "",
         uId: String(new Date(Date.now())),
-        createdAt: new Date().toLocaleString()
+        createdAt: new Date().toLocaleString(),
     })
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
             const arrayExerciseList = JSON.parse(storageExerciseList);
             for (const key in arrayExerciseList) {
                 if (key === muscleType?.muscle_group) {
-                    setExerciseOptions(arrayExerciseList[key])
+                    setExerciseOptions(arrayExerciseList[key]);
                 }
             }
         }
@@ -37,7 +37,6 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
 
         } else if (muscleType?.muscle_group === "Costas") {
             setSubGroups(["Superior", "Dorsal", "Inferior"]);
-
         } else if (muscleType?.muscle_group === "Peito") {
             setSubGroups(["Superior", "Medial", "Inferior"]);
         } else if (muscleType?.muscle_group === "Pernas") {
@@ -67,7 +66,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
     return (
         <form className="my-form-modal">
             <div className="flex justify-end">
-                <button onClick={() => { showNewExerciseModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
+                <button onClick={() => { showNewExerciseModal(false) }} className="text-2xl font-extrabold leading-3">X</button>
             </div>
             <select className="select select-xs select-primary rounded-lg">
                 <option onClick={() => handleSelectedMuscleGroup(null)}>Músculo</option>
@@ -82,7 +81,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
                 {
                     selectedSubGroups?.map((ele: any) => {
                         return (
-                            <option onClick={() => setSelectedMuscleGroup({ muscle_group: selectedMuscleGroup?.muscle_group })} value={ele}>{ele}</option>
+                            <option key={ele.muscle_group} onClick={() => setSelectedMuscleGroup({ muscle_group: selectedMuscleGroup?.muscle_group })} value={ele}>{ele}</option>
                         )
                     })
                 }
@@ -94,14 +93,14 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
             <input name="name" className="my-input hidden" onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
 
             <select className="my-input">
-                <option>Default</option>
                 {
-                   exerciseOptions?.forEach((ele:any) => {
+                   exerciseOptions?.map((ele:any) => {
                         return (
-                        <option>{ele.exercise_name}</option>
+                        <option key={ele.exercise_name}>{ele.exercise_name}</option>
                         )
                     }) 
                 }
+                <option>Default</option>
             </select>
 
             <label className="label">

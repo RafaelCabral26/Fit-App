@@ -7,11 +7,12 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
     const [exerciseList, setExerciseList] = useState<string | null>();
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<TMuscleGroups | null>()
     const [selectedSubGroups, setSubGroups] = useState<any[] | null>()
+    const [exerciseOptions, setExerciseOptions] = useState<any>();
     const [newExercise, setNewExercise] = useState<TExercise>({
         name: "",
         sets: 0,
         quantity: 0,
-        muscle_group: selectedMuscleGroup?.muscle_group,
+        muscle_group: "",
         subgroup: "",
         uId: String(new Date(Date.now())),
         createdAt: new Date().toLocaleString()
@@ -22,22 +23,32 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
         if (list) setExerciseList(JSON.parse(list))
     }, [])
     const handleSelectedMuscleGroup = (muscleType: TMuscleGroups | null) => {
+        let storageExerciseList = localStorage.getItem("Exercises_list");
+        if (storageExerciseList !== null) {
+            const arrayExerciseList = JSON.parse(storageExerciseList);
+            for (const key in arrayExerciseList) {
+                if (key === muscleType?.muscle_group) {
+                    setExerciseOptions(arrayExerciseList[key])
+                }
+            }
+        }
+        if (muscleType?.muscle_group === "Bracos") {
+            setSubGroups(["Biceps", "Triceps", "Antebraço"]);
 
-        if (muscleType?.muscle_group === "arm") {
-            setSubGroups(["Bíceps", "Tríceps", "Antebraço"]);
-        } else if (muscleType?.muscle_group === "back") {
+        } else if (muscleType?.muscle_group === "Costas") {
             setSubGroups(["Superior", "Dorsal", "Inferior"]);
-        } else if (muscleType?.muscle_group === "chest") {
+
+        } else if (muscleType?.muscle_group === "Peito") {
             setSubGroups(["Superior", "Medial", "Inferior"]);
-        } else if (muscleType?.muscle_group === "leg") {
+        } else if (muscleType?.muscle_group === "Pernas") {
             setSubGroups(["Posterior", "Gluteos", "Quadriceps", "Panturrilha"]);
-        } else if (muscleType?.muscle_group === "shoulder") {
+        } else if (muscleType?.muscle_group === "Ombros") {
             setSubGroups(["Anterior", "Posterior", "Lateral"]);
         } else {
             setSubGroups(null);
 
         }
-        setSelectedMuscleGroup({ muscle_group: muscleType?.muscle_group })
+        setSelectedMuscleGroup(muscleType)
     }
 
     const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,11 +71,11 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
             </div>
             <select className="select select-xs select-primary rounded-lg">
                 <option onClick={() => handleSelectedMuscleGroup(null)}>Músculo</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "arm", subgroup: "" })}>Braços</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "back", subgroup: "" })}>Costas</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "chest", subgroup: "" })}>Peito</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "leg", subgroup: "" })}>Pernas</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "shoulder", subgroup: "" })}>Ombros</option>
+                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Bracos", subgroup: "" })}>Braços</option>
+                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Costas", subgroup: "" })}>Costas</option>
+                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Peito", subgroup: "" })}>Peito</option>
+                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Pernas", subgroup: "" })}>Pernas</option>
+                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Ombros", subgroup: "" })}>Ombros</option>
             </select>
             <select className="select select-xs select-primary rounded-lg">
                 <option >Subgrupo</option>
@@ -76,17 +87,23 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
                     })
                 }
             </select>
-            <div className="form-control">
 
             <label className="label">
                 <span className="label-text-alt">Exercício</span>
             </label>
-                <input autoFocus name="name" className="my-input" onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
-            </div>
+            <input name="name" className="my-input hidden" onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
 
             <select className="my-input">
-
+                <option>Default</option>
+                {
+                   exerciseOptions?.forEach((ele:any) => {
+                        return (
+                        <option>{ele.exercise_name}</option>
+                        )
+                    }) 
+                }
             </select>
+
             <label className="label">
                 <span className="label-text-alt">Séries</span>
             </label>
@@ -100,8 +117,6 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
                 <button onClick={handleAddNewExercise} type="button" className="my-btn">
                     Criar
                 </button>
-                <button type="button" onClick={() => console.log(selectedMuscleGroup)
-                }>teste</button>
             </div>
         </form>
     )

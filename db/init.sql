@@ -1,9 +1,10 @@
 USE fitdb;
-CREATE TABLE IF NOT EXISTS `users` (`id` CHAR(36) BINARY NOT NULL UNIQUE , `name` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `password` VARCHAR(255) NOT NULL, `profile` VARCHAR(255) DEFAULT 'user', `active` TINYINT(1) DEFAULT true, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+SET NAMES utf8mb4;
+CREATE TABLE IF NOT EXISTS `users` (`id` CHAR(36) BINARY NOT NULL UNIQUE , `name` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `password` VARCHAR(255) NOT NULL, `profile` VARCHAR(255) DEFAULT 'user', `active` TINYINT(1) DEFAULT true, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`));
 
 
 
-CREATE TABLE IF NOT EXISTS `exercises` (`exercise_id` CHAR(36) BINARY UNIQUE , `exercise_name` VARCHAR(255) NOT NULL UNIQUE, `muscle_group` VARCHAR(255) NOT NULL, `subgroup` VARCHAR(255), PRIMARY KEY (`exercise_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `exercises` (`exercise_id` CHAR(36) BINARY UNIQUE , `exercise_name` VARCHAR(255) NOT NULL UNIQUE, `muscle_group` VARCHAR(255) NOT NULL, `subgroup` VARCHAR(255), PRIMARY KEY (`exercise_id`));
 DELIMITER //
 CREATE FUNCTION uuid_v4() 
 RETURNS CHAR(36) DETERMINISTIC
@@ -159,7 +160,7 @@ VALUES
     ),
     (
 		 uuid_v4(),
-         "Barr Supinada",
+         "Barra Supinada",
          "back",
          "lats"
     ),

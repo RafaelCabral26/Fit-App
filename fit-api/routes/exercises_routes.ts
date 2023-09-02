@@ -1,6 +1,5 @@
 import { Router } from "express";
 import Exercise from "../models/exercise.model";
-import { TExercise } from "../models/exercise.model";
 
 const router = Router();
 

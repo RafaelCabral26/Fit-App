@@ -1,5 +1,4 @@
 USE fitdb;
-SET NAMES utf8mb4;
 CREATE TABLE IF NOT EXISTS `users` (`id` CHAR(36) BINARY NOT NULL UNIQUE , `name` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `password` VARCHAR(255) NOT NULL, `profile` VARCHAR(255) DEFAULT 'user', `active` TINYINT(1) DEFAULT true, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`));
 
 
@@ -18,6 +17,7 @@ BEGIN
         ));
 END; //
 DELIMITER ;
+SET NAMES utf8mb4;
 INSERT INTO exercises(exercise_id,exercise_name, muscle_group, subgroup)
 VALUES 
     (

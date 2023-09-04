@@ -4,9 +4,9 @@ import { useContext, useEffect, useState } from "react"
 import LoginModal from "./LoginModal"
 import RegisterModal from "./RegisterModal"
 import myHTTP from "@/services/axiosconfig"
-import { ToastContext } from "@/services/MyToast"
+import { GlobalContext } from "@/services/MyToast"
 export const Navbar = () => {
-    const toastState = useContext(ToastContext);
+    const globalState = useContext(GlobalContext);
     const [loginModal, showLoginModal] = useState<boolean>(false)
     const [registerModal, showRegisterModal] = useState<boolean>(false)
     const [userState, setUserState] = useState<"user" | "trainer" | null>(null)
@@ -25,13 +25,13 @@ export const Navbar = () => {
     const handleLogout = () => {
         myHTTP.get("/logout")
             .then(res => {
-                toastState?.setToast({ type: "success", message: res.data.msg })
+                globalState?.setToast({ type: "success", message: res.data.msg })
             })
             .then(() => {
                 showLoginModal(false)
             })
             .catch(err => {
-                toastState?.setToast({ type: "error", message: err.response.data.msg })
+                globalState?.setToast({ type: "error", message: err.response.data.msg })
             })
     }
     return (

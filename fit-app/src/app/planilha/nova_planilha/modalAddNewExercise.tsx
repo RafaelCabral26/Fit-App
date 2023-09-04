@@ -1,15 +1,17 @@
-
-import { SetStateAction, useEffect, useState } from "react"
+import { SetStateAction, useContext, useEffect, useState } from "react"
 import { TExercise, TMuscleGroups } from "./nova_planilha_Types"
 import { ValidateAddExercise } from "./nova_planilha_Utilities"
+import { Draggable, DroppableProvided, DroppableProvidedProps } from "@hello-pangea/dnd";
+import { GlobalContext } from "@/services/MyToast";
 
-const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[] }) => {
+const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[], dropProvided:any }) => {
+    const globalState = useContext(GlobalContext);
     const [exerciseList, setExerciseList] = useState<string | null>();
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<TMuscleGroups | null>()
     const [selectedSubGroups, setSubGroups] = useState<any[] | null>()
     const [exerciseOptions, setExerciseOptions] = useState<any>();
     const [newExercise, setNewExercise] = useState<TExercise>({
-        name: "",
+        exercise_name: "",
         sets: 0,
         quantity: 0,
         muscle_group: "",
@@ -17,7 +19,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
         uId: String(new Date(Date.now())),
         createdAt: new Date().toLocaleString(),
     })
-
+    
     useEffect(() => {
         const list = localStorage.getItem("Exercises_list")
         if (list) setExerciseList(JSON.parse(list))
@@ -64,20 +66,21 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
         showNewExerciseModal(false);
     }
     return (
-        <form className="my-form-modal">
+<div className="absolute h-screen w-screen top-0 z-20">
+        <form data-rfd-drag-handle-context-id={dropProvided.dragHandleProps?.["data-rfd-drag-handle-context-id"]} className="my-form-modal bg-white cursor-none">
             <div className="flex justify-end">
-                <button onClick={() => { showNewExerciseModal(false) }} className="text-2xl font-extrabold leading-3">X</button>
+                <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
             </div>
             <select className="select select-xs select-primary rounded-lg">
-                <option onClick={() => handleSelectedMuscleGroup(null)}>Músculo</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Bracos", subgroup: "" })}>Braços</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Costas", subgroup: "" })}>Costas</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Peito", subgroup: "" })}>Peito</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Pernas", subgroup: "" })}>Pernas</option>
-                <option onClick={() => handleSelectedMuscleGroup({ muscle_group: "Ombros", subgroup: "" })}>Ombros</option>
+                <option key={"musculo"} onClick={() => handleSelectedMuscleGroup(null)}>Músculo</option>
+                <option key={"bracos"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Bracos", subgroup: "" })}>Braços</option>
+                <option key={"costas"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Costas", subgroup: "" })}>Costas</option>
+                <option key={"peito"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Peito", subgroup: "" })}>Peito</option>
+                <option key={"pernas"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Pernas", subgroup: "" })}>Pernas</option>
+                <option key={"ombros"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Ombros", subgroup: "" })}>Ombros</option>
             </select>
             <select className="select select-xs select-primary rounded-lg">
-                <option >Subgrupo</option>
+                <option key={"subgroup"} >Subgrupo</option>
                 {
                     selectedSubGroups?.map((ele: any) => {
                         return (
@@ -90,7 +93,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
             <label className="label">
                 <span className="label-text-alt">Exercício</span>
             </label>
-            <input name="name" className="my-input hidden" onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
+            <input name="exercise_name" className="my-input " onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
 
             <select className="my-input">
                 {
@@ -100,7 +103,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
                         )
                     }) 
                 }
-                <option>Default</option>
+                <option key={"outro"}>Outro</option>
             </select>
 
             <label className="label">
@@ -118,6 +121,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject }: { showNewExer
                 </button>
             </div>
         </form>
+        </div>
     )
 }
 export default AddExerciseFormModal 

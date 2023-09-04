@@ -1,4 +1,4 @@
-import { Draggable, DraggableProvided,  } from "react-beautiful-dnd"
+import { Draggable, DraggableProvided,  } from "@hello-pangea/dnd"
 import TrashSvg from "@/svgs/trashsvg"
 import EditPencilSvg from "@/svgs/editpencil"
 import { SetStateAction, useState } from "react"
@@ -22,7 +22,7 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
                         ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}>
                         <div className="flex flex-col">
                             <span>
-                                {item.name}
+                                {item.exercise_name}
                             </span>
                             <span className="flex gap-2">
                                 <span>
@@ -63,7 +63,7 @@ const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, set
         name: item.name,
         sets: item.sets,
         quantity: item.quantity,
-        muscleGroup: "",
+        muscle_group: "",
         uId:item.uId
     })
     const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +110,7 @@ const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, set
 }
 const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteModal }: { provided: DraggableProvided, itemName: string, handleDeleteExercise: () => void, showDeleteModal: React.Dispatch<SetStateAction<boolean>> }) => {
     return (
-        <div data-rbd-drag-handle-context-id={provided.dragHandleProps?.["data-rbd-drag-handle-context-id"]}
+        <div data-rfd-drag-handle-context-id={provided.dragHandleProps?.["data-rfd-drag-handle-context-id"]}
             autoFocus
             onBlur={() => { showDeleteModal(false) }}
             className="bg-white border-2 border-stone-300 rounded-md cursor-pointer

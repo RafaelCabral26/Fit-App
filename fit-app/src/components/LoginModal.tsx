@@ -1,11 +1,11 @@
 import myHTTP from "@/services/axiosconfig";
 import { ShowPassSvg, HidePassSvg } from "@/svgs/show-hide-eyes";
 import React, { SetStateAction, useContext, useState } from "react"
-import { ToastContext } from "@/services/MyToast";
+import { GlobalContext } from "@/services/MyToast";
 
 const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const [loginInput, setLoginInput] = useState({ email: "", password: "" });
-    const toastState = useContext(ToastContext)
+    const toastState = useContext(GlobalContext)
     const [passwordViewState, setPasswordViewState] = useState<boolean>(false)
     const handleLoginInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;

@@ -5,29 +5,32 @@ type TToast = {
     type: "success" | "warning" | "error" | null,
     message: string | null,
 }
-type TPropsToast = {
+type TPropsGlobalContext = {
     toast: TToast,
-    setToast: React.Dispatch<SetStateAction<TToast>>
+    setToast: React.Dispatch<SetStateAction<TToast>>,
+    isDragDisabledState:boolean
+    isDragDisabledSwitch: React.Dispatch<SetStateAction<boolean>>
 }
-export const ToastContext = createContext<TPropsToast | null>(null)
-export const ToastProvider = ({ children }: { children: JSX.Element[] }) => {
+export const GlobalContext = createContext<TPropsGlobalContext | null>(null)
+export const GlobalProvider = ({ children }: { children: JSX.Element[] }) => {
     const [toast, setToast] = useState<TToast>({ type: null, message: null })
+    const [isDragDisabledState, isDragDisabledSwitch] = useState<boolean>(false);
     return (
-        <ToastContext.Provider value={{ toast, setToast }}>
+        <GlobalContext.Provider value={{ toast, setToast,isDragDisabledState, isDragDisabledSwitch }}>
             {children}
-        </ToastContext.Provider>
+        </GlobalContext.Provider>
     )
 }
 
 export const MyToast = () => {
-    const toastState = useContext(ToastContext)
+    const globalState = useContext(GlobalContext)
     const [toastClass, setToastClass] = useState("translate-y-[-320%]")
     useEffect(() => {
-        if (toastState?.toast.type === null) return
+        if (globalState?.toast.type === null) return
         let color: string;
-        if (toastState?.toast.type === "success") {
+        if (globalState?.toast.type === "success") {
             color = "bg-success"
-        } else if (toastState?.toast.type === "warning") {
+        } else if (globalState?.toast.type === "warning") {
             color = "bg-warning"
         } else {
             color = "bg-error"
@@ -37,11 +40,11 @@ export const MyToast = () => {
         setTimeout(() => {
             setToastClass("translate-y-[-320%]")
         }, 2000)
-    }, [toastState])
+    }, [globalState])
     return (
         <div className={`flex justify-center items-center absolute transition duration-700 ease-in-out ${toastClass} right-4 top-[15vh] w-[25%] h-16 z-50 rounded-lg  `}>
             <span className="text-md">
-                {toastState?.toast.message}
+                {globalState?.toast.message}
             </span>
         </div>
     )

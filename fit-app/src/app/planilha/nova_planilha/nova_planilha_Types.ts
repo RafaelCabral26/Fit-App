@@ -1,6 +1,6 @@
 
 export type TExercise = {
-    name: string,
+    exercise_name: string,
     sets: number,
     quantity: number,
     uId: string,

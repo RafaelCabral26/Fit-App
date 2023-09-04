@@ -1,10 +1,11 @@
 'use client'
-import React, { useEffect, useState } from "react"
-import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd"
+import React, { useContext, useEffect, useState } from "react"
+import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 import DayComponent from "./DayComponent"
 import myHTTP from "@/services/axiosconfig"
 import { TExercise, TPossibleDays, TDays } from "./nova_planilha_Types"
 import { formatExercisesStorage } from "./nova_planilha_Utilities"
+import { GlobalContext } from "@/services/MyToast"
 
 
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
@@ -15,8 +16,8 @@ const reorder = (list: any[], startIndex: number, endIndex: number) => {
 }
 
 const SpreadsheetBuilder: React.FC = () => {
+   const globalState = useContext(GlobalContext);
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
-
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
         if (listOfExercises === null) {
@@ -84,12 +85,12 @@ const SpreadsheetBuilder: React.FC = () => {
                                 <div ref={provided.innerRef} {...provided.droppableProps} className="flex w-full justify-center">
                                     {daysArray.map((e: TDays, index: number) => {
                                         return (
-                                            <Draggable key={e.day} draggableId={e.day} index={index}>
+                                            <Draggable isDragDisabled={globalState?.isDragDisabledState} key={e.day} draggableId={e.day} index={index}>
                                                 {(provided, snapshot) => {
                                                     return (
                                                         <div className="flex basis-[90%] justify-center  md:basis-[15%] min-h-[300px]"
                                                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                            <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
+                                                            <DayComponent dropProvided={provided} setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
                                                         </div>)
                                                 }}
                                             </Draggable>

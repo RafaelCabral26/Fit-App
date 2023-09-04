@@ -1,7 +1,7 @@
 import { createContext } from 'vm'
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
-import { MyToast, ToastProvider } from '@/services/MyToast'
+import { MyToast, GlobalProvider } from '@/services/MyToast'
 
 
 export const metadata = {
@@ -16,13 +16,13 @@ export default function RootLayout({
     return (
         <html lang="en" data-theme="corporate">
             <body className='h-screen overflow-x-hidden'>
-                <ToastProvider>
+                <GlobalProvider>
                     <Navbar></Navbar>
                 <div className=''>
                         <MyToast></MyToast>
                     {children}
                 </div>
-                </ToastProvider>
+                </GlobalProvider>
             </body>
         </html>
     )

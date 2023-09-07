@@ -1,5 +1,7 @@
-Logout user UI
-Dnd to mobile UI(vertical mode spreadsheets)
+UI Dnd to mobile (vertical mode spreadsheets)
+user save spreadsheet to db
+trainer send spreadsheet to user
+UI add exercise name or choose name 
 
 
 

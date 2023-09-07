@@ -1,9 +1,28 @@
 USE fitdb;
-CREATE TABLE IF NOT EXISTS `users` (`id` CHAR(36) BINARY NOT NULL UNIQUE , `name` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `password` VARCHAR(255) NOT NULL, `profile` VARCHAR(255) DEFAULT 'user', `active` TINYINT(1) DEFAULT true, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`));
+CREATE TABLE IF NOT EXISTS `users` (
+    `user_id` CHAR(36) BINARY NOT NULL UNIQUE ,
+    `name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `password` VARCHAR(255) NOT NULL,
+    `profile` VARCHAR(255) DEFAULT 'user' CHECK(profile in ('user', 'trainer')),
+    `active` TINYINT(1) DEFAULT true,
+    `createdAt` DATETIME NOT NULL,
+    `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`user_id`));
 
+CREATE TABLE IF NOT EXISTS `exercises` (
+    `exercise_id` CHAR(36) BINARY UNIQUE ,
+    `exercise_name` VARCHAR(255) NOT NULL UNIQUE,
+    `muscle_group` VARCHAR(255) NOT NULL,
+    `subgroup` VARCHAR(255),
+ PRIMARY KEY (`exercise_id`));
 
+CREATE TABLE IF NOT EXISTS `spreadsheets` (
+    `spreadsheet_id` CHAR(36) BINARY NOT NULL UNIQUE,
+    `user_id` CHAR(36)  BINARY NOT NULL,
+    `trainer_id` CHAR(36) BINARY,
+    `spreadsheet_days` JSON NOT NULL,
+    PRIMARY KEY (`spreadsheet_id`));
 
-CREATE TABLE IF NOT EXISTS `exercises` (`exercise_id` CHAR(36) BINARY UNIQUE , `exercise_name` VARCHAR(255) NOT NULL UNIQUE, `muscle_group` VARCHAR(255) NOT NULL, `subgroup` VARCHAR(255), PRIMARY KEY (`exercise_id`));
 DELIMITER //
 CREATE FUNCTION uuid_v4() 
 RETURNS CHAR(36) DETERMINISTIC
@@ -17,7 +36,9 @@ BEGIN
         ));
 END; //
 DELIMITER ;
+
 SET NAMES utf8mb4;
+
 INSERT INTO exercises(exercise_id,exercise_name, muscle_group, subgroup)
 VALUES 
     (

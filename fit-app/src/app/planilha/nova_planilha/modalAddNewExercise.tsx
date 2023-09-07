@@ -36,7 +36,6 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
         }
         if (muscleType?.muscle_group === "Bracos") {
             setSubGroups(["Biceps", "Triceps", "Antebraço"]);
-
         } else if (muscleType?.muscle_group === "Costas") {
             setSubGroups(["Superior", "Dorsal", "Inferior"]);
         } else if (muscleType?.muscle_group === "Peito") {
@@ -66,8 +65,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
         showNewExerciseModal(false);
     }
     return (
-<div className="absolute h-screen w-screen top-0 z-20">
-        <form data-rfd-drag-handle-context-id={dropProvided.dragHandleProps?.["data-rfd-drag-handle-context-id"]} className="my-form-modal bg-white cursor-none">
+        <form  className="my-form-modal bg-white cursor-none">
             <div className="flex justify-end">
                 <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
             </div>
@@ -121,7 +119,6 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
                 </button>
             </div>
         </form>
-        </div>
     )
 }
 export default AddExerciseFormModal 

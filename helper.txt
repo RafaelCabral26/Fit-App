@@ -1,0 +1,10 @@
+Logout user UI
+Dnd to mobile UI(vertical mode spreadsheets)
+
+
+
+
+
+INSERT INTO `spreadsheets` (spreadsheet_id, user_id, spreadsheet_days) VALUES
+(uuid_v4(), "d91192b3-8239-42dd-9096-74d2b0543e26",
+'[{"day1":{"name":"exerciciotalz"}}]');

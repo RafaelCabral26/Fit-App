@@ -1,8 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize"
-import Exercise from "./exercise.model"
 const sequelize = require("./index.ts")
 export type TUser = {
-    id?: string,
+    user_id?: string,
     name?: string,
     password?: string,
     email: string,
@@ -12,7 +11,7 @@ export type TUser = {
 
 
 const User = sequelize.define("user", {
-    id: {
+    user_id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,

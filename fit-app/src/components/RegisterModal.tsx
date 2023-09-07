@@ -1,4 +1,4 @@
-import { ToastContext } from "@/services/MyToast";
+import { GlobalContext } from "@/services/MyToast";
 import { HidePassSvg, ShowPassSvg } from "@/svgs/show-hide-eyes";
 import myHTTP from "@/services/axiosconfig";
 import { SetStateAction, useContext, useState } from "react"
@@ -18,14 +18,14 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         email: "",
         password: "",
         password_confirm: "",
-        profile: "user",
+        profile: userProfile,
     })
-    const toastState = useContext(ToastContext);
+    const toastState = useContext(GlobalContext);
     const handleRegisterInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         const value = e.target.value;
         setRegisterInput((prev: any) => {
-            return { ...prev, [name]: value };
+            return { ...prev, [name]: value, profile:userProfile };
         })
     }
     const tryRegister = () => {
@@ -89,11 +89,11 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                             <span className="text-xs leading-4 text-secondary">Selecione o tipo de conta.(Treinador pode enviar planilhas.)</span>
                             <div className="flex">
                                 <label className="label ">
-                                    <input type="checkbox" checked={userProfile === "user"} onClick={() => setUserProfile("user")} />
+                                    <input type="checkbox" checked={userProfile === "user"} onChange={() => setUserProfile("user")} onClick={() => setUserProfile("user")} />
                                     <span className="label-text text-xs">Praticante</span>
                                 </label>
                                 <label className="label">
-                                    <input type="checkbox" checked={userProfile === "trainer"} onClick={() => setUserProfile("trainer")} />
+                                    <input type="checkbox" checked={userProfile === "trainer"} onChange={() => setUserProfile("trainer")} onClick={() => setUserProfile("trainer")} />
                                     <span className="label-text text-xs">Treinador</span>
                                 </label>
                             </div>

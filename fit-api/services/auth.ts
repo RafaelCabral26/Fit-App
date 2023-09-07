@@ -13,7 +13,7 @@ const auth = {
     },
     createToken: async (user:TUser) => {
         const secret = process.env.SECRET as Secret;
-        const payload = { id: user.id, email: user.email, profile: user.profile };
+        const payload = { user_id: user.user_id, email: user.email, profile: user.profile };
         const token = jwt.sign(payload, secret, { expiresIn: "10 days" });
         return token;
     },

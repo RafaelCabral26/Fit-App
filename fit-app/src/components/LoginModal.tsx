@@ -1,12 +1,15 @@
+"use client"
 import myHTTP from "@/services/axiosconfig";
 import { ShowPassSvg, HidePassSvg } from "@/svgs/show-hide-eyes";
 import React, { SetStateAction, useContext, useState } from "react"
 import { GlobalContext } from "@/services/MyToast";
+import { useRouter } from "next/navigation";
 
 const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const [loginInput, setLoginInput] = useState({ email: "", password: "" });
-    const toastState = useContext(GlobalContext)
+    const globalState = useContext(GlobalContext)
     const [passwordViewState, setPasswordViewState] = useState<boolean>(false)
+    const router = useRouter();
     const handleLoginInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -17,12 +20,13 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
     const tryLogin = () => {
         myHTTP.post("/login", loginInput)
             .then((res:any) => {
-                toastState?.setToast({type:"success", message:res.data.msg})
+                globalState?.setToast({type:"success", message:res.data.msg})
                 showLoginModal(false);
+                router.replace("/")
             })
             .catch((err:any) => {
-                console.log(err);
-                toastState?.setToast({type:"warning", message:err.response.data.msg})
+                const myMessage = err.response.data.msg ? err.response.data.msg : "Erro Desconhecido"
+                globalState?.setToast({type:"warning", message:myMessage})
             })
     }
     const handlePasswordView = () => {

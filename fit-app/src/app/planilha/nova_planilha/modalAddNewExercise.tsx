@@ -16,7 +16,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
         quantity: 0,
         muscle_group: "",
         subgroup: "",
-        uId: String(new Date(Date.now())),
+        uId: crypto.randomUUID(),
         createdAt: new Date().toLocaleString(),
     })
     

@@ -5,8 +5,10 @@ import LoginModal from "./LoginModal"
 import RegisterModal from "./RegisterModal"
 import myHTTP from "@/services/axiosconfig"
 import { GlobalContext } from "@/services/MyToast"
+import { useRouter } from "next/navigation"
 export const Navbar = () => {
     const globalState = useContext(GlobalContext);
+    const router = useRouter();
     const [loginModal, showLoginModal] = useState<boolean>(false)
     const [registerModal, showRegisterModal] = useState<boolean>(false)
     const [userState, setUserState] = useState<"user" | "trainer" | null>(null)
@@ -29,6 +31,7 @@ export const Navbar = () => {
             })
             .then(() => {
                 showLoginModal(false)
+                router.replace("/");
             })
             .catch(err => {
                 globalState?.setToast({ type: "error", message: err.response.data.msg })

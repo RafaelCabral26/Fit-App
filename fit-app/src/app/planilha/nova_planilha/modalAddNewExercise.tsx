@@ -1,14 +1,14 @@
 import { SetStateAction, useContext, useEffect, useState } from "react"
 import { TExercise, TMuscleGroups } from "./nova_planilha_Types"
 import { ValidateAddExercise } from "./nova_planilha_Utilities"
-import { Draggable, DroppableProvided, DroppableProvidedProps } from "@hello-pangea/dnd";
 import { GlobalContext } from "@/services/MyToast";
 
 const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[], dropProvided:any }) => {
     const globalState = useContext(GlobalContext);
     const [exerciseList, setExerciseList] = useState<string | null>();
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<TMuscleGroups | null>()
-    const [selectedSubGroups, setSubGroups] = useState<any[] | null>()
+    const [selectedSubGroup, setSelectedSubGroup] = useState<TMuscleGroups | null>()
+    const [optionsSubGroups, setOptionsSubGroups] = useState<any[] | null>()
     const [exerciseOptions, setExerciseOptions] = useState<any>();
     const [newExercise, setNewExercise] = useState<TExercise>({
         exercise_name: "",
@@ -21,9 +21,10 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
     })
     
     useEffect(() => {
-        const list = localStorage.getItem("Exercises_list")
-        if (list) setExerciseList(JSON.parse(list))
+        const list = localStorage.getItem("Exercises_list");
+        if (list) setExerciseList(JSON.parse(list));
     }, [])
+    
     const handleSelectedMuscleGroup = (muscleType: TMuscleGroups | null) => {
         let storageExerciseList = localStorage.getItem("Exercises_list");
         if (storageExerciseList !== null) {
@@ -35,17 +36,17 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
             }
         }
         if (muscleType?.muscle_group === "Bracos") {
-            setSubGroups(["Biceps", "Triceps", "Antebraço"]);
+            setOptionsSubGroups(["Biceps", "Triceps", "Antebraço"]);
         } else if (muscleType?.muscle_group === "Costas") {
-            setSubGroups(["Superior", "Dorsal", "Inferior"]);
+            setOptionsSubGroups(["Superior", "Dorsal", "Inferior"]);
         } else if (muscleType?.muscle_group === "Peito") {
-            setSubGroups(["Superior", "Medial", "Inferior"]);
+            setOptionsSubGroups(["Superior", "Medial", "Inferior"]);
         } else if (muscleType?.muscle_group === "Pernas") {
-            setSubGroups(["Posterior", "Gluteos", "Quadriceps", "Panturrilha"]);
+            setOptionsSubGroups(["Posterior", "Gluteos", "Quadriceps", "Panturrilha"]);
         } else if (muscleType?.muscle_group === "Ombros") {
-            setSubGroups(["Anterior", "Posterior", "Lateral"]);
+            setOptionsSubGroups(["Anterior", "Posterior", "Lateral"]);
         } else {
-            setSubGroups(null);
+            setOptionsSubGroups(null);
 
         }
         setSelectedMuscleGroup(muscleType)
@@ -55,8 +56,13 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
         const name = e.target.name
         const value = e.target.value
         setNewExercise((prev: TExercise) => {
+            prev.muscle_group = selectedMuscleGroup?.muscle_group 
+            prev.subgroup = selectedSubGroup?.subgroup
             return { ...prev, [name]: value };
         })
+        
+        console.log(newExercise);
+        
     }
     const handleAddNewExercise = () => {
         const isExerciseValid = ValidateAddExercise(newExercise);
@@ -78,11 +84,11 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
                 <option key={"ombros"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Ombros", subgroup: "" })}>Ombros</option>
             </select>
             <select className="select select-xs select-primary rounded-lg">
-                <option key={"subgroup"} >Subgrupo</option>
+                <option key="subgroup" >Subgrupo</option>
                 {
-                    selectedSubGroups?.map((ele: any) => {
+                    optionsSubGroups?.map((ele: any) => {
                         return (
-                            <option key={ele.muscle_group} onClick={() => setSelectedMuscleGroup({ muscle_group: selectedMuscleGroup?.muscle_group })} value={ele}>{ele}</option>
+                            <option key={ele} onClick={() => {setSelectedSubGroup({subgroup:ele})}} value={ele}>{ele}</option>
                         )
                     })
                 }
@@ -95,13 +101,14 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
 
             <select className="my-input">
                 {
-                   exerciseOptions?.map((ele:any) => {
+                   exerciseOptions?.map((ele:any, index:number) => {
+                       console.log(index);
                         return (
                         <option key={ele.exercise_name}>{ele.exercise_name}</option>
                         )
                     }) 
                 }
-                <option key={"outro"}>Outro</option>
+                <option key="outro">Outro</option>
             </select>
 
             <label className="label">

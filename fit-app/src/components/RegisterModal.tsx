@@ -39,7 +39,8 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                 showRegisterModal(false);
             })
             .catch(err => {
-                return toastState?.setToast({ type: "error", message: err.response.data.msg.errors[0].message })
+                //const myError = err.response.data.msg.errors[0] ? err.response.data.msg.errors[0].message : "Erro Desconhecido"
+                return toastState?.setToast({ type: "error", message:"Erro Desconhecido"})
             })
     }
     const handlePasswordView = () => {

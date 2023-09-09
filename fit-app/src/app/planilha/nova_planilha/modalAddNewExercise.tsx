@@ -4,7 +4,7 @@ import { ValidateAddExercise } from "./nova_planilha_Utilities"
 import { Draggable, DroppableProvided, DroppableProvidedProps } from "@hello-pangea/dnd";
 import { GlobalContext } from "@/services/MyToast";
 
-const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[], dropProvided:any }) => {
+const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[], dropProvided: any }) => {
     const globalState = useContext(GlobalContext);
     const [exerciseList, setExerciseList] = useState<string | null>();
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<TMuscleGroups | null>()
@@ -19,7 +19,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
         uId: crypto.randomUUID(),
         createdAt: new Date().toLocaleString(),
     })
-    
+
     useEffect(() => {
         const list = localStorage.getItem("Exercises_list")
         if (list) setExerciseList(JSON.parse(list))
@@ -65,20 +65,20 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
         showNewExerciseModal(false);
     }
     return (
-        <form  className="my-form-modal bg-white cursor-none">
+        <form className="my-form-modal bg-white cursor-none">
             <div className="flex justify-end">
                 <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
             </div>
             <select className="select select-xs select-primary rounded-lg">
-                <option key={"musculo"} onClick={() => handleSelectedMuscleGroup(null)}>Músculo</option>
-                <option key={"bracos"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Bracos", subgroup: "" })}>Braços</option>
-                <option key={"costas"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Costas", subgroup: "" })}>Costas</option>
-                <option key={"peito"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Peito", subgroup: "" })}>Peito</option>
-                <option key={"pernas"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Pernas", subgroup: "" })}>Pernas</option>
-                <option key={"ombros"} onClick={() => handleSelectedMuscleGroup({ muscle_group: "Ombros", subgroup: "" })}>Ombros</option>
+                <option key="musculo" onClick={() => handleSelectedMuscleGroup(null)}>Músculo</option>
+                <option key="bracos" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Bracos", subgroup: "" })}>Braços</option>
+                <option key="costas" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Costas", subgroup: "" })}>Costas</option>
+                <option key="peito" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Peito", subgroup: "" })}>Peito</option>
+                <option key="pernas" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Pernas", subgroup: "" })}>Pernas</option>
+                <option key="ombros" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Ombros", subgroup: "" })}>Ombros</option>
             </select>
             <select className="select select-xs select-primary rounded-lg">
-                <option key={"subgroup"} >Subgrupo</option>
+                <option key="subgroup" >Subgrupo</option>
                 {
                     selectedSubGroups?.map((ele: any) => {
                         return (
@@ -95,13 +95,13 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
 
             <select className="my-input">
                 {
-                   exerciseOptions?.map((ele:any) => {
+                    exerciseOptions?.map((ele: any) => {
                         return (
-                        <option key={ele.exercise_name}>{ele.exercise_name}</option>
+                            <option key={ele.exercise_name}>{ele.exercise_name}</option>
                         )
-                    }) 
+                    })
                 }
-                <option key={"outro"}>Outro</option>
+                <option key="outro" >Outro</option>
             </select>
 
             <label className="label">

@@ -88,7 +88,7 @@ const SpreadsheetBuilder: React.FC = () => {
                                             <Draggable isDragDisabled={globalState?.isDragDisabledState} key={e.day} draggableId={e.day} index={index}>
                                                 {(provided, snapshot) => {
                                                     return (
-                                                        <div className="flex basis-[90%] justify-center  md:basis-[15%] min-h-[300px]"
+                                                        <div key={e.day} className="flex basis-[90%] justify-center  md:basis-[15%] min-h-[300px]"
                                                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                             <DayComponent dropProvided={provided} setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
                                                         </div>)

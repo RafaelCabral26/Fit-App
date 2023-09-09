@@ -16,6 +16,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray, dropProvided }: {
         setNewDayArray([...daysArray]);
 
     }
+    
     const handleModal = () => {
         showNewExerciseModal(true);
         globalState?.isDragDisabledSwitch(true)
@@ -39,12 +40,12 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray, dropProvided }: {
                                                 <li><a>Item 2</a></li>
                                                <li onClick={handleDeleteDay} className="text-red-500 hover:text-red-400"><a>Deletar</a></li>
                                             </ul>
-                                        </div>
+                                    </div>
                                     }
                                 </button>
                             </div>
                             {day.exercises.map((e: TExercise, index: number) => {
-                                return <ExerciseComponent daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} key={index} item={e} index={index}></ExerciseComponent>
+                                return <ExerciseComponent daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} key={day.day} item={e} index={index}></ExerciseComponent>
                             })}
                             {provided.placeholder}
                         </div>

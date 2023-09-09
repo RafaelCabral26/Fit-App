@@ -43,19 +43,19 @@ INSERT INTO exercises(exercise_id,exercise_name, muscle_group, subgroup)
 VALUES 
     (
          uuid_v4(),
-         "Flexao",
+         "Flexão",
          "chest",
          "middlechest"
     ),
     (
 		 uuid_v4(),
-         "Flexao Apoiado",
+         "Flexão Apoiado",
          "chest",
          "middlechest"
     ),
     (
 		 uuid_v4(),
-         "Flexao de Joelho",
+         "Flexão de Joelho",
          "chest",
          "middlechest"
     ),
@@ -283,49 +283,49 @@ VALUES
     ),
     (
 		 uuid_v4(),
-        "Triceps Polia",
+        "Tríceps Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Triceps Invertido Polia",
+        "Tríceps Invertido Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Triceps Coice Polia",
+        "Tríceps Coice Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Triceps Corda Polia",
+        "Tríceps Corda Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Triceps Testa Polia",
+        "Tríceps Testa Polia",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Triceps Coice Halter",
+        "Tríceps Coice Halter",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Triceps Testa Halter",
+        "Tríceps Testa Halter",
         "arm",
         "triceps"
     ),
     (
 		 uuid_v4(),
-        "Triceps Banco",
+        "Tríceps Banco",
         "arm",
         "triceps"
     ),

@@ -55,7 +55,7 @@ VALUES
     ),
     (
 		 uuid_v4(),
-         "Flexão de Joelho",
+        "Flexão de Joelho",
          "chest",
          "middlechest"
     ),
@@ -247,25 +247,25 @@ VALUES
     ),
     (
 		 uuid_v4(),
-        "Elevacao Lateral Halter",
+        "Elevação Lateral Halter",
          "shoulder",
         "lateral"
     ),
     (
 		 uuid_v4(),
-        "Elevacao Frontal Halter",
+        "Elevação Frontal Halter",
          "shoulder",
         "anterior"
     ),
     (
 		 uuid_v4(),
-        "Elevacao Lateral Polia",
+        "Elevação Lateral Polia",
          "shoulder",
         "lateral"
     ),
     (
 		 uuid_v4(),
-        "Elevacao Frontal Polia",
+        "Elevação Frontal Polia",
          "shoulder",
         "anterior"
     ),

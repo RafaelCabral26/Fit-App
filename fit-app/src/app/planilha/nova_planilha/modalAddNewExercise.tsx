@@ -50,9 +50,13 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
             setOptionsSubGroups(["Anterior", "Posterior", "Lateral"]);
         } else {
             setOptionsSubGroups(null);
-
         }
         setSelectedMuscleGroup(muscleType)
+    }
+
+    const handleSelectedSubgroup = () => {
+        console.log(exerciseList);
+        
     }
 
     const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +91,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
                 <option key="ombros" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Ombros", subgroup: "" })}>Ombros</option>
             </select>
             <select className="select select-xs select-primary rounded-lg">
-                <option key="subgroup" >Subgrupo</option>
+                <option onClick={handleSelectedSubgroup} key="subgroup" >Subgrupo</option>
                 {
                     optionsSubGroups?.map((ele: any) => {
                         return (
@@ -113,23 +117,13 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
             <select defaultValue={"name exercise"} className={`${customExerciseInput ? "hidden" : "my-input"}`}>
                 <option key="name exercise" hidden>Nome do Exercício</option>
                 {
-<<<<<<< HEAD
                     exerciseOptions?.map((ele: any) => {
                         return (
                             <option key={ele.exercise_name}>{ele.exercise_name}</option>
                         )
                     })
                 }
-                <option key="outro" >Outro</option>
-=======
-                    exerciseOptions?.map((ele: any, index: number) => {
-                        return (
-                            <option key={ele.exercise_name} value={ele.exercise_name}>{ele.exercise_name}</option>
-                        )
-                    })
-                }
                 <option key="outro" onClick={() => showCustomExerciseInput(true)}>Outro</option>
->>>>>>> acd6a237a18686962150b9e826027a3542596e65
             </select>
 
             <label className="label">

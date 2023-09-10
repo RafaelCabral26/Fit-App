@@ -1,13 +1,13 @@
 import { SetStateAction, useContext, useEffect, useState } from "react"
-import { TExercise, TMuscleGroups } from "./nova_planilha_Types"
+import { TExercise, TMuscleGroups, TMuscleGroupsObj } from "./nova_planilha_Types"
 import { ValidateAddExercise } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast";
 
-const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[], dropProvided: any }) => {
+const AddExerciseFormModal = ({ showNewExerciseModal, dayObject,  }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[]  }) => {
     const globalState = useContext(GlobalContext);
-    const [exerciseList, setExerciseList] = useState<string | null>();
-    const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<TMuscleGroups | null>()
-    const [selectedSubGroup, setSelectedSubGroup] = useState<TMuscleGroups | null>()
+    const [exerciseList, setExerciseList] = useState<any>();
+    const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<"Braços" | "Costas" | "Peitoral" | "Pernas" | "Ombros" | null>()
+    const [selectedSubGroup, setSelectedSubGroup] = useState<string | null>()
     const [optionsSubGroups, setOptionsSubGroups] = useState<any[] | null>()
     const [exerciseOptions, setExerciseOptions] = useState<any>();
     const [customExerciseInput, showCustomExerciseInput] = useState<boolean>(false);
@@ -28,25 +28,24 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
         }
     }, [])
 
-    const handleSelectedMuscleGroup = (muscleType: TMuscleGroups | null) => {
-        let storageExerciseList = localStorage.getItem("Exercises_list");
-        if (storageExerciseList !== null) {
-            const arrayExerciseList = JSON.parse(storageExerciseList);
-            for (const key in arrayExerciseList) {
-                if (key === muscleType?.muscle_group) {
-                    setExerciseOptions(arrayExerciseList[key]);
+    const filterSelectedMuscleGroup = (muscleType:TMuscleGroups  | null) => {
+        
+        if (exerciseList !== null) {
+            for (const key in exerciseList) {
+                if (key === muscleType) {
+                    setExerciseOptions(exerciseList[key]);
                 }
             }
         }
-        if (muscleType?.muscle_group === "Bracos") {
-            setOptionsSubGroups(["Biceps", "Triceps", "Antebraço"]);
-        } else if (muscleType?.muscle_group === "Costas") {
+        if (muscleType === "Braços") {
+            setOptionsSubGroups(["Bíceps", "Tríceps", "Antebraço"]);
+        } else if (muscleType === "Costas") {
             setOptionsSubGroups(["Superior", "Dorsal", "Inferior"]);
-        } else if (muscleType?.muscle_group === "Peito") {
+        } else if (muscleType === "Peitoral") {
             setOptionsSubGroups(["Superior", "Medial", "Inferior"]);
-        } else if (muscleType?.muscle_group === "Pernas") {
+        } else if (muscleType === "Pernas") {
             setOptionsSubGroups(["Posterior", "Gluteos", "Quadriceps", "Panturrilha"]);
-        } else if (muscleType?.muscle_group === "Ombros") {
+        } else if (muscleType === "Ombros") {
             setOptionsSubGroups(["Anterior", "Posterior", "Lateral"]);
         } else {
             setOptionsSubGroups(null);
@@ -54,9 +53,14 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
         setSelectedMuscleGroup(muscleType)
     }
 
+<<<<<<< HEAD
     const handleSelectedSubgroup = () => {
         console.log(exerciseList);
         
+=======
+    const handleSelectedSubgroups = () => {
+        console.log(exerciseOptions);
+>>>>>>> df38fcf16e5737b363c259974f3ffaf2f2dec922
     }
 
     const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,12 +87,21 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
                 <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
             </div>
             <select className="select select-xs select-primary rounded-lg">
+<<<<<<< HEAD
                 <option key="musculo" onClick={() => handleSelectedMuscleGroup(null)}>Músculo</option>
                 <option key="bracos" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Bracos", subgroup: "" })}>Braços</option>
                 <option key="costas" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Costas", subgroup: "" })}>Costas</option>
                 <option key="peito" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Peito", subgroup: "" })}>Peito</option>
                 <option key="pernas" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Pernas", subgroup: "" })}>Pernas</option>
                 <option key="ombros" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Ombros", subgroup: "" })}>Ombros</option>
+=======
+                <option key={"musculo"} onClick={() => filterSelectedMuscleGroup(null)}>Músculo</option>
+                <option key={"bracos"} onClick={() => filterSelectedMuscleGroup("Braços")}>Braços</option>
+                <option key={"costas"} onClick={() => filterSelectedMuscleGroup("Costas")}>Costas</option>
+                <option key={"peito"} onClick={() => filterSelectedMuscleGroup("Peitoral")}>Peito</option>
+                <option key={"pernas"} onClick={() => filterSelectedMuscleGroup("Pernas")}>Pernas</option>
+                <option key={"ombros"} onClick={() => filterSelectedMuscleGroup("Ombros")}>Ombros</option>
+>>>>>>> df38fcf16e5737b363c259974f3ffaf2f2dec922
             </select>
             <select className="select select-xs select-primary rounded-lg">
                 <option onClick={handleSelectedSubgroup} key="subgroup" >Subgrupo</option>
@@ -100,7 +113,6 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, dropProvided }:
                     })
                 }
             </select>
-
 
             <label className="label">
                 <span className="label-text-alt">Exercício</span>

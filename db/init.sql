@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `spreadsheets` (
     `spreadsheet_days` JSON NOT NULL,
     PRIMARY KEY (`spreadsheet_id`));
 
+SET NAMES utf8mb4;
 DELIMITER //
 CREATE FUNCTION uuid_v4() 
 RETURNS CHAR(36) DETERMINISTIC
@@ -37,297 +38,296 @@ BEGIN
 END; //
 DELIMITER ;
 
-SET NAMES utf8mb4;
 
 INSERT INTO exercises(exercise_id,exercise_name, muscle_group, subgroup)
 VALUES 
     (
          uuid_v4(),
          "Flexão",
-         "chest",
-         "middlechest"
+         "Peitoral",
+         "Medial"
     ),
     (
 		 uuid_v4(),
          "Flexão Apoiado",
-         "chest",
-         "middlechest"
+         "Peitoral",
+         "Medial"
     ),
     (
 		 uuid_v4(),
         "Flexão de Joelho",
-         "chest",
-         "middlechest"
+         "Peitoral",
+         "Medial"
     ),
     (
 		 uuid_v4(),
          "Supino Reto Barra",
-         "chest",
-         "middlechest"
+         "Peitoral",
+         "Medial"
     ),
     (
 		 uuid_v4(),
          "Supino Inclinado Barra",
-         "chest",
-         "upperchest"
+         "Peitoral",
+         "Superior"
     ),
     (
 		 uuid_v4(),
          "Supino Declinado Barra",
-         "chest",
-         "lowerchest"
+         "Peitoral",
+         "Inferior"
     ),
     (
 		 uuid_v4(),
          "Supino Reto Halter",
-         "chest",
-         "middlechest"
+         "Peitoral",
+         "Medial"
     ),
     (
 		 uuid_v4(),
          "Supino Halter 45",
-         "chest",
-         "upperchest"
+         "Peitoral",
+         "Superior"
     ),
     (
 		 uuid_v4(),
          "Supino Halter Declinado",
-         "chest",
-         "lowerchest"
+         "Peitoral",
+         "Inferior"
     ),
     (
 		 uuid_v4(),
          "Supino Reto Máquina",
-         "chest",
-         "middlechest"
+         "Peitoral",
+         "Medial"
     ),
     (
 		 uuid_v4(),
          "Supino 45 Máquina",
-         "chest",
-         "upperchest"
+         "Peitoral",
+         "Superior"
     ),
     (
 		 uuid_v4(),
          "Supino Declinado Máquina",
-         "chest",
-         "lowerchest"
+         "Peitoral",
+         "Inferior"
     ),
     (
 		 uuid_v4(),
          "Crucifixo Reto",
-         "chest",
-         "middlechest"
+         "Peitoral",
+         "Medial"
     ),
     (
 		 uuid_v4(),
          "Crucifixo Inclinado",
-         "chest",
-         "upperchest"
+         "Peitoral",
+         "Superior"
     ),
     (
 		 uuid_v4(),
 		 "Crucifixo Voador",
-         "chest",
-         "middlechest"
+         "Peitoral",
+         "Medial"
     ),
     (
 		 uuid_v4(),
          "Crucifixo Inclinado Máquina",
-         "chest",
-         "upperchest"
+         "Peitoral",
+         "Superior"
     ),
     (
 		 uuid_v4(),
         "Pullover",
-         "chest",
-        "middlechest"
+         "Peitoral",
+        "Medial"
     ),
     (
 		 uuid_v4(),
          "Remada Barra",
-         "back",
-         "lats"
+         "Costas",
+         "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Remada Halter",
-         "back",
-         "lats"
+         "Costas",
+         "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Remada Máquina",
-         "back",
-         "lats"
+         "Costas",
+         "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Puxada Supinada",
-         "back",
-         "lats"
+         "Costas",
+         "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Puxada Pronada",
-         "back",
-         "lats"
+         "Costas",
+         "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Puxada Neutra",
-         "back",
-         "lats"
+         "Costas",
+         "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Barra Supinada",
-         "back",
-         "lats"
+         "Costas",
+         "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Barra Pronada",
-         "back",
-         "lats"
+         "Costas",
+         "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Barra Neutra",
-         "back",
-         "lats"
+         "Costas",
+         "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Pull Down Polia",
-        "back",
-        "lats"
+        "Costas",
+        "Dorsal"
     ),
     (
 		 uuid_v4(),
          "Hiperextensao Lombar",
-         "back",
-        "lowerback"
+         "Costas",
+        "Inferior"
     ),
     (
 		 uuid_v4(),
         "Levantamento Terra",
-         "back",
+         "Costas",
          NULL
     ),
     (
 		 uuid_v4(),
         "Remada Alta",
-        "shoulder",
+        "Ombros",
         NULL
     ),
     (
 		 uuid_v4(),
         "Desenvolvimento Lateral Halter",
-        "shoulder",
-        "lateral"
+        "Ombros",
+        "Lateral"
     ),
     (
 		 uuid_v4(),
         "Desenvolvimento Frontal Halter",
-        "shoulder",
-        "anterior"
+        "Ombros",
+        "Anterior"
     ),
     (
 		 uuid_v4(),
         "Desenvolvimento Lateral Máquina",
-        "shoulder",
-        "lateral"
+        "Ombros",
+        "Lateral"
     ),
     (
 		 uuid_v4(),
         "Desenvolvimento Frontal Máquina",
-        "shoulder",
-        "anterior"
+        "Ombros",
+        "Anterior"
     ),
     (
 		 uuid_v4(),
         "Elevação Lateral Halter",
-         "shoulder",
-        "lateral"
+         "Ombros",
+        "Lateral"
     ),
     (
 		 uuid_v4(),
         "Elevação Frontal Halter",
-         "shoulder",
-        "anterior"
+         "Ombros",
+        "Anterior"
     ),
     (
 		 uuid_v4(),
         "Elevação Lateral Polia",
-         "shoulder",
-        "lateral"
+         "Ombros",
+        "Lateral"
     ),
     (
 		 uuid_v4(),
         "Elevação Frontal Polia",
-         "shoulder",
-        "anterior"
+         "Ombros",
+        "Anterior"
     ),
     (
 		 uuid_v4(),
          "Crucifixo Invertido Halter",
-         "shoulder",
-        "posterior"
+         "Ombros",
+        "Posterior"
     ),
     (
 		 uuid_v4(),
          "Crucifixo Invertido Máquina",
-         "shoulder",
-        "posterior"
+         "Ombros",
+        "Posterior"
     ),
     (
 		 uuid_v4(),
         "Tríceps Polia",
-        "arm",
-        "triceps"
+        "Braços",
+        "tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Invertido Polia",
-        "arm",
-        "triceps"
+        "Braços",
+        "tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Coice Polia",
-        "arm",
-        "triceps"
+        "Braços",
+        "tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Corda Polia",
-        "arm",
-        "triceps"
+        "Braços",
+        "tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Testa Polia",
-        "arm",
-        "triceps"
+        "Braços",
+        "tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Coice Halter",
-        "arm",
-        "triceps"
+        "Braços",
+        "tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Testa Halter",
-        "arm",
-        "triceps"
+        "Braços",
+        "tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Banco",
-        "arm",
-        "triceps"
+        "Braços",
+        "tríceps"
     ),
-    (uuid_v4(),"Paralela","arm","triceps");
+    (uuid_v4(),"Paralela","Braços","tríceps");
     

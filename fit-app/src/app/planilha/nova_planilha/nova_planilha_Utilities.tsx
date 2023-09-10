@@ -25,23 +25,23 @@ export const formatExercisesStorage = (responseExerciseList: TExercise[]) => {
 
     responseExerciseList.forEach((ele: TExercise) => {
         switch (ele.muscle_group) {
-            case "arm":
+            case "Braços":
                 ObjectifiedExerciseList.Bracos.push(ele)
                 break;
 
-            case "leg":
+            case "Pernas":
                 ObjectifiedExerciseList.Pernas.push(ele)
                 break;
 
-            case "back":
+            case "Costas":
                 ObjectifiedExerciseList.Costas.push(ele)
                 break;
 
-            case "chest":
+            case "Peitoral":
                 ObjectifiedExerciseList.Peito.push(ele)
                 break;
 
-            case "shoulder":
+            case "Ombros":
                 ObjectifiedExerciseList.Ombros.push(ele)
                 break;
         }

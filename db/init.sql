@@ -285,49 +285,49 @@ VALUES
 		 uuid_v4(),
         "Tríceps Polia",
         "Braços",
-        "tríceps"
+        "Tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Invertido Polia",
         "Braços",
-        "tríceps"
+        "Tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Coice Polia",
         "Braços",
-        "tríceps"
+        "Tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Corda Polia",
         "Braços",
-        "tríceps"
+        "Tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Testa Polia",
         "Braços",
-        "tríceps"
+        "Tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Coice Halter",
         "Braços",
-        "tríceps"
+        "Tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Testa Halter",
         "Braços",
-        "tríceps"
+        "Tríceps"
     ),
     (
 		 uuid_v4(),
         "Tríceps Banco",
         "Braços",
-        "tríceps"
+        "Tríceps"
     ),
-    (uuid_v4(),"Paralela","Braços","tríceps");
+    (uuid_v4(),"Paralela","Braços","Tríceps");
     

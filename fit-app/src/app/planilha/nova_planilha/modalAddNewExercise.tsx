@@ -8,8 +8,9 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExe
     const [exerciseOptions, setExerciseOptions] = useState<any>();
     const [exerciseList, setExerciseList] = useState<any>();
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<TMuscleGroups>()
-    const [selectedSubGroup, setSelectedSubGroup] = useState<TSubgroups >()
+    const [selectedSubGroup, setSelectedSubGroup] = useState<TSubgroups>()
     const [optionsSubGroups, setOptionsSubGroups] = useState<any[] | null>()
+    const [selectedMuscleName, setSelectedMuscleName] = useState<string | null>();
     const [customExerciseInput, showCustomExerciseInput] = useState<boolean>(false);
     const [newExercise, setNewExercise] = useState<TExercise>({
         exercise_name: "",
@@ -47,39 +48,35 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExe
             setOptionsSubGroups(["Posterior", "Gluteos", "Quadriceps", "Panturrilha"]);
         } else if (muscleType === "Ombros") {
             setOptionsSubGroups(["Anterior", "Posterior", "Lateral"]);
-        } else {
+        } else if (muscleType === null) {
             setOptionsSubGroups(null);
 
         }
         setSelectedMuscleGroup(muscleType)
     }
 
-    const filterSelectedSubgroups = (subgroup:TSubgroups) => {
-        
-        if(selectedMuscleGroup){
+    const filterSelectedSubgroups = (subgroup: TSubgroups) => {
+        setSelectedSubGroup(subgroup)
+        if (selectedMuscleGroup) {
             const choosenMuscle = exerciseList[selectedMuscleGroup]
-            console.log("choosen",choosenMuscle);
-            for (const key in choosenMuscle) {
-                console.log("selecionados",choosenMuscle[key]);
-                if (choosenMuscle[key].subgroup === subgroup) {
-                    console.log("teste if 65",choosenMuscle[key].subgroup);
-                    setExerciseOptions(choosenMuscle[key]);
-                }
-
-            }
-        } 
-        
+            const filteredMuscles = choosenMuscle.filter((ele: any) => {
+                    return ele.subgroup === subgroup    
+            })
+            setExerciseOptions(filteredMuscles)
+        }
     }
 
     const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name
         const value = e.target.value
+        globalState?.isDragDisabledSwitch(false);
         setNewExercise((prev: TExercise) => {
-            if (!customExerciseInput) prev.exercise_name = "teste"
+            if (!customExerciseInput && selectedMuscleName) prev.exercise_name = selectedMuscleName;
             prev.muscle_group = selectedMuscleGroup
             prev.subgroup = selectedSubGroup
             return { ...prev, [name]: value };
-        })
+        }
+        )
 
 
     }
@@ -107,7 +104,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExe
                 {
                     optionsSubGroups?.map((subgroup: any) => {
                         return (
-                            <option key={subgroup} onClick={() => {filterSelectedSubgroups(subgroup)}} value={subgroup}>{subgroup}</option>
+                            <option key={subgroup} onClick={() => { filterSelectedSubgroups(subgroup) }} value={subgroup}>{subgroup}</option>
                         )
                     })
                 }
@@ -130,11 +127,11 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExe
                 {
                     exerciseOptions?.map((ele: any) => {
                         return (
-                            <option key={ele.exercise_name} value={ele.exercise_name}>{ele.exercise_name}</option>
+                            <option onClick={() => setSelectedMuscleName(ele.exercise_name)} key={ele.exercise_name} value={ele.exercise_name}>{ele.exercise_name}</option>
                         )
                     })
                 }
-                <option key="outro" onClick={() => showCustomExerciseInput(true)}>Outro</option>
+                <option key="outro" onClick={() => {showCustomExerciseInput(true); setSelectedMuscleName(null)}}>Outro</option>
             </select>
 
             <label className="label">

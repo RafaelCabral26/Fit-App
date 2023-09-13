@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 import DayComponent from "./DayComponent"
 import myHTTP from "@/services/axiosconfig"
-import { TExercise, TPossibleDays, TDays } from "./nova_planilha_Types"
+import {  TPossibleDays, TDays } from "./nova_planilha_Types"
 import { formatExercisesStorage } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast"
 

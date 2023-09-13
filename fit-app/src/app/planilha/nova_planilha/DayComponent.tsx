@@ -52,7 +52,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray, dropProvided }: {
                 }}
             </Droppable>
             {newExerciseModal &&
-                    <AddExerciseFormModal dropProvided={dropProvided} showNewExerciseModal={showNewExerciseModal} dayObject={day.exercises}></AddExerciseFormModal>
+                    <AddExerciseFormModal  showNewExerciseModal={showNewExerciseModal} dayObject={day.exercises}></AddExerciseFormModal>
             }
         </>
     )

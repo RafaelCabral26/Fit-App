@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `createdAt` DATETIME NOT NULL,
     `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`user_id`));
 
-CREATE TABLE IF NOT EXISTS `exercises` (
+CREATE TABLE IF NOT EXISTS `exercises_samples` (
     `exercise_id` CHAR(36) BINARY UNIQUE ,
     `exercise_name` VARCHAR(255) NOT NULL UNIQUE,
     `muscle_group` VARCHAR(255) NOT NULL,
@@ -40,7 +40,7 @@ END; //
 DELIMITER ;
 
 
-INSERT INTO exercises(exercise_id,exercise_name, muscle_group, subgroup)
+INSERT INTO exercises_samples(exercise_id,exercise_name, muscle_group, subgroup)
 VALUES 
     (
          uuid_v4(),

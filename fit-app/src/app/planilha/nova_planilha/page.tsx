@@ -72,7 +72,14 @@ const SpreadsheetBuilder: React.FC = () => {
         }
     }
     const handleSaveSpreadsheet = () => {
-        console.log(daysArray);
+        myHTTP.post("/new_spreadsheet", daysArray)
+            .then(res => {
+                console.log(res);
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (

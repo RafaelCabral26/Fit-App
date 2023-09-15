@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 import DayComponent from "./DayComponent"
 import myHTTP from "@/services/axiosconfig"
-import {  TPossibleDays, TDays } from "./nova_planilha_Types"
+import { TPossibleDays, TDays } from "./nova_planilha_Types"
 import { formatExercisesStorage } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast"
 
@@ -16,7 +16,7 @@ const reorder = (list: any[], startIndex: number, endIndex: number) => {
 }
 
 const SpreadsheetBuilder: React.FC = () => {
-   const globalState = useContext(GlobalContext);
+    const globalState = useContext(GlobalContext);
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
@@ -71,13 +71,18 @@ const SpreadsheetBuilder: React.FC = () => {
             setNewDayArray(newDayOrder)
         }
     }
+    const handleSaveSpreadsheet = () => {
+        console.log(daysArray);
+    }
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="flex h-screen w-screen ">
                 <div className="flex flex-col w-full h-full items-center gap-4 m-4">
-                    <div className="flex bg-sky-400  w-10 h-10  justify-center rounded-xl">
-                        <button onClick={addNewDay} className="text-4xl leading-none ">+</button>
+                    <div className="flex  gap-4    justify-center rounded-xl">
+                        <button onClick={addNewDay} type="button" className="my-btn">+</button>
+                        <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">Salvar???</button>
+                        <button className="my-btn" type="button">Enviar???</button>
                     </div>
                     <Droppable direction="horizontal" type="droppableDay" droppableId="droppableContainer">
                         {(provided) => {

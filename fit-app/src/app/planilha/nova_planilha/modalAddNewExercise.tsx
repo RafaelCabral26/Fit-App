@@ -18,8 +18,8 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExe
         quantity: 0,
         muscle_group: "",
         subgroup: "",
+        obs: "",
         uId: crypto.randomUUID(),
-        createdAt: new Date().toLocaleString(),
     })
 
     useEffect(() => {
@@ -60,34 +60,32 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExe
         if (selectedMuscleGroup) {
             const choosenMuscle = exerciseList[selectedMuscleGroup]
             const filteredMuscles = choosenMuscle.filter((ele: any) => {
-                    return ele.subgroup === subgroup    
+                return ele.subgroup === subgroup
             })
             setExerciseOptions(filteredMuscles)
         }
     }
 
-    const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const name = e.target.name
         const value = e.target.value
-        globalState?.isDragDisabledSwitch(false);
         setNewExercise((prev: TExercise) => {
             if (!customExerciseInput && selectedMuscleName) prev.exercise_name = selectedMuscleName;
             prev.muscle_group = selectedMuscleGroup
             prev.subgroup = selectedSubGroup
             return { ...prev, [name]: value };
-        }
-        )
-
-
+        });
     }
     const handleAddNewExercise = () => {
         const isExerciseValid = ValidateAddExercise(newExercise);
         if (!isExerciseValid) return;
         dayObject.push(newExercise);
         showNewExerciseModal(false);
+        globalState?.isDragDisabledSwitch(false);
+
     }
     return (
-        <form className="my-form-modal bg-white cursor-none">
+        <form className="my-form-modal bg-white cursor-none z-10">
             <div className="flex justify-end">
                 <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
             </div>
@@ -131,7 +129,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExe
                         )
                     })
                 }
-                <option key="outro" onClick={() => {showCustomExerciseInput(true); setSelectedMuscleName(null)}}>Outro</option>
+                <option key="outro" onClick={() => { showCustomExerciseInput(true); setSelectedMuscleName(null) }}>Outro</option>
             </select>
 
             <label className="label">
@@ -143,6 +141,13 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExe
                 <span className="label-text-alt">Repetições</span>
             </label>
             <input name="quantity" type="number" onChange={handleNewExerciseInput} className="my-input" />
+            <div className="form-control gap-2">
+                <label className="label-text">
+                    <span>Observações</span>
+                </label>
+                <textarea onChange={handleNewExerciseInput} name="obs" className="my-input resize-none h-20  border-primary border-2 rounded-xl p-2 " maxLength={100} />
+
+            </div>
             <div>
                 <button onClick={handleAddNewExercise} type="button" className="my-btn">
                     Criar

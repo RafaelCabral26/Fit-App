@@ -1,7 +1,7 @@
-disable drag in update exercise and delete exercises modals
+add: Observation field on exercise API
 UI add exercise name or choose name 
 user save spreadsheet to db
-    trainer send spreadsheet to user
+trainer send spreadsheet to user
 UI Dnd to mobile (vertical mode spreadsheets)
 
 

@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `exercises` (
     `exercise_name` VARCHAR(255) NOT NULL UNIQUE,
     `muscle_group` VARCHAR(255) NOT NULL,
     `subgroup` VARCHAR(255),
+    `obs` VARCHAR(255),
  PRIMARY KEY (`exercise_id`));
 
 CREATE TABLE IF NOT EXISTS `spreadsheets` (

@@ -4,7 +4,7 @@ export type TExercise = {
     sets: number,
     quantity: number,
     uId: string,
-    createdAt?: string,
+    obs?:string
 } & (TMuscleGroupsObj)
 
 export type TPossibleDays = "day1" | "day2" | "day3" | "day4" | "day5" | "day6" | "day7"

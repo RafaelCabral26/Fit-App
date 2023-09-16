@@ -1,4 +1,5 @@
-add: Observation field on exercise API
+add:list spreadsheet api & UI
+add:edit spreadsheet api & UI
 UI add exercise name or choose name 
 user save spreadsheet to db
 trainer send spreadsheet to user

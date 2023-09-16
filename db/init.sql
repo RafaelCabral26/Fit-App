@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS `users` (
     `profile` VARCHAR(255) DEFAULT 'user' CHECK(profile in ('user', 'trainer')),
     `active` TINYINT(1) DEFAULT true,
     `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`user_id`));
+    `updatedAt` DATETIME NOT NULL,
+    PRIMARY KEY (`user_id`));
 
 CREATE TABLE IF NOT EXISTS `exercises_samples` (
     `exercise_id` CHAR(36) BINARY UNIQUE ,
@@ -21,8 +22,11 @@ CREATE TABLE IF NOT EXISTS `spreadsheets` (
     `spreadsheet_id` CHAR(36) BINARY NOT NULL UNIQUE,
     `user_id` CHAR(36)  BINARY NOT NULL,
     `trainer_id` CHAR(36) BINARY,
-    `spreadsheet_days` JSON NOT NULL,
-    PRIMARY KEY (`spreadsheet_id`));
+    `spreadsheet_days` JSON,
+    `createdAt` DATETIME NOT NULL,
+    `updatedAt` DATETIME NOT NULL,
+    PRIMARY KEY (`spreadsheet_id`),
+    FOREIGN KEY(`user_id`) REFERENCES `users`(`user_id`));
 
 SET NAMES utf8mb4;
 DELIMITER //

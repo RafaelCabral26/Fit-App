@@ -6,6 +6,7 @@ import myHTTP from "@/services/axiosconfig"
 import { TPossibleDays, TDays } from "./nova_planilha_Types"
 import { formatExercisesStorage } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast"
+import { useRouter } from "next/navigation"
 
 
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
@@ -17,6 +18,7 @@ const reorder = (list: any[], startIndex: number, endIndex: number) => {
 
 const SpreadsheetBuilder: React.FC = () => {
     const globalState = useContext(GlobalContext);
+    const router = useRouter();
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
@@ -75,9 +77,15 @@ const SpreadsheetBuilder: React.FC = () => {
         myHTTP.post("/new_spreadsheet", daysArray)
             .then(res => {
                 console.log(res);
-
+                if(res.status === 202) {
+                   return globalState?.setToast({type:"warning", message:res.data.msg});
+                }
+                globalState?.setToast({type:"success", message: res.data.msg})
+                router.replace("/")
+                
             })
             .catch(err => {
+                globalState?.setToast({type:"error", message:err.response.data.msg})
                 console.log(err);
             })
     }
@@ -88,7 +96,7 @@ const SpreadsheetBuilder: React.FC = () => {
                 <div className="flex flex-col w-full h-full items-center gap-4 m-4">
                     <div className="flex  gap-4    justify-center rounded-xl">
                         <button onClick={addNewDay} type="button" className="my-btn">+</button>
-                        <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">Salvar???</button>
+                        <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">Salvar</button>
                         <button className="my-btn" type="button">Enviar???</button>
                     </div>
                     <Droppable direction="horizontal" type="droppableDay" droppableId="droppableContainer">

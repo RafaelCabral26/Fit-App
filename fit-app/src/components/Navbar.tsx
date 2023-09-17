@@ -37,6 +37,17 @@ export const Navbar = () => {
                 globalState?.setToast({ type: "error", message: err.response.data.msg })
             })
     }
+    const handleList = () => {
+        myHTTP.get("/list_user_spreadsheets")
+            .then(res => {
+                const teste = JSON.parse(res.data.spreadsheet_array[0].spreadsheet_days)
+                console.log(teste);
+                
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
     return (
 
         <div className='navbar border-b-2  p-4 drop-shadow-lg'>
@@ -52,7 +63,7 @@ export const Navbar = () => {
                         <label tabIndex={0} className=" m-1 cursor-pointer hover:text-secondary">Planilha</label>
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                             <li><a href="/planilha/nova_planilha">Criar Planilha</a></li>
-                            <li><a>Minhas Planilhas</a></li>
+                            <li><a onClick={handleList}>Minhas Planilhas</a></li>
                         </ul>
                     </div>
                     <div className="dropdown dropdown-end">

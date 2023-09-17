@@ -30,8 +30,14 @@ const SpreadsheetBuilder: React.FC = () => {
                 .catch(err => {
                     console.log(err);
                 })
-        }
+        };
+        const cachedSpreadsheet = localStorage.getItem("Ongoing_Spreadsheet");
+        if (cachedSpreadsheet) setNewDayArray((JSON.parse(cachedSpreadsheet)));
+
     }, [])
+    useEffect(() => {
+        localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
+    }, [daysArray])
 
     const addNewDay = () => {
         if (daysArray.length < 7) {
@@ -77,15 +83,15 @@ const SpreadsheetBuilder: React.FC = () => {
         myHTTP.post("/new_spreadsheet", daysArray)
             .then(res => {
                 console.log(res);
-                if(res.status === 202) {
-                   return globalState?.setToast({type:"warning", message:res.data.msg});
+                if (res.status === 202) {
+                    return globalState?.setToast({ type: "warning", message: res.data.msg });
                 }
-                globalState?.setToast({type:"success", message: res.data.msg})
+                globalState?.setToast({ type: "success", message: res.data.msg })
                 router.replace("/")
-                
+
             })
             .catch(err => {
-                globalState?.setToast({type:"error", message:err.response.data.msg})
+                globalState?.setToast({ type: "error", message: err.response.data.msg })
                 console.log(err);
             })
     }

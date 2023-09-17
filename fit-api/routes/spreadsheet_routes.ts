@@ -41,8 +41,12 @@ router.get("/list_user_spreadsheets", async (req, res, next) => {
         }
         const secret = process.env.SECRET as Secret;
         const user = jwt.verify(req.cookies.authcookie, secret) as TUser;
-
-        res.status(200).json({ msg: "Bateu na API" })
+        const allSpreadsheets = await Spreadsheet.findAll({
+            where:{
+                user_id:user.user_id
+            }
+        });
+        res.status(200).json({ msg: "Bateu na API",spreadsheet_array:allSpreadsheets })
     } catch (err) {
         console.log(err);
     }

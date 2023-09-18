@@ -1,9 +1,9 @@
 import { SetStateAction, useContext, useEffect, useState } from "react"
-import { TExercise, TMuscleGroups, TSubgroups } from "./nova_planilha_Types"
+import { TDays, TExercise, TMuscleGroups, TSubgroups } from "./nova_planilha_Types"
 import { ValidateAddExercise } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast";
 
-const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[] }) => {
+const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[], daysArray: TDays[] }) => {
     const globalState = useContext(GlobalContext);
     const [exerciseOptions, setExerciseOptions] = useState<any>();
     const [exerciseList, setExerciseList] = useState<any>();
@@ -82,10 +82,11 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, }: { showNewExe
         dayObject.push(newExercise);
         showNewExerciseModal(false);
         globalState?.isDragDisabledSwitch(false);
+        localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray));
 
     }
     return (
-        <form className="my-form-modal bg-white cursor-none z-10">
+        <form className="my-form-modal bg-white cursor-none">
             <div className="flex justify-end">
                 <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
             </div>

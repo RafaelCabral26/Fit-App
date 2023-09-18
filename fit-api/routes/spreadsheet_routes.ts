@@ -1,3 +1,4 @@
+"use client"
 import { Router } from "express";
 import jwt, { Secret } from "jsonwebtoken";
 import { TUser } from "../models/user.model";
@@ -46,7 +47,7 @@ router.get("/list_user_spreadsheets", async (req, res, next) => {
                 user_id:user.user_id
             }
         });
-        res.status(200).json({ msg: "Bateu na API",spreadsheet_array:allSpreadsheets })
+        res.status(200).json({ msg: "Bateu na API",spreadsheet:allSpreadsheets })
     } catch (err) {
         console.log(err);
     }

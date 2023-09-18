@@ -20,7 +20,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         password_confirm: "",
         profile: userProfile,
     })
-    const toastState = useContext(GlobalContext);
+    const globalState = useContext(GlobalContext);
     const handleRegisterInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -31,15 +31,15 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
     const tryRegister = () => {
         const validation = ValidateRegisterInput(registerInput);
         if (validation.valid === false) {
-            return toastState?.setToast({ type: "warning", message: validation.message })
+            return globalState?.setToast({ type: "warning", message: validation.message })
         }
         myHTTP.post("/register", registerInput)
             .then(res => {
-                toastState?.setToast({ type: "success", message: "Cadastro realizado com sucesso." })
+                globalState?.setToast({ type: "success", message: "Cadastro realizado com sucesso." })
                 showRegisterModal(false);
             })
             .catch(err => {
-                return toastState?.setToast({ type: "error", message: err.response.data.msg.errors[0].message })
+                return globalState?.setToast({ type: "error", message: err.response.data.msg.errors[0].message })
             })
     }
     const handlePasswordView = () => {
@@ -50,11 +50,11 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
     }
     return (
         <div className="absolute h-screen w-screen">
-            <div className="relative w-80 p-4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <form className="my-form-modal">
+            <div className="relative w-80 p-4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  bg-white z-20">
+                <form className="my-form-modal bg-white z-30 ">
                     <div className="flex justify-between">
                         <h1 className="">Cadastro</h1>
-                        <button onClick={() => { showRegisterModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
+                        <button onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(true) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
                     <label className="label">
                         <span className="label-text text-xs">Nome</span>

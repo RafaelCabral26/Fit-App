@@ -6,11 +6,11 @@ import { TDays, TExercise  } from "./nova_planilha_Types";
 import { GlobalContext } from "@/services/MyToast";
 import { useOnClickOutside } from "@/services/ClickOutsideHook";
 
-const DayComponent = ({ index, day, daysArray, setNewDayArray, dropProvided }: { index: number, day: TDays, daysArray: TDays[], setNewDayArray: React.Dispatch<SetStateAction<TDays[]>>, dropProvided:any }) => {
-    const globalState = useContext(GlobalContext)
+const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number, day: TDays, daysArray: TDays[], setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
+    const globalState = useContext(GlobalContext);
     const [optionsDropdown, showOptions] = useState(false);
     const [newExerciseModal, showNewExerciseModal] = useState(false);
-    const clickRef = useRef(null)
+    const clickRef = useRef(null);
     useOnClickOutside(clickRef, () => {
         showOptions(false)
     })
@@ -25,18 +25,17 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray, dropProvided }: {
         showNewExerciseModal(true);
         globalState?.isDragDisabledSwitch(true)
     }
-    
     return (
         <>
             <Droppable  type="droppableExercise" key={day.day} droppableId={`${day.day}`}>
                 {(provided, snapshot) => {
                     return (
-                        <div  className={`bg-white rounded-lg w-full shadow-lg m-2
+                        <div  className={`bg-white rounded-lg w-full shadow-lg m-2 
                         border-2 border-secondary ${snapshot.isDraggingOver ? "bg-sky-500 bg-opacity-30" : "bg-white"}`}
                         {...provided.droppableProps} ref={provided.innerRef}>
-                            <div className="flex justify-between p-2 bg-sky-500 rounded-t-sm border-secondary ">
+                            <div className="flex justify-between p-2 bg-sky-500 rounded-t-sm border-secondary  ">
                                 <h2>{"Dia " + (index + 1)}</h2>
-                                <button onClick={() => showOptions(!optionsDropdown)} className="relative text-2xl">...
+                                <button onClick={() => showOptions(!optionsDropdown)} className="relative text-2xl ">...
                                     {optionsDropdown &&
                                         <div ref={clickRef} className="absolute right-0">
                                             <ul tabIndex={0} className="dropdown-content  menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -56,7 +55,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray, dropProvided }: {
                 }}
             </Droppable>
             {newExerciseModal &&
-                    <AddExerciseFormModal  showNewExerciseModal={showNewExerciseModal} dayObject={day.exercises}></AddExerciseFormModal>
+                <AddExerciseFormModal  showNewExerciseModal={showNewExerciseModal} dayObject={day.exercises} daysArray={daysArray}></AddExerciseFormModal>
             }
         </>
     )

@@ -6,8 +6,7 @@ import myHTTP from "@/services/axiosconfig"
 import { TPossibleDays, TDays } from "./nova_planilha_Types"
 import { formatExercisesStorage } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast"
-import { useRouter } from "next/navigation"
-
+import { usePathname, useRouter } from "next/navigation"
 
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
     const result = list;
@@ -35,9 +34,6 @@ const SpreadsheetBuilder: React.FC = () => {
         if (cachedSpreadsheet) setNewDayArray((JSON.parse(cachedSpreadsheet)));
 
     }, [])
-    useEffect(() => {
-        localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
-    }, [daysArray])
 
     const addNewDay = () => {
         if (daysArray.length < 7) {
@@ -71,13 +67,14 @@ const SpreadsheetBuilder: React.FC = () => {
                     const [removed] = sourceOrder.splice(source.index, 1);
                     destinationOrder?.splice(destination.index, 0, removed);
                 }
-            }
+            };
         }
 
         if (type === "droppableDay") {
             const newDayOrder = reorder(daysArray, source.index, destination.index) as TDays[]
             setNewDayArray(newDayOrder)
         }
+            localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
     }
     const handleSaveSpreadsheet = () => {
         myHTTP.post("/new_spreadsheet", daysArray)
@@ -87,6 +84,7 @@ const SpreadsheetBuilder: React.FC = () => {
                     return globalState?.setToast({ type: "warning", message: res.data.msg });
                 }
                 globalState?.setToast({ type: "success", message: res.data.msg })
+                setNewDayArray([])
                 router.replace("/")
 
             })
@@ -99,7 +97,7 @@ const SpreadsheetBuilder: React.FC = () => {
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="flex h-screen w-screen ">
-                <div className="flex flex-col w-full h-full items-center gap-4 m-4">
+                <div className="flex flex-col w-full h-full items-center gap-4 m-4 ">
                     <div className="flex  gap-4    justify-center rounded-xl">
                         <button onClick={addNewDay} type="button" className="my-btn">+</button>
                         <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">Salvar</button>
@@ -116,7 +114,7 @@ const SpreadsheetBuilder: React.FC = () => {
                                                     return (
                                                         <div className="flex basis-[90%] justify-center  md:basis-[15%] min-h-[300px]"
                                                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                            <DayComponent dropProvided={provided} setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
+                                                            <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
                                                         </div>)
                                                 }}
                                             </Draggable>

@@ -10,7 +10,7 @@
         @apply btn btn-primary rounded-2xl my-2
     }
     .my-form-modal {
-        @apply p-4 rounded-xl drop-shadow-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white
+        @apply p-4 rounded-xl drop-shadow-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-base-100 
     }
     h1 {
         @apply text-secondary text-2xl

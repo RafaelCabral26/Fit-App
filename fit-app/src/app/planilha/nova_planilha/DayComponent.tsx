@@ -33,7 +33,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
                         <div  className={`bg-white rounded-lg w-full shadow-lg m-2 
                         border-2 border-secondary ${snapshot.isDraggingOver ? "bg-sky-500 bg-opacity-30" : "bg-white"}`}
                         {...provided.droppableProps} ref={provided.innerRef}>
-                            <div className="flex justify-between p-2 bg-sky-500 rounded-t-sm border-secondary  ">
+                            <div className="flex justify-between p-2 bg-stone-300 rounded-t-sm border-secondary  ">
                                 <h2>{"Dia " + (index + 1)}</h2>
                                 <button onClick={() => showOptions(!optionsDropdown)} className="relative text-2xl ">...
                                     {optionsDropdown &&

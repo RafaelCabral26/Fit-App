@@ -85,6 +85,7 @@ const SpreadsheetBuilder: React.FC = () => {
                 }
                 globalState?.setToast({ type: "success", message: res.data.msg })
                 setNewDayArray([])
+                localStorage.removeItem("Ongoing_Spreadsheet");
                 router.replace("/")
 
             })

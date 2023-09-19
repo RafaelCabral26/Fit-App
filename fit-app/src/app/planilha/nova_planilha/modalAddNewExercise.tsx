@@ -86,7 +86,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
 
     }
     return (
-        <form className="my-form-modal bg-white cursor-none">
+        <form className="my-form-modal  cursor-none">
             <div className="flex justify-end">
                 <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
             </div>

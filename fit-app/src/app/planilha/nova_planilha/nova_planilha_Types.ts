@@ -10,7 +10,8 @@ export type TExercise = {
 export type TPossibleDays = "day1" | "day2" | "day3" | "day4" | "day5" | "day6" | "day7"
 export type TDays = {
     day: TPossibleDays,
-    exercises: TExercise[] | []
+    exercises: TExercise[] | [],
+    dayUID:string
 }
 export type TMuscleGroupsObj = TArm | TBack | TChest | TLegs | TShoulder;
 export type TMuscleGroups = "Braços" | "Costas" | "Peitoral" | "Pernas" | "Ombros";

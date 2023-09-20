@@ -39,7 +39,7 @@ export const Navbar = () => {
     }
     return (
         <>
-            <div className='navbar border-b-2  p-4 drop-shadow-lg'>
+            <div className='navbar bg-base-100 border-b-2  p-4 drop-shadow-lg'>
                 <div className='container flex justify-between m-auto'>
                     <div className='lg:hidden'>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,10 +49,10 @@ export const Navbar = () => {
                     <a href="/" className='text-primary font-bold'>FitApp</a>
                     <div className='flex items-center font-bold gap-4'>
                         <div className="dropdown dropdown-end">
-                            <label tabIndex={0} className=" m-1 cursor-pointer hover:text-secondary">Planilha</label>
+                            <label tabIndex={0} className=" m-1 cursor-pointer hover:text-primary">Planilha</label>
                             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a href="/planilha/nova_planilha">Criar Planilha</a></li>
-                                <li><a href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>
+                                <li className=""><a className="my-list-item" href="/planilha/nova_planilha">Criar Planilha</a></li>
+                                <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>
                             </ul>
                         </div>
                         <div className="dropdown dropdown-end">
@@ -60,21 +60,21 @@ export const Navbar = () => {
                             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                                 {userState === null &&
                                     <>
-                                        <li><button onClick={() => { showLoginModal(true) }}>Login</button></li>
-                                        <li><button onClick={() => showRegisterModal(true)} >Cadastrar</button></li>
+                                        <li><button className="my-list-item" onClick={() => { showLoginModal(true) }}>Login</button></li>
+                                        <li><button className="my-list-item" onClick={() => showRegisterModal(true)} >Cadastrar</button></li>
                                     </>
                                 }
                                 {userState === "user" &&
                                     (<>
-                                        <li><button>Perfil</button></li>
-                                        <li><button onClick={handleLogout}>Sair</button></li>
+                                        <li><button className="my-list-item" >Perfil</button></li>
+                                        <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
                                     </>)
                                 }
                                 {userState === "trainer" &&
                                     (<>
-                                        <li><button>Perfil</button></li>
-                                        <li><button>Alunos</button></li>
-                                        <li><button onClick={handleLogout}>Sair</button></li>
+                                        <li><button className="my-list-item" >Perfil</button></li>
+                                        <li><button className="my-list-item" >Alunos</button></li>
+                                        <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
                                     </>)
                                 }
                             </ul>

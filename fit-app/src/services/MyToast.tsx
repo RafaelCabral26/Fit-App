@@ -38,7 +38,7 @@ export const MyToast = () => {
 
         setToastClass(("translate-y-0 " + color))
         setTimeout(() => {
-            setToastClass("translate-y-[-320%]")
+            setToastClass("translate-y-[-420%]")
         }, 2000)
     }, [globalState])
     return (

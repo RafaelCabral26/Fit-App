@@ -49,7 +49,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         setPasswordViewState(true);
     }
     return (
-        <div className="absolute h-screen w-screen">
+        <div className="fixed top-0 h-screen w-screen z-10">
             <div className="relative w-80 p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
                 <form className="my-form-modal z-30">
                     <div className="flex justify-between">

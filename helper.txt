@@ -1,4 +1,4 @@
-add:list spreadsheet api & UI
+add:list spreadsheet  UI
 add:edit spreadsheet api & UI
 UI add exercise name or choose name 
 user save spreadsheet to db

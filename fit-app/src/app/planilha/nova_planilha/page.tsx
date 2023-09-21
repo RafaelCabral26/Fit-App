@@ -101,11 +101,11 @@ const SpreadsheetBuilder: React.FC = () => {
     return (
         <DragDropContext onDragEnd={onDragEnd} >
             <div className="flex h-screen w-screen">
-                <button type="button" className={`${window.innerWidth < 560 ? "fixed" : "hidden"} bottom-[10%] right-5 bg-primary p-1 rounded-full flex justify-center items-center`}>
-                    {globalState?.toast ? 
-                    <OpenedLockSvg></OpenedLockSvg>
+                <button onClick={() => {globalState?.isDragDisabledSwitch(!globalState.isDragDisabledState)}} type="button" className={`${window.innerWidth < 560 ? "fixed" : "hidden"} bottom-[10%] right-5 bg-primary p-2 rounded-full flex justify-center items-center`}>
+                    {globalState?.isDragDisabledState ? 
+                        <ClosedLockSvg></ClosedLockSvg> 
                         :
-                   <ClosedLockSvg></ClosedLockSvg> 
+                        <OpenedLockSvg></OpenedLockSvg>
                     }
                 </button>
                 <div className="flex flex-col w-full h-auto items-center gap-4 m-4 ">

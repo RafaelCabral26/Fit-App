@@ -32,21 +32,23 @@ const MinhasPlanilhas = () => {
     }
     return (
         <>
-            <select className="flex select select-primary m-auto my-10">
-                <option>testee</option>
+            <select className="flex my-input select m-auto my-10">
+                <option hidden>Planilhas...</option>
                 {allSpreadsheets?.map((ele: any, index: any) => {
-                    return <option onClick={() => handleSelectSpreadsheet(index)} key={crypto.randomUUID()}>Planilha - {index + 1}</option>
+                    return <option onClick={() => handleSelectSpreadsheet(index)} key={index} value={index}>Planilha - {index + 1}</option>
                 })}
             </select>
-            <div className="container m-auto flex gap-4 justify-center">
+            <div className="container m-auto flex flex-col md:flex-row justify-center">
                 {
-                    selectedSpreadsheet?.map((ele: TDays,index:number) => {
+                    selectedSpreadsheet?.map((ele: TDays, index: number) => {
                         return (
-                            <div key={crypto.randomUUID()} className="flex flex-col w-40 border-primary border-2 justify-start">
-                                <span className="m-2">{("Dia " + String(index + 1))}</span>
+                            <div key={crypto.randomUUID()} className="rounded-lg md:w-[22%] shadow-lg m-2 border-2 border-secondary bg-base-200">
+                                <div className="flex justify-between p-2 bg-base-300 rounded-t-sm border-secondary ">
+                                    <span className="m-2">{("Dia " + String(index + 1))}</span>
+                                </div>
                                 {ele.exercises.map((ele: TExercise) => {
                                     return (
-                                        <div key={crypto.randomUUID()} className="flex flex-col basis-1/5 gap-1 border-2 border-primary m-2">
+                                        <div key={crypto.randomUUID()} className={"flex flex-col justify-between p-2 m-1 shadow-sm bg-base-100 border-2 border-base-300"}>
                                             <span className="flex gap-2">
                                                 {ele.exercise_name}
                                             </span>
@@ -57,6 +59,12 @@ const MinhasPlanilhas = () => {
                                             <span className="flex gap-2">
                                                 <span>Repetições</span>
                                                 {ele.quantity}
+                                            </span>
+                                            <span className="flex flex-col  break-words ">
+                                                <span>Obs</span>
+                                                <span className="text-xs">
+                                                    {ele.obs}
+                                                </span>
                                             </span>
                                         </div>
                                     )

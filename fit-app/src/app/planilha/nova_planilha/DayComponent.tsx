@@ -19,15 +19,15 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
         (e.currentTarget as HTMLInputElement).blur();
         daysArray.splice(index, 1);
         setNewDayArray([...daysArray]);
-
+        localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
     }
     const handleModal = () => {
         showNewExerciseModal(true);
-        globalState?.isDragDisabledSwitch(true)
+        globalState?.isDragDisabledSwitch(true);
     }
     return (
         <>
-            <Droppable type="droppableExercise" key={day.day} droppableId={`${day.day}`}>
+            <Droppable type="droppableExercise" key={day.dayUID} droppableId={`${day.dayUID}`}>
                 {(provided, snapshot) => {
                     return (
                         <div className={`rounded-lg w-52 h-auto lg:w-full shadow-lg m-2 

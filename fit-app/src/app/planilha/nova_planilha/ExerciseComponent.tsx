@@ -28,7 +28,7 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
         <Draggable isDragDisabled={globalState?.isDragDisabledState} draggableId={item.uId} key={item.uId} index={index}>
             {(provided, snapshot) => {
                 return (
-                    <div className={`flex  justify-between p-2 m-2 shadow-sm bg-base-100 border-2 border-stone-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
+                    <div className={`flex  justify-between p-2 m-2 shadow-sm bg-base-100 border-2 border-base-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
                         ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}>
                         <div className="flex flex-col w-32 ">
                             <span className="overflow-clip hover:overflow-visible">
@@ -141,7 +141,7 @@ const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteMod
             autoFocus
             onBlur={() => { showDeleteModal(false) }}
             className="bg-white border-2 border-stone-300 rounded-md cursor-pointer
-            absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+            fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
             <div className="flex flex-col justify-between gap-2 p-4  cursor-auto">
                 <div>
                     <h2>

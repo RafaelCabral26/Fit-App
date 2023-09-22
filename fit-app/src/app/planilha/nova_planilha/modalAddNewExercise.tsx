@@ -109,7 +109,6 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                         })
                     }
                 </select>
-
                 <label className="label">
                     <span className="label-text-alt">Exercício</span>
                 </label>

@@ -17,7 +17,7 @@ router.post("/register", async (req, res, next) => {
         res.status(200).json({ msg: "Usuário Cadastrado!" })
         next();
     } catch (err) {
-        res.status(400).send({ msg: err })
+        res.status(403).send({ msg: err })
     }
 })
 

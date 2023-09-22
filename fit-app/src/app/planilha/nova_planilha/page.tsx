@@ -6,7 +6,7 @@ import myHTTP from "@/services/axiosconfig"
 import { TPossibleDays, TDays } from "./nova_planilha_Types"
 import { formatExercisesStorage } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast"
-import {  useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import OpenedLockSvg from "@/svgs/openedLock"
 import ClosedLockSvg from "@/svgs/closedLock"
 
@@ -43,7 +43,7 @@ const SpreadsheetBuilder: React.FC = () => {
 
     const addNewDay = () => {
         if (daysArray.length < 7) {
-            const newDay: TDays = { dayUID: crypto.randomUUID(), exercises: [],  }
+            const newDay: TDays = { dayUID: crypto.randomUUID(), exercises: [], }
             return setNewDayArray([...daysArray, newDay])
         }
         globalState?.setToast({ type: "warning", message: "Máximo de 7 dias" })
@@ -115,7 +115,10 @@ const SpreadsheetBuilder: React.FC = () => {
                     <div className="flex  gap-4 justify-center rounded-xl">
                         <button onClick={addNewDay} type="button" className="my-btn">+</button>
                         <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">Salvar</button>
-                        <button className="my-btn" type="button">Enviar???</button>
+                        {
+                            globalState?.userType === "trainer" &&
+                            <button className="my-btn" type="button">Enviar</button>
+                        }
                     </div>
                     <Droppable direction={window.innerWidth > 560 ? "horizontal" : "vertical"} type="droppableDay" droppableId="droppableContainer">
                         {(provided) => {

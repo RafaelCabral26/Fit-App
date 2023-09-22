@@ -11,23 +11,12 @@ export const Navbar = () => {
     const router = useRouter();
     const [loginModal, showLoginModal] = useState<boolean>(false)
     const [registerModal, showRegisterModal] = useState<boolean>(false)
-    const [userState, setUserState] = useState<"user" | "trainer" | null>(null)
-    useEffect(() => {
-        myHTTP.post("/check_user")
-            .then(res => {
-                if (res.data.logged) {
-                    return setUserState(res.data.profile)
-                }
-                setUserState(null)
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    })
+
     const handleLogout = () => {
         myHTTP.get("/logout")
             .then(res => {
                 globalState?.setToast({ type: "success", message: res.data.msg })
+                globalState?.setUserType(null)
             })
             .then(() => {
                 showLoginModal(false)
@@ -37,6 +26,20 @@ export const Navbar = () => {
                 globalState?.setToast({ type: "error", message: err.response.data.msg })
             })
     }
+
+    useEffect(() => {
+        myHTTP.post("/check_user")
+            .then(res => {
+                if (res.data.logged) {
+                    return globalState?.setUserType(res.data.profile)
+                }
+                globalState?.setUserType(null)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [handleLogout])
+
     return (
         <>
             <div className='navbar bg-base-100 border-b-2  p-4 drop-shadow-lg'>
@@ -58,19 +61,19 @@ export const Navbar = () => {
                         <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="cursor-pointer"><ProfileSvg /></label>
                             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                {userState === null &&
+                                {globalState?.userType === null &&
                                     <>
                                         <li><button className="my-list-item" onClick={() => { showLoginModal(true) }}>Login</button></li>
                                         <li><button className="my-list-item" onClick={() => showRegisterModal(true)} >Cadastrar</button></li>
                                     </>
                                 }
-                                {userState === "user" &&
+                                {globalState?.userType === "user" &&
                                     (<>
                                         <li><button className="my-list-item" >Perfil</button></li>
                                         <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
                                     </>)
                                 }
-                                {userState === "trainer" &&
+                                {globalState?.userType === "trainer" &&
                                     (<>
                                         <li><button className="my-list-item" >Perfil</button></li>
                                         <li><button className="my-list-item" >Alunos</button></li>

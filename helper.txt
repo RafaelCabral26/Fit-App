@@ -1,5 +1,6 @@
-add:list spreadsheet  UI
+add:trainer vs user UI
 add:edit spreadsheet api & UI
+add:trainer send spreadsheet
 UI add exercise name or choose name 
 user save spreadsheet to db
 trainer send spreadsheet to user

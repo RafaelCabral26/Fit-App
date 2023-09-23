@@ -43,13 +43,23 @@ router.get("/list_user_spreadsheets", async (req, res, next) => {
         const secret = process.env.SECRET as Secret;
         const user = jwt.verify(req.cookies.authcookie, secret) as TUser;
         const allSpreadsheets = await Spreadsheet.findAll({
-            where:{
-                user_id:user.user_id
+            where: {
+                user_id: user.user_id
             }
         });
-        res.status(200).json({ msg: "Bateu na API",spreadsheet:allSpreadsheets })
+        res.status(200).json({ msg: "Bateu na API", spreadsheet: allSpreadsheets })
     } catch (err) {
         console.log(err);
+    }
+})
+router.delete("/delete_spreadsheet/spreadsheet_id", async (req, res, next) => {
+    try {
+        console.log(req.params);
+        return res.status(200).json({msg:"Bateu na API"})
+    } catch (err) {
+        console.log(err);
+        return res.status(402).json({msg:"Erro ao tentar deletar."})
+
     }
 })
 export { router }

@@ -12,7 +12,7 @@ export type TRegisterInput = {
 }
 const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const [passwordViewState, setPasswordViewState] = useState<boolean>(false)
-    const [userProfile, setUserProfile] = useState<"user"|"trainer">("user");
+    const [userProfile, setUserProfile] = useState<"user" | "trainer">("user");
     const [registerInput, setRegisterInput] = useState<TRegisterInput>({
         name: "",
         email: "",
@@ -25,7 +25,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         const name = e.target.name;
         const value = e.target.value;
         setRegisterInput((prev: any) => {
-            return { ...prev, [name]: value, profile:userProfile };
+            return { ...prev, [name]: value, profile: userProfile };
         })
     }
     const tryRegister = () => {
@@ -49,7 +49,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         setPasswordViewState(true);
     }
     return (
-        <div className="fixed top-0 h-screen w-screen z-10">
+        <div className="fixed top-20 h-screen w-screen z-10">
             <div className="relative w-80 p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
                 <form className="my-form-modal z-30">
                     <div className="flex justify-between">
@@ -59,7 +59,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                     <label className="label">
                         <span className="label-text text-xs">Nome</span>
                     </label>
-                    <input name="name" onChange={handleRegisterInput} type="text" className="my-input" autoFocus/>
+                    <input name="name" onChange={handleRegisterInput} type="text" className="my-input" autoFocus />
 
                     <label className="label">
                         <span className="label-text text-xs">Email</span>
@@ -82,9 +82,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                     <input name="password_confirm" onChange={handleRegisterInput}
                         type="password" className="my-input" />
 
-                    <div className="flex justify-between">
-                        <button onClick={tryRegister} type="button" className="my-btn">Registrar</button>
-                        <span></span>
+                    <div className="">
                         <div className="flex flex-col justify-evenly">
                             <span className="text-xs leading-4 text-secondary">Selecione o tipo de conta.(Treinador pode enviar planilhas.)</span>
                             <div className="flex">
@@ -97,6 +95,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                                     <span className="label-text text-xs">Treinador</span>
                                 </label>
                             </div>
+                            <button onClick={tryRegister} type="button" className="my-btn">Registrar</button>
                         </div>
                     </div>
                 </form>

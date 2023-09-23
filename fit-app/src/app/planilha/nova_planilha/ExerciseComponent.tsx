@@ -54,7 +54,7 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
                                 <EditPencilSvg />
                             </button>
                             <button type="button" onClick={() => { showDeleteModal(true) }}>
-                                <TrashSvg />
+                                <TrashSvg color="#D40431" />
                             </button>
                         </div>
                         {editModal &&

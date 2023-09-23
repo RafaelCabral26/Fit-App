@@ -1,12 +1,10 @@
-UI Dnd to mobile (vertical mode spreadsheets)
-user save spreadsheet to db
-trainer send spreadsheet to user
+add:delete spreadsheet api & UI
+add:edit spreadsheet api & UI
+add:trainer send spreadsheet
 UI add exercise name or choose name 
+add:trainer send spreadsheet to user
 
 
 
 
 
-INSERT INTO `spreadsheets` (spreadsheet_id, user_id, spreadsheet_days) VALUES
-(uuid_v4(), "d91192b3-8239-42dd-9096-74d2b0543e26",
-'[{"day1":{"name":"exerciciotalz"}}]');

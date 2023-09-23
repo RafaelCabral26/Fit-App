@@ -3,10 +3,12 @@ import React, { useContext, useEffect, useState } from "react"
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 import DayComponent from "./DayComponent"
 import myHTTP from "@/services/axiosconfig"
-import { TExercise, TPossibleDays, TDays } from "./nova_planilha_Types"
+import { TPossibleDays, TDays } from "./nova_planilha_Types"
 import { formatExercisesStorage } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast"
-
+import { useRouter } from "next/navigation"
+import OpenedLockSvg from "@/svgs/openedLock"
+import ClosedLockSvg from "@/svgs/closedLock"
 
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
     const result = list;
@@ -16,9 +18,9 @@ const reorder = (list: any[], startIndex: number, endIndex: number) => {
 }
 
 const SpreadsheetBuilder: React.FC = () => {
-   const globalState = useContext(GlobalContext);
+    const globalState = useContext(GlobalContext);
+    const router = useRouter();
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
-
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
         if (listOfExercises === null) {
@@ -29,16 +31,24 @@ const SpreadsheetBuilder: React.FC = () => {
                 .catch(err => {
                     console.log(err);
                 })
-        }
+        };
+        const cachedSpreadsheet = localStorage.getItem("Ongoing_Spreadsheet");
+        if (cachedSpreadsheet) setNewDayArray((JSON.parse(cachedSpreadsheet)));
+
     }, [])
+
+    useEffect(() => {
+        localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
+    }, [daysArray])
 
     const addNewDay = () => {
         if (daysArray.length < 7) {
-            const dayNumber = "day" + Number(daysArray.length + 1) as TPossibleDays
-            const newDay: TDays = { day: dayNumber, exercises: [] }
-            setNewDayArray([...daysArray, newDay]);
+            const newDay: TDays = { dayUID: crypto.randomUUID(), exercises: [], }
+            return setNewDayArray([...daysArray, newDay])
         }
+        globalState?.setToast({ type: "warning", message: "Máximo de 7 dias" })
     }
+
     const onDragEnd = (result: DropResult) => {
         const { source, destination, type } = result;
         if (!destination) {
@@ -48,50 +58,82 @@ const SpreadsheetBuilder: React.FC = () => {
         const destinationId = destination.droppableId
         if (type === "droppableExercise") {
             if (sourceId === destinationId) {
-                const tempExercises = daysArray.find((e: TDays) => e.day === sourceId)?.exercises;
+                const tempExercises = daysArray.find((e: TDays) => e.dayUID === sourceId)?.exercises;
                 if (tempExercises) {
                     const newExerciseOrder = reorder(tempExercises, source.index, destination.index);
                     const newDayOrder = daysArray.map((e: TDays) =>
-                        e.day !== sourceId
+                        e.dayUID !== sourceId
                             ? e
-                            : { ...e, exercises: newExerciseOrder })
+                            : { ...e, exercises: newExerciseOrder });
                     setNewDayArray(newDayOrder);
                 }
             } else {
-                const sourceOrder = daysArray.find((e: TDays) => e.day === sourceId)?.exercises;
-                const destinationOrder = daysArray.find((e: TDays) => e.day === destinationId)?.exercises;
+                const sourceOrder = daysArray.find((e: TDays) => e.dayUID === sourceId)?.exercises;
+                const destinationOrder = daysArray.find((e: TDays) => e.dayUID === destinationId)?.exercises;
                 if (sourceOrder && destinationOrder) {
                     const [removed] = sourceOrder.splice(source.index, 1);
                     destinationOrder?.splice(destination.index, 0, removed);
-                }
-            }
-        }
+                };
+            };
+        };
 
         if (type === "droppableDay") {
             const newDayOrder = reorder(daysArray, source.index, destination.index) as TDays[]
             setNewDayArray(newDayOrder)
         }
+        localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
+    }
+    const handleSaveSpreadsheet = () => {
+        if (daysArray.length === 0) return globalState?.setToast({type:"warning", message:"Adicione dias."});
+        const emptyDay = daysArray.map((ele:any) => {})
+        myHTTP.post("/new_spreadsheet", daysArray)
+            .then(res => {
+                console.log(res);
+                if (res.status === 202) {
+                    return globalState?.setToast({ type: "warning", message: res.data.msg });
+                }
+                globalState?.setToast({ type: "success", message: res.data.msg })
+                setNewDayArray([])
+                localStorage.removeItem("Ongoing_Spreadsheet");
+                router.replace("/")
+            })
+            .catch(err => {
+                globalState?.setToast({ type: "error", message: err.response.data.msg })
+                console.log(err);
+            })
     }
 
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <div className="flex h-screen w-screen ">
-                <div className="flex flex-col w-full h-full items-center gap-4 m-4">
-                    <div className="flex bg-sky-400  w-10 h-10  justify-center rounded-xl">
-                        <button onClick={addNewDay} className="text-4xl leading-none ">+</button>
+        <DragDropContext onDragEnd={onDragEnd} >
+            <div className="flex h-screen w-screen">
+                <button onClick={() => { globalState?.isDragDisabledSwitch(!globalState.isDragDisabledState) }} type="button" className={`${window.innerWidth < 560 ? "fixed" : "hidden"} bottom-[10%] right-5 bg-primary p-2 rounded-full flex justify-center items-center`}>
+                    {globalState?.isDragDisabledState ?
+                        <ClosedLockSvg></ClosedLockSvg>
+                        :
+                        <OpenedLockSvg></OpenedLockSvg>
+                    }
+                </button>
+                <div className="flex flex-col w-full h-auto items-center gap-4 m-4 ">
+                    <div className="flex  gap-4 justify-center rounded-xl">
+                        <button onClick={addNewDay} type="button" className="my-btn">+</button>
+                        <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">Salvar</button>
+                        {
+                            globalState?.userType === "trainer" &&
+                            <button className="my-btn" type="button">Enviar</button>
+                        }
                     </div>
-                    <Droppable direction="horizontal" type="droppableDay" droppableId="droppableContainer">
+                    <Droppable direction={window.innerWidth > 560 ? "horizontal" : "vertical"} type="droppableDay" droppableId="droppableContainer">
                         {(provided) => {
                             return (
-                                <div ref={provided.innerRef} {...provided.droppableProps} className="flex w-full justify-center">
+                                <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col md:flex-row w-full justify-center">
                                     {daysArray.map((e: TDays, index: number) => {
                                         return (
-                                            <Draggable isDragDisabled={globalState?.isDragDisabledState} key={e.day} draggableId={e.day} index={index}>
+                                            <Draggable isDragDisabled={globalState?.isDragDisabledState} key={e.dayUID} draggableId={e.dayUID} index={index}>
                                                 {(provided, snapshot) => {
                                                     return (
-                                                        <div key={e.day} className="flex basis-[90%] justify-center  md:basis-[15%] min-h-[300px]"
+                                                        <div className="flex justify-center lg:basis-[15%] min-h-[300px]"
                                                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                            <DayComponent dropProvided={provided} setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
+                                                            <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
                                                         </div>)
                                                 }}
                                             </Draggable>

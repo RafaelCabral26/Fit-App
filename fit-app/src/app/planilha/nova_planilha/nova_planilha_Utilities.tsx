@@ -14,13 +14,13 @@ export const formatExercisesStorage = (responseExerciseList: TExercise[]) => {
         Pernas: TExercise[],
         Ombros: TExercise[],
         Costas: TExercise[],
-        Peito: TExercise[],
+        Peitoral: TExercise[],
     } = {
         Braços: [],
         Pernas: [],
         Ombros: [],
         Costas: [],
-        Peito: [],
+        Peitoral: [],
     }
 
     responseExerciseList.forEach((ele: TExercise) => {
@@ -38,7 +38,7 @@ export const formatExercisesStorage = (responseExerciseList: TExercise[]) => {
                 break;
 
             case "Peitoral":
-                ObjectifiedExerciseList.Peito.push(ele)
+                ObjectifiedExerciseList.Peitoral.push(ele)
                 break;
 
             case "Ombros":

@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" data-theme="corporate">
-            <body className='h-screen overflow-x-hidden'>
+            <body className='h-screen overflow-x-hidden relative'>
                 <GlobalProvider>
                     <Navbar></Navbar>
                 <div className=''>

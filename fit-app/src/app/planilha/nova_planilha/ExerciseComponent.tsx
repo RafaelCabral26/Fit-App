@@ -1,55 +1,67 @@
-import { Draggable, DraggableProvided,  } from "@hello-pangea/dnd"
+import { Draggable, DraggableProvided, } from "@hello-pangea/dnd"
 import TrashSvg from "@/svgs/trashsvg"
 import EditPencilSvg from "@/svgs/editpencil"
-import { SetStateAction, useState } from "react"
+import { SetStateAction, useContext, useState } from "react"
 import { TDays, TExercise } from "./nova_planilha_Types"
 import { ValidateAddExercise } from "./nova_planilha_Utilities"
+import { GlobalContext } from "@/services/MyToast"
 
 const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: TExercise, index: number, daysArray: TDays[], dayIndex: number, setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
+
+    const globalState = useContext(GlobalContext);
     const [editModal, openEditModal] = useState<boolean>(false);
     const [confirmDeleteModal, showDeleteModal] = useState<boolean>(false);
+
+
     const handleDeleteExercise = () => {
         const newArray = daysArray;
         newArray[dayIndex].exercises.splice(index, 1);
         setNewDayArray([...newArray]);
+
     };
+    const handleEditModal = (myBoolean: boolean) => {
+        openEditModal(!editModal);
+        globalState?.isDragDisabledSwitch(myBoolean);
+    }
 
     return (
-        <Draggable draggableId={item.uId} key={item.uId} index={index}>
+        <Draggable isDragDisabled={globalState?.isDragDisabledState} draggableId={item.uId} key={item.uId} index={index}>
             {(provided, snapshot) => {
                 return (
-                    <div className={`flex justify-between p-2 m-2 shadow-sm bg-white border-2 border-stone-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
+                    <div className={`flex  justify-between p-2 m-2 shadow-sm bg-base-100 border-2 border-base-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
                         ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}>
-                        <div className="flex flex-col">
-                            <span>
+                        <div className="flex flex-col w-32 ">
+                            <span className="overflow-clip hover:overflow-visible">
                                 {item.exercise_name}
                             </span>
                             <span className="flex gap-2">
-                                <span>
-                                    Séries
-                                </span>
+                                <span>Séries</span>
                                 {item.sets}
                             </span>
                             <span className="flex gap-2">
-                                <span>
-                                    Repetições
-                                </span>
+                                <span>Repetições</span>
                                 {item.quantity}
                             </span>
+                            <span className="flex flex-col  break-words ">
+                                <span>Obs</span>
+                                <span className="text-xs">
+                                    {item.obs}
+                                </span>
+                            </span>
                         </div>
-                        <div className="">
-                            <button onClick={() => { openEditModal(true) }} className="">
+                        <div className="flex flex-col gap-2">
+                            <button type="button" onClick={() => { handleEditModal(true) }} className="">
                                 <EditPencilSvg />
                             </button>
-                            <button onClick={() => { showDeleteModal(true) }}>
-                                <TrashSvg />
+                            <button type="button" onClick={() => { showDeleteModal(true) }}>
+                                <TrashSvg color="#D40431" />
                             </button>
                         </div>
                         {editModal &&
-                            <EditExerciseForm openEditModal={openEditModal} index={index} daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} item={item}></EditExerciseForm>
+                            <EditExerciseForm handleEditModal={handleEditModal} index={index} daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} item={item}></EditExerciseForm>
                         }
                         {confirmDeleteModal &&
-                            <ConfirmDelete provided={provided} itemName={item.name} handleDeleteExercise={handleDeleteExercise} showDeleteModal={showDeleteModal}></ConfirmDelete>
+                            <ConfirmDelete provided={provided} itemName={item.exercise_name} handleDeleteExercise={handleDeleteExercise} showDeleteModal={showDeleteModal}></ConfirmDelete>
                         }
                     </div>
                 )
@@ -58,38 +70,44 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
     )
 }
 
-const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, setNewDayArray }: { openEditModal: React.Dispatch<SetStateAction<boolean>>, item: TExercise, index: number, daysArray: TDays[], dayIndex: number, setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
+const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, setNewDayArray }: { handleEditModal: (myBoolean: boolean) => void, item: TExercise, index: number, daysArray: TDays[], dayIndex: number, setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
+
     const [newExercise, setNewExercise] = useState<TExercise>({
-        name: item.name,
+        exercise_name: item.exercise_name,
         sets: item.sets,
         quantity: item.quantity,
-        muscle_group: "",
-        uId:item.uId
+        muscle_group: item.muscle_group,
+        subgroup: "",
+        obs:item.obs,
+        uId: item.uId
     })
-    const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const name = e.target.name
-        const value = e.target.value
+
+    const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const name = e.target.name;
+        const value = e.target.value;
         setNewExercise((prev: TExercise) => {
-            return { ...prev, [name]: value }
+            return { ...prev, [name]: value };
         })
     }
+
     const updateExercise = () => {
-        const isExerciseValid = ValidateAddExercise(newExercise)
+        const isExerciseValid = ValidateAddExercise(newExercise);
         if (!isExerciseValid) return;
         const newArray = daysArray;
-        newArray[dayIndex].exercises.splice(index, 1, newExercise)
-        setNewDayArray([...newArray])
-        openEditModal(false);
+        newArray[dayIndex].exercises.splice(index, 1, newExercise);
+        setNewDayArray([...newArray]);
+        handleEditModal(false);
     }
+
     return (
-        <form className="w-96 h-96 p-8 rounded-xl border-secondary border-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+        <form className=" p-4 rounded-xl border-secondary border-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
             <div className="flex justify-end">
-                <button onClick={() => { openEditModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
+                <button type="button" onClick={() => { handleEditModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
             </div>
             <label className="label">
                 <span className="label-text">Exercício</span>
             </label>
-            <input onChange={handleNewExerciseInput} autoFocus name="name" className="my-input" type="text" value={newExercise.name} />
+            <input onChange={handleNewExerciseInput} autoFocus name="exercise_name" className="my-input" type="text" value={newExercise.exercise_name} />
 
             <label className="label">
                 <span className="label-text">Séries</span>
@@ -100,6 +118,14 @@ const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, set
                 <span className="label-text">Repetições</span>
             </label>
             <input onChange={handleNewExerciseInput} name="quantity" type="number" className="my-input" value={newExercise.quantity} />
+
+            <div className="form-control gap-2">
+                <label className="label-text">
+                    <span>Observações</span>
+                </label>
+                <textarea onChange={handleNewExerciseInput}  name="obs"  defaultValue={newExercise.obs} className="my-input resize-none h-20  border-primary border-2 rounded-xl p-2 " maxLength={100} />
+
+            </div>
             <div>
                 <button onClick={updateExercise} type="button" className="btn btn-primary rounded-2xl my-2">
                     Atualizar
@@ -109,20 +135,21 @@ const EditExerciseForm = ({ openEditModal, item, index, daysArray, dayIndex, set
     )
 }
 const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteModal }: { provided: DraggableProvided, itemName: string, handleDeleteExercise: () => void, showDeleteModal: React.Dispatch<SetStateAction<boolean>> }) => {
+
     return (
         <div data-rfd-drag-handle-context-id={provided.dragHandleProps?.["data-rfd-drag-handle-context-id"]}
             autoFocus
             onBlur={() => { showDeleteModal(false) }}
             className="bg-white border-2 border-stone-300 rounded-md cursor-pointer
-            absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-            <div className="flex flex-col justify-between p-4 w-56 h-32 cursor-auto">
+            fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+            <div className="flex flex-col justify-between gap-2 p-4  cursor-auto">
                 <div>
                     <h2>
                         Deseja deletar
                     </h2>
                     <span className="font-bold">{itemName}?</span>
                 </div>
-                <div className="flex justify-between ">
+                <div className="flex gap-2 ">
                     <button onClick={handleDeleteExercise} className="btn btn-sm rounded-md btn-warning">
                         deletar
                     </button>

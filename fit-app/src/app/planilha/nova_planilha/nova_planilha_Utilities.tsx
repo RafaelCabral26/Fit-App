@@ -10,13 +10,13 @@ export const ValidateAddExercise = (exercise: TExercise) => {
 
 export const formatExercisesStorage = (responseExerciseList: TExercise[]) => {
     const ObjectifiedExerciseList: {
-        Bracos: TExercise[],
+        Braços: TExercise[],
         Pernas: TExercise[],
         Ombros: TExercise[],
         Costas: TExercise[],
         Peito: TExercise[],
     } = {
-        Bracos: [],
+        Braços: [],
         Pernas: [],
         Ombros: [],
         Costas: [],
@@ -26,7 +26,7 @@ export const formatExercisesStorage = (responseExerciseList: TExercise[]) => {
     responseExerciseList.forEach((ele: TExercise) => {
         switch (ele.muscle_group) {
             case "Braços":
-                ObjectifiedExerciseList.Bracos.push(ele)
+                ObjectifiedExerciseList.Braços.push(ele)
                 break;
 
             case "Pernas":

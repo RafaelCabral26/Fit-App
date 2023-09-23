@@ -1,13 +1,13 @@
 import { SetStateAction, useContext, useEffect, useState } from "react"
-import { TExercise, TMuscleGroups, TMuscleGroupsObj } from "./nova_planilha_Types"
+import { TExercise, TMuscleGroups, TMuscleGroupsObj, TSubgroups } from "./nova_planilha_Types"
 import { ValidateAddExercise } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast";
 
 const AddExerciseFormModal = ({ showNewExerciseModal, dayObject,  }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[]  }) => {
     const globalState = useContext(GlobalContext);
     const [exerciseList, setExerciseList] = useState<any>();
-    const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<"Braços" | "Costas" | "Peitoral" | "Pernas" | "Ombros" | null>()
-    const [selectedSubGroup, setSelectedSubGroup] = useState<string | null>()
+    const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<"Braços" | "Costas" | "Peitoral" | "Pernas" | "Ombros" | "" >()
+    const [selectedSubGroup, setSelectedSubGroup] = useState<TSubgroups>()
     const [optionsSubGroups, setOptionsSubGroups] = useState<any[] | null>()
     const [exerciseOptions, setExerciseOptions] = useState<any>();
     const [customExerciseInput, showCustomExerciseInput] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject,  }: { showNewEx
         }
     }, [])
 
-    const filterSelectedMuscleGroup = (muscleType:TMuscleGroups  | null) => {
+    const filterSelectedMuscleGroup = (muscleType:TMuscleGroups  | "") => {
         
         if (exerciseList !== null) {
             for (const key in exerciseList) {
@@ -53,14 +53,11 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject,  }: { showNewEx
         setSelectedMuscleGroup(muscleType)
     }
 
-<<<<<<< HEAD
-    const handleSelectedSubgroup = () => {
-        console.log(exerciseList);
         
-=======
-    const handleSelectedSubgroups = () => {
-        console.log(exerciseOptions);
->>>>>>> df38fcf16e5737b363c259974f3ffaf2f2dec922
+    const handleSelectedSubgroups = (Sugroup:TSubgroups) => {
+        for (const key in exerciseOptions) {
+            
+        }
     }
 
     const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,8 +65,8 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject,  }: { showNewEx
         const value = e.target.value
         setNewExercise((prev: TExercise) => {
             if (!customExerciseInput) prev.exercise_name = "teste"
-            prev.muscle_group = selectedMuscleGroup?.muscle_group
-            prev.subgroup = selectedSubGroup?.subgroup
+            prev.muscle_group = selectedMuscleGroup
+            prev.subgroup = selectedSubGroup
             return { ...prev, [name]: value };
         })
 
@@ -87,28 +84,19 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject,  }: { showNewEx
                 <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
             </div>
             <select className="select select-xs select-primary rounded-lg">
-<<<<<<< HEAD
-                <option key="musculo" onClick={() => handleSelectedMuscleGroup(null)}>Músculo</option>
-                <option key="bracos" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Bracos", subgroup: "" })}>Braços</option>
-                <option key="costas" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Costas", subgroup: "" })}>Costas</option>
-                <option key="peito" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Peito", subgroup: "" })}>Peito</option>
-                <option key="pernas" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Pernas", subgroup: "" })}>Pernas</option>
-                <option key="ombros" onClick={() => handleSelectedMuscleGroup({ muscle_group: "Ombros", subgroup: "" })}>Ombros</option>
-=======
-                <option key={"musculo"} onClick={() => filterSelectedMuscleGroup(null)}>Músculo</option>
+                <option key={"musculo"} onClick={() => filterSelectedMuscleGroup("")}>Músculo</option>
                 <option key={"bracos"} onClick={() => filterSelectedMuscleGroup("Braços")}>Braços</option>
                 <option key={"costas"} onClick={() => filterSelectedMuscleGroup("Costas")}>Costas</option>
                 <option key={"peito"} onClick={() => filterSelectedMuscleGroup("Peitoral")}>Peito</option>
                 <option key={"pernas"} onClick={() => filterSelectedMuscleGroup("Pernas")}>Pernas</option>
                 <option key={"ombros"} onClick={() => filterSelectedMuscleGroup("Ombros")}>Ombros</option>
->>>>>>> df38fcf16e5737b363c259974f3ffaf2f2dec922
             </select>
             <select className="select select-xs select-primary rounded-lg">
-                <option onClick={handleSelectedSubgroup} key="subgroup" >Subgrupo</option>
+                <option onClick={handleSelectedSubgroups} key="subgroup" >Subgrupo</option>
                 {
                     optionsSubGroups?.map((ele: any) => {
                         return (
-                            <option key={ele} onClick={() => { setSelectedSubGroup({ subgroup: ele }) }} value={ele}>{ele}</option>
+                            <option key={ele} onClick={() => { setSelectedSubGroup(ele) }} value={ele}>{ele}</option>
                         )
                     })
                 }

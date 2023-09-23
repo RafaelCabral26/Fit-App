@@ -18,6 +18,7 @@ const reorder = (list: any[], startIndex: number, endIndex: number) => {
 const SpreadsheetBuilder: React.FC = () => {
    const globalState = useContext(GlobalContext);
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
+
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
         if (listOfExercises === null) {

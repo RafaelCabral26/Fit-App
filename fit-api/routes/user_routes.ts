@@ -12,6 +12,7 @@ router.post("/register", async (req, res, next) => {
             email: req.body.email,
             password: req.body.password
         };
+        
         user.password = await auth.createEncryptedPass(user.password)
         await User.create(user);
         res.status(200).json({ msg: "Usuário Cadastrado!" })

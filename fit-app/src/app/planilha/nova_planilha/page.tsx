@@ -84,6 +84,8 @@ const SpreadsheetBuilder: React.FC = () => {
         localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
     }
     const handleSaveSpreadsheet = () => {
+        if (daysArray.length === 0) return globalState?.setToast({type:"warning", message:"Adicione dias."});
+        const emptyDay = daysArray.map((ele:any) => {})
         myHTTP.post("/new_spreadsheet", daysArray)
             .then(res => {
                 console.log(res);

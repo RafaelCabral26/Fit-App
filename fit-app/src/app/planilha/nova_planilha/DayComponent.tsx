@@ -48,7 +48,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
                                 </button>
                             </div>
                             {day.exercises.map((e: TExercise, index: number) => {
-                                return <ExerciseComponent daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} key={day.day} item={e} index={index}></ExerciseComponent>
+                                return <ExerciseComponent daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} key={e.uId} item={e} index={index}></ExerciseComponent>
                             })}
                             {provided.placeholder}
                         </div>

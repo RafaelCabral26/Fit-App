@@ -85,7 +85,11 @@ const SpreadsheetBuilder: React.FC = () => {
     }
     const handleSaveSpreadsheet = () => {
         if (daysArray.length === 0) return globalState?.setToast({type:"warning", message:"Adicione dias."});
-        const emptyDay = daysArray.map((ele:any) => {})
+        let emptyDay = false
+        daysArray.forEach((ele:any) => {
+            if (ele.exercises.length === 0) emptyDay = true
+        })
+        if (emptyDay) return globalState?.setToast({type:"warning", message:"Preencha todos os dias."});
         myHTTP.post("/new_spreadsheet", daysArray)
             .then(res => {
                 console.log(res);

@@ -79,6 +79,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
     const handleAddNewExercise = () => {
         const isExerciseValid = ValidateAddExercise(newExercise);
         if (!isExerciseValid) return;
+        console.log("new exercise", newExercise);
         dayObject.push(newExercise);
         showNewExerciseModal(false);
         globalState?.isDragDisabledSwitch(false);

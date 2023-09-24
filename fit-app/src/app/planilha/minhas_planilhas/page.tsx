@@ -4,6 +4,7 @@ import myHTTP from "@/services/axiosconfig"
 import { useContext, useEffect, useState } from "react"
 import { TDays, TExercise } from "../nova_planilha/nova_planilha_Types"
 import TrashSvg from "@/svgs/trashsvg"
+import { useRouter } from "next/navigation"
 
 type TSpreadsheets = {
     spreadsheet_id: string,
@@ -11,6 +12,7 @@ type TSpreadsheets = {
 }
 const MinhasPlanilhas = () => {
     const globalState = useContext(GlobalContext);
+    const router = useRouter();
     const [allSpreadsheets, setAllSpreadSheets] = useState<TSpreadsheets[]>();
     const [selectedSpreadsheet, setSelectedSpreadSheet] = useState<TSpreadsheets>();
     const [confirmDeleteModal, showConfirmDeleteModal] = useState<boolean>(false);
@@ -33,16 +35,18 @@ const MinhasPlanilhas = () => {
     const handleSelectSpreadsheet = (index: number) => {
         if (allSpreadsheets !== undefined) setSelectedSpreadSheet(allSpreadsheets[index]);
     }
-
     const deleteSpreadsheet = () => {
         myHTTP.delete(`/delete_spreadsheet/${selectedSpreadsheet?.spreadsheet_id}` )
             .then(res => {
-                console.log(res);
+                globalState?.setToast({type:"success", message:res.data.msg})
+                setSelectedSpreadSheet(undefined)
+                window.location.reload()
             })
             .catch(err => {
                 console.log(err);
             })
     }
+
     return (
         <>
             <div className="flex justify-center items-center gap-4 my-5">

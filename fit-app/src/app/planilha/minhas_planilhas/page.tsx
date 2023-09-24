@@ -19,7 +19,6 @@ const MinhasPlanilhas = () => {
             .then(res => {
                 if (!res.data.spreadsheet) return globalState?.setToast({ type: "warning", message: res.data.msg });
                 const receivedSpreadsheets = res.data.spreadsheet;
-                console.log(receivedSpreadsheets);
                 let placeholderDaysArray = [] as TSpreadsheets[];
                 receivedSpreadsheets.forEach((ele: any) => {
                     placeholderDaysArray.push({ spreadsheet_id: ele.spreadsheet_id, days: JSON.parse(ele.spreadsheet_days) });
@@ -36,7 +35,7 @@ const MinhasPlanilhas = () => {
     }
 
     const deleteSpreadsheet = () => {
-        myHTTP.delete(`/delete_spreadsheet/${selectedSpreadsheet?.spreadsheet_id}`)
+        myHTTP.delete(`/delete_spreadsheet/${selectedSpreadsheet?.spreadsheet_id}` )
             .then(res => {
                 console.log(res);
             })

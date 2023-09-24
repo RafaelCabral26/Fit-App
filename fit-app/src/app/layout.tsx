@@ -14,7 +14,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en" data-theme="corporate">
+        <html lang="en" data-theme="dark">
             <body className='h-screen overflow-x-hidden relative'>
                 <GlobalProvider>
                     <Navbar></Navbar>

@@ -52,10 +52,14 @@ router.get("/list_user_spreadsheets", async (req, res, next) => {
         console.log(err);
     }
 })
-router.delete("/delete_spreadsheet/spreadsheet_id", async (req, res, next) => {
+router.delete("/delete_spreadsheet/:id", async (req, res, next) => {
     try {
-        console.log(req.params);
-        return res.status(200).json({msg:"Bateu na API"})
+        Spreadsheet.destroy({
+            where: {
+                spreadsheet_id:req.params.id
+            }
+        }) 
+        return res.status(200).json({msg:"Planilha deletada."})
     } catch (err) {
         console.log(err);
         return res.status(402).json({msg:"Erro ao tentar deletar."})

@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react"
 import { TDays, TExercise } from "../nova_planilha/nova_planilha_Types"
 import TrashSvg from "@/svgs/trashsvg"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 type TSpreadsheets = {
     spreadsheet_id: string,
@@ -59,6 +60,10 @@ const MinhasPlanilhas = () => {
                 <button onClick={() => showConfirmDeleteModal(true)} className="my-btn">
                     <TrashSvg color="#ffffff"></TrashSvg>
                 </button>
+                {
+                    selectedSpreadsheet && 
+                        <Link className="my-btn" href={`/planilha/editar_planilha/[slug]?slug=${selectedSpreadsheet?.spreadsheet_id}`}>Editar</Link>
+                }
             </div>
             <div className="container m-auto flex flex-col md:flex-row justify-center">
                 {

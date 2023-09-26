@@ -1,4 +1,3 @@
-add:delete spreadsheet api & UI
 add:edit spreadsheet api & UI
 add:trainer send spreadsheet
 UI add exercise name or choose name 

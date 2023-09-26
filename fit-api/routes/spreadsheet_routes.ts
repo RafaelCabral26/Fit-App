@@ -66,4 +66,13 @@ router.delete("/delete_spreadsheet/:id", async (req, res, next) => {
 
     }
 })
+router.get("/search_spreadsheet/:spreadsheet_id", async (req, res,next) => {
+    try{
+    const queriedSpreadsheet = await Spreadsheet.findByPk(req.params.spreadsheet_id)
+   return res.status(200).json({spreadsheet:queriedSpreadsheet}) ;
+    } catch(err) {
+        console.log(err);
+        return res.status(400).json({msg:"Erro ao buscar planilha."})
+    }
+})
 export { router }

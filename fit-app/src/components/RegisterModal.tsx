@@ -54,7 +54,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                 <form className="my-form-modal z-30">
                     <div className="flex justify-between">
                         <h1 className="">Cadastro</h1>
-                        <button onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(true) }} className="text-2xl font-extrabold leading-3 ">X</button>
+                        <button onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
                     <label className="label">
                         <span className="label-text text-xs">Nome</span>

@@ -6,6 +6,7 @@ import { TDays, TExercise } from "../nova_planilha/nova_planilha_Types"
 import TrashSvg from "@/svgs/trashsvg"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import createQueryString from "@/services/createQueryString"
 
 type TSpreadsheets = {
     spreadsheet_id: string,
@@ -13,7 +14,6 @@ type TSpreadsheets = {
 }
 const MinhasPlanilhas = () => {
     const globalState = useContext(GlobalContext);
-    const router = useRouter();
     const [allSpreadsheets, setAllSpreadSheets] = useState<TSpreadsheets[]>();
     const [selectedSpreadsheet, setSelectedSpreadSheet] = useState<TSpreadsheets>();
     const [confirmDeleteModal, showConfirmDeleteModal] = useState<boolean>(false);
@@ -37,9 +37,9 @@ const MinhasPlanilhas = () => {
         if (allSpreadsheets !== undefined) setSelectedSpreadSheet(allSpreadsheets[index]);
     }
     const deleteSpreadsheet = () => {
-        myHTTP.delete(`/delete_spreadsheet/${selectedSpreadsheet?.spreadsheet_id}` )
+        myHTTP.delete(`/delete_spreadsheet/${selectedSpreadsheet?.spreadsheet_id}`)
             .then(res => {
-                globalState?.setToast({type:"success", message:res.data.msg})
+                globalState?.setToast({ type: "success", message: res.data.msg })
                 setSelectedSpreadSheet(undefined)
                 window.location.reload()
             })
@@ -57,12 +57,15 @@ const MinhasPlanilhas = () => {
                         return <option onClick={() => handleSelectSpreadsheet(index)} key={index} value={index}>Planilha - {index + 1}</option>
                     })};
                 </select>
-                <button onClick={() => showConfirmDeleteModal(true)} className="my-btn">
-                    <TrashSvg color="#ffffff"></TrashSvg>
-                </button>
                 {
-                    selectedSpreadsheet && 
-                        <Link className="my-btn" href={`/planilha/editar_planilha/[slug]?slug=${selectedSpreadsheet?.spreadsheet_id}`}>Editar</Link>
+                    selectedSpreadsheet &&
+                    <>
+                        <button onClick={() => showConfirmDeleteModal(true)} className="my-btn">
+                            <TrashSvg color="#ffffff"></TrashSvg>
+                        </button>
+                        <Link href={`/planilha/editar_planilha?${createQueryString("spreadsheet_id", selectedSpreadsheet?.spreadsheet_id)}`} className="my-btn">
+                            Editar</Link>
+                    </>
                 }
             </div>
             <div className="container m-auto flex flex-col md:flex-row justify-center">

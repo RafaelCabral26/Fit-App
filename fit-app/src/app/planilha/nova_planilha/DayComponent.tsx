@@ -21,7 +21,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
         setNewDayArray([...daysArray]);
         localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
     }
-    
+
     const handleModal = () => {
         showNewExerciseModal(true);
         globalState?.isDragDisabledSwitch(true);
@@ -31,10 +31,9 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
             <Droppable type="droppableExercise" key={day.dayUID} droppableId={`${day.dayUID}`}>
                 {(provided, snapshot) => {
                     return (
-                        <div className={`rounded-lg w-52 h-auto lg:w-full shadow-lg m-2 
-                        border-2 border-secondary ${snapshot.isDraggingOver ? "bg-sky-500 bg-opacity-30" : "bg-base-200"}`}
+                        <div className={`my-day-container ${snapshot.isDraggingOver ? "bg-sky-500 bg-opacity-30" : "bg-base-200"}`}
                             {...provided.droppableProps} ref={provided.innerRef}>
-                            <div className="flex justify-between p-2 bg-base-300 rounded-t-sm border-secondary  ">
+                            <div className="flex justify-between p-2 bg-base-300 rounded-t-md">
                                 <h2>{"Dia " + (index + 1)}</h2>
                                 <button onClick={() => showOptions(!optionsDropdown)} className="relative text-2xl ">...
                                     {optionsDropdown &&
@@ -43,7 +42,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
                                                 <li onClick={handleModal}><a>Adicionar</a></li>
                                                 <li onClick={handleDeleteDay} className="text-red-500 hover:text-red-400"><a>Deletar</a></li>
                                             </ul>
-                                    </div>
+                                        </div>
                                     }
                                 </button>
                             </div>

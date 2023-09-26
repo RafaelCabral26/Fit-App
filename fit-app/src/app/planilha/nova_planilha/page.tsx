@@ -84,6 +84,7 @@ const SpreadsheetBuilder: React.FC = () => {
         localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
     }
     const handleSaveSpreadsheet = () => {
+        if(globalState?.userType === null) return globalState?.setToast({type:"warning", message:"Faça login para salvar."});
         if (daysArray.length === 0) return globalState?.setToast({type:"warning", message:"Adicione dias."});
         let emptyDay = false
         daysArray.forEach((ele:any) => {
@@ -96,8 +97,8 @@ const SpreadsheetBuilder: React.FC = () => {
                 if (res.status === 202) {
                     return globalState?.setToast({ type: "warning", message: res.data.msg });
                 }
-                globalState?.setToast({ type: "success", message: res.data.msg })
-                setNewDayArray([])
+                globalState?.setToast({ type: "success", message: res.data.msg });
+                setNewDayArray([]);
                 localStorage.removeItem("Ongoing_Spreadsheet");
                 router.replace("/")
             })

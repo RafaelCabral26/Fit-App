@@ -13,6 +13,7 @@ type TSpreadsheets = {
     days: TDays[]
 }
 const MinhasPlanilhas = () => {
+
     const globalState = useContext(GlobalContext);
     const [allSpreadsheets, setAllSpreadSheets] = useState<TSpreadsheets[]>();
     const [selectedSpreadsheet, setSelectedSpreadSheet] = useState<TSpreadsheets>();
@@ -63,7 +64,7 @@ const MinhasPlanilhas = () => {
                         <button onClick={() => showConfirmDeleteModal(true)} className="my-btn">
                             <TrashSvg color="#ffffff"></TrashSvg>
                         </button>
-                        <Link href={`/planilha/editar_planilha?${createQueryString("spreadsheet_id", selectedSpreadsheet?.spreadsheet_id)}`} className="my-btn">
+                        <Link href={`/planilha/nova_planilha?${createQueryString("spreadsheet_id", selectedSpreadsheet?.spreadsheet_id)}`} className="my-btn">
                             Editar</Link>
                     </>
                 }

@@ -16,7 +16,7 @@
         @apply p-4 rounded-xl drop-shadow-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-base-100 border-2 border-secondary border-opacity-30
     }
     .my-day-container {
-        @apply rounded-lg w-52 h-auto lg:w-full shadow-lg m-2 border-2 border-secondary;
+        @apply rounded-lg w-52 h-auto lg:w-full  shadow-lg m-2 border-2 border-secondary;
     }
     .my-day-header {
         @apply flex justify-between p-2 bg-base-300 rounded-t-md;

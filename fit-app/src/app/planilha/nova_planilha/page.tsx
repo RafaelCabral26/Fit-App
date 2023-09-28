@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useContext, useEffect, useState } from "react"
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 import DayComponent from "./DayComponent"
@@ -6,7 +7,7 @@ import myHTTP from "@/services/axiosconfig"
 import { TPossibleDays, TDays } from "./nova_planilha_Types"
 import { formatExercisesStorage } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import OpenedLockSvg from "@/svgs/openedLock"
 import ClosedLockSvg from "@/svgs/closedLock"
 
@@ -19,43 +20,61 @@ const reorder = (list: any[], startIndex: number, endIndex: number) => {
 
 const SpreadsheetBuilder: React.FC = () => {
     const globalState = useContext(GlobalContext);
+    const searchParams = useSearchParams();
+    const [editingSpreadsheet, setEditingSpreadsheet] = useState<boolean>(false)
     const router = useRouter();
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
+
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
+        const cachedSpreadsheet = localStorage.getItem("Ongoing_Spreadsheet");
         if (listOfExercises === null) {
             myHTTP.get("/list_exercises")
                 .then(res => {
-                    formatExercisesStorage(res.data.exercises)
+                    formatExercisesStorage(res.data.exercises);
                 })
                 .catch(err => {
                     console.log(err);
                 })
         };
-        const cachedSpreadsheet = localStorage.getItem("Ongoing_Spreadsheet");
+        const previousUrlCheck = searchParams.get("spreadsheet_id");
+        if (previousUrlCheck) {
+            myHTTP.get(`/search_spreadsheet/${searchParams.get("spreadsheet_id")}`)
+                .then(res => {
+                    const parsedSpreadsheet = JSON.parse(res.data.spreadsheet.spreadsheet_days);
+                    setEditingSpreadsheet(true);
+                    return setNewDayArray(parsedSpreadsheet);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            return;
+            ;
+        }
         if (cachedSpreadsheet) setNewDayArray((JSON.parse(cachedSpreadsheet)));
-
     }, [])
 
     useEffect(() => {
-        localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
+        if (editingSpreadsheet) return console.log("editing", editingSpreadsheet);
+        const cachedSpreadsheet = localStorage.getItem("Ongoing_Spreadsheet");
+        if (!cachedSpreadsheet) localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray));
     }, [daysArray])
 
     const addNewDay = () => {
         if (daysArray.length < 7) {
-            const newDay: TDays = { dayUID: crypto.randomUUID(), exercises: [], }
-            return setNewDayArray([...daysArray, newDay])
+            const newDay: TDays = { dayUID: crypto.randomUUID(), exercises: [], };
+            return setNewDayArray([...daysArray, newDay]);
         }
-        globalState?.setToast({ type: "warning", message: "Máximo de 7 dias" })
+        globalState?.setToast({ type: "warning", message: "Máximo de 7 dias" });
     }
 
     const onDragEnd = (result: DropResult) => {
         const { source, destination, type } = result;
         if (!destination) {
             return;
-        }
-        const sourceId = source.droppableId
-        const destinationId = destination.droppableId
+        };
+        const sourceId = source.droppableId;
+        const destinationId = destination.droppableId;
         if (type === "droppableExercise") {
             if (sourceId === destinationId) {
                 const tempExercises = daysArray.find((e: TDays) => e.dayUID === sourceId)?.exercises;
@@ -81,24 +100,26 @@ const SpreadsheetBuilder: React.FC = () => {
             const newDayOrder = reorder(daysArray, source.index, destination.index) as TDays[]
             setNewDayArray(newDayOrder)
         }
-        localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
+        if (!editingSpreadsheet) {
+            console.log("edit false");
+            localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
+        }
     }
     const handleSaveSpreadsheet = () => {
-        if(globalState?.userType === null) return globalState?.setToast({type:"warning", message:"Faça login para salvar."});
-        if (daysArray.length === 0) return globalState?.setToast({type:"warning", message:"Adicione dias."});
+        if (globalState?.userType === null) return globalState?.setToast({ type: "warning", message: "Faça login para salvar." });
+        if (daysArray.length === 0) return globalState?.setToast({ type: "warning", message: "Adicione dias." });
         let emptyDay = false
-        daysArray.forEach((ele:any) => {
+        daysArray.forEach((ele: any) => {
             if (ele.exercises.length === 0) emptyDay = true
         })
-        if (emptyDay) return globalState?.setToast({type:"warning", message:"Preencha todos os dias."});
+        if (emptyDay) return globalState?.setToast({ type: "warning", message: "Preencha todos os dias." });
         myHTTP.post("/new_spreadsheet", daysArray)
             .then(res => {
-                console.log(res);
                 if (res.status === 202) {
                     return globalState?.setToast({ type: "warning", message: res.data.msg });
                 }
                 globalState?.setToast({ type: "success", message: res.data.msg });
-                setNewDayArray([]);
+                setNewDayArray([])
                 localStorage.removeItem("Ongoing_Spreadsheet");
                 router.replace("/")
             })
@@ -119,7 +140,7 @@ const SpreadsheetBuilder: React.FC = () => {
                     }
                 </button>
                 <div className="flex flex-col w-full h-auto items-center gap-4 m-4 ">
-                    <div className="flex  gap-4 justify-center rounded-xl">
+                    <div className="flex gap-4 justify-center rounded-xl">
                         <button onClick={addNewDay} type="button" className="my-btn">+</button>
                         <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">Salvar</button>
                         {

@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 import DayComponent from "./DayComponent"
 import myHTTP from "@/services/axiosconfig"
-import { TPossibleDays, TDays } from "./nova_planilha_Types"
+import { TDays } from "./nova_planilha_Types"
 import { formatExercisesStorage } from "./nova_planilha_Utilities"
 import { GlobalContext } from "@/services/MyToast"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -55,7 +55,7 @@ const SpreadsheetBuilder: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        if (editingSpreadsheet) return console.log("editing", editingSpreadsheet);
+        if (editingSpreadsheet) return;
         const cachedSpreadsheet = localStorage.getItem("Ongoing_Spreadsheet");
         if (!cachedSpreadsheet) localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray));
     }, [daysArray])
@@ -101,7 +101,6 @@ const SpreadsheetBuilder: React.FC = () => {
             setNewDayArray(newDayOrder)
         }
         if (!editingSpreadsheet) {
-            console.log("edit false");
             localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray))
         }
     }
@@ -113,6 +112,19 @@ const SpreadsheetBuilder: React.FC = () => {
             if (ele.exercises.length === 0) emptyDay = true
         })
         if (emptyDay) return globalState?.setToast({ type: "warning", message: "Preencha todos os dias." });
+
+        if (editingSpreadsheet) {
+            myHTTP.patch("/update_spreadsheet",{spreadsheet_id:searchParams.get("spreadsheet_id"), spreadsheet_days:daysArray} )
+                .then(res => {
+                    globalState?.setToast({type:"success", message:res.data.msg})
+                })
+                .catch(err => {
+                    console.log(err);
+                    globalState?.setToast({type:"warning",message:err.response.data.msg})
+                })
+            return;
+        }
+
         myHTTP.post("/new_spreadsheet", daysArray)
             .then(res => {
                 if (res.status === 202) {

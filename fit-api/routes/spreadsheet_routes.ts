@@ -47,7 +47,7 @@ router.get("/list_user_spreadsheets", async (req, res, next) => {
                 user_id: user.user_id
             }
         });
-        res.status(200).json({ msg: "Bateu na API", spreadsheet: allSpreadsheets })
+        res.status(200).json({ msg: "Bateu na API", spreadsheet: allSpreadsheets });
     } catch (err) {
         console.log(err);
     }
@@ -59,10 +59,10 @@ router.delete("/delete_spreadsheet/:id", async (req, res, next) => {
                 spreadsheet_id:req.params.id
             }
         }) 
-        return res.status(200).json({msg:"Planilha deletada."})
+        return res.status(200).json({msg:"Planilha deletada."});
     } catch (err) {
         console.log(err);
-        return res.status(402).json({msg:"Erro ao tentar deletar."})
+        return res.status(402).json({msg:"Erro ao tentar deletar."});
 
     }
 })
@@ -72,7 +72,22 @@ router.get("/search_spreadsheet/:spreadsheet_id", async (req, res,next) => {
    return res.status(200).json({spreadsheet:queriedSpreadsheet}) ;
     } catch(err) {
         console.log(err);
-        return res.status(400).json({msg:"Erro ao buscar planilha."})
+        return res.status(400).json({msg:"Erro ao buscar planilha."});
+    }
+})
+router.patch("/update_spreadsheet", async (req, res,next) => {
+    try {
+        const stringfiedDayArray = JSON.stringify(req.body.spreadsheet_days);
+        console.log(stringfiedDayArray);
+        await Spreadsheet.update({spreadsheet_days:stringfiedDayArray}, {
+            where: {
+                spreadsheet_id:req.body.spreadsheet_id,
+            }
+        }) 
+        return res.status(200).json({msg:"Planilha atualizada."});
+    } catch (err) {
+       console.log(err);
+       return res.status(402).json({msg:"Erro ao atualizar."}); 
     }
 })
 export { router }

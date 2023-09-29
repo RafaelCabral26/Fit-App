@@ -1,7 +1,7 @@
 import { GlobalContext } from "@/services/MyToast";
 import { HidePassSvg, ShowPassSvg } from "@/svgs/show-hide-eyes";
 import myHTTP from "@/services/axiosconfig";
-import { SetStateAction, useContext, useState } from "react"
+import { SetStateAction, useContext, useEffect, useState } from "react"
 import { ValidateRegisterInput } from "./ValidationUserInput";
 export type TRegisterInput = {
     name: string,
@@ -11,6 +11,7 @@ export type TRegisterInput = {
     profile: "user" | "trainer",
 }
 const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatch<SetStateAction<boolean>> }) => {
+    const globalState = useContext(GlobalContext);
     const [passwordViewState, setPasswordViewState] = useState<boolean>(false)
     const [userProfile, setUserProfile] = useState<"user" | "trainer">("user");
     const [registerInput, setRegisterInput] = useState<TRegisterInput>({
@@ -19,16 +20,21 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         password: "",
         password_confirm: "",
         profile: userProfile,
-    })
-    const globalState = useContext(GlobalContext);
+    });
+
+    useEffect(() => {
+        setRegisterInput((prev) => {return {...prev, profile:userProfile}});
+    },[userProfile])
+
     const handleRegisterInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         const value = e.target.value;
         setRegisterInput((prev: any) => {
-            return { ...prev, [name]: value, profile: userProfile };
+            return { ...prev, [name]: value  };
         })
     }
-    const tryRegister = () => {
+    const tryRegister = (e:React.SyntheticEvent) => {
+        e.preventDefault();
         const validation = ValidateRegisterInput(registerInput);
         if (validation.valid === false) {
             return globalState?.setToast({ type: "warning", message: validation.message })
@@ -51,10 +57,10 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
     return (
         <div className="fixed top-20 h-screen w-screen z-10">
             <div className="relative w-80 p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-                <form className="my-form-modal z-30">
+                <form onSubmit={tryRegister} className="my-form-modal z-30">
                     <div className="flex justify-between">
                         <h1 className="">Cadastro</h1>
-                        <button onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
+                        <button type="button" onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
                     <label className="label">
                         <span className="label-text text-xs">Nome</span>
@@ -95,7 +101,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                                     <span className="label-text text-xs">Treinador</span>
                                 </label>
                             </div>
-                            <button onClick={tryRegister} type="button" className="my-btn">Registrar</button>
+                            <button type="submit" className="my-btn">Registrar</button>
                         </div>
                     </div>
                 </form>

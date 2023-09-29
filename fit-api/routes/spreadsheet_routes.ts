@@ -8,7 +8,6 @@ const router = Router();
 
 router.post("/new_spreadsheet", async (req, res, next) => {
     try {
-        console.log(req.body);
         if (!req.cookies.authcookie) {
             return res.status(202).json({ msg: "Faça login para salvar planilha." })
         }
@@ -78,7 +77,6 @@ router.get("/search_spreadsheet/:spreadsheet_id", async (req, res,next) => {
 router.patch("/update_spreadsheet", async (req, res,next) => {
     try {
         const stringfiedDayArray = JSON.stringify(req.body.spreadsheet_days);
-        console.log(stringfiedDayArray);
         await Spreadsheet.update({spreadsheet_days:stringfiedDayArray}, {
             where: {
                 spreadsheet_id:req.body.spreadsheet_id,

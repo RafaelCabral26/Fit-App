@@ -52,7 +52,7 @@ const MinhasPlanilhas = () => {
     return (
         <>
             <div className="flex justify-center items-center gap-4 my-5">
-                <select className="my-input basis-40">
+                <select className="my-input">
                     <option hidden>Planilhas...</option>
                     {allSpreadsheets?.map((ele: any, index: any) => {
                         return <option onClick={() => handleSelectSpreadsheet(index)} key={index} value={index}>Planilha - {index + 1}</option>

@@ -4,7 +4,7 @@
 
 @layer components {
     .my-input {
-        @apply  input  h-8 border-2 border-primary leading-none rounded-xl outline-none
+        @apply  input w-64 h-8 border-2 border-primary leading-none rounded-xl outline-none
     }
     .my-btn {
         @apply bg-primary text-base-100 px-4 py-2 shadow-md rounded-lg my-2

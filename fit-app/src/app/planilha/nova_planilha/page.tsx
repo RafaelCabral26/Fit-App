@@ -114,13 +114,13 @@ const SpreadsheetBuilder: React.FC = () => {
         if (emptyDay) return globalState?.setToast({ type: "warning", message: "Preencha todos os dias." });
 
         if (editingSpreadsheet) {
-            myHTTP.patch("/update_spreadsheet",{spreadsheet_id:searchParams.get("spreadsheet_id"), spreadsheet_days:daysArray} )
+            myHTTP.patch("/update_spreadsheet", { spreadsheet_id: searchParams.get("spreadsheet_id"), spreadsheet_days: daysArray })
                 .then(res => {
-                    globalState?.setToast({type:"success", message:res.data.msg})
+                    globalState?.setToast({ type: "success", message: res.data.msg })
                 })
                 .catch(err => {
                     console.log(err);
-                    globalState?.setToast({type:"warning",message:err.response.data.msg})
+                    globalState?.setToast({ type: "warning", message: err.response.data.msg })
                 })
             return;
         }

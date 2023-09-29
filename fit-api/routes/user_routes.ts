@@ -10,9 +10,9 @@ router.post("/register", async (req, res, next) => {
         const user = {
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            profile: req.body.profile
         };
-        
         user.password = await auth.createEncryptedPass(user.password)
         await User.create(user);
         res.status(200).json({ msg: "Usuário Cadastrado!" })
@@ -30,7 +30,6 @@ router.post("/login", async (req, res, next) => {
             throw new Error("Preencha todos os campos.");
         }
         const dbUser = await User.findOne({ where: { email: userInput.email } });
-        console.log(dbUser);
         if (!dbUser) throw new Error("Usuário não encontrado");
         await auth.comparePasswords(userInput.password, dbUser.password);
         const token = await auth.createToken(dbUser);

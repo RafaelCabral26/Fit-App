@@ -2,9 +2,8 @@
 import { GlobalContext } from "@/services/MyToast"
 import myHTTP from "@/services/axiosconfig"
 import { useContext, useEffect, useState } from "react"
-import { TDays, TExercise } from "../nova_planilha/nova_planilha_Types"
+import { TDays, TExercise } from "../construtor_planilha/Spreadsheet_Types"
 import TrashSvg from "@/svgs/trashsvg"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
 import createQueryString from "@/services/createQueryString"
 
@@ -64,7 +63,7 @@ const MinhasPlanilhas = () => {
                         <button onClick={() => showConfirmDeleteModal(true)} className="my-btn">
                             <TrashSvg color="#ffffff"></TrashSvg>
                         </button>
-                        <Link href={`/planilha/nova_planilha?${createQueryString("spreadsheet_id", selectedSpreadsheet?.spreadsheet_id)}`} className="my-btn">
+                        <Link href={`/planilha/construtor_planilha?${createQueryString("spreadsheet_id", selectedSpreadsheet?.spreadsheet_id)}`} className="my-btn">
                             Editar</Link>
                     </>
                 }

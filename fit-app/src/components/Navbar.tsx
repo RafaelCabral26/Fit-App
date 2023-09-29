@@ -6,6 +6,7 @@ import RegisterModal from "./RegisterModal"
 import myHTTP from "@/services/axiosconfig"
 import { GlobalContext } from "@/services/MyToast"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 export const Navbar = () => {
     const globalState = useContext(GlobalContext);
     const router = useRouter();
@@ -54,7 +55,7 @@ export const Navbar = () => {
                         <div className="dropdown dropdown-end">
                             <label tabIndex={0} className=" m-1 cursor-pointer hover:text-primary">Planilha</label>
                             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                <li className=""><a className="my-list-item" href="/planilha/nova_planilha">Criar Planilha</a></li>
+                                <li className=""><a className="my-list-item" href="/planilha/construtor_planilha">Criar Planilha</a></li>
                                 <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>
                             </ul>
                         </div>
@@ -76,7 +77,7 @@ export const Navbar = () => {
                                 {globalState?.userType === "trainer" &&
                                     (<>
                                         <li><button className="my-list-item" >Perfil</button></li>
-                                        <li><button className="my-list-item" >Alunos</button></li>
+                                        <li><Link href={"/alunos"} className="my-list-item" >Alunos</Link></li>
                                         <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
                                     </>)
                                 }

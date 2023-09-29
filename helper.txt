@@ -1,6 +1,5 @@
-add:trainer send spreadsheet
-UI add exercise name or choose name 
 add:trainer send spreadsheet to user
+add:UI trainer managing
 
 
 

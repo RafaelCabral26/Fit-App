@@ -33,32 +33,56 @@ router.post("/login", async (req, res, next) => {
         if (!dbUser) throw new Error("Usuário não encontrado");
         await auth.comparePasswords(userInput.password, dbUser.password);
         const token = await auth.createToken(dbUser);
-        res.cookie('authcookie', token, { httpOnly: true, maxAge: 36000 * 60, sameSite: "none", secure: true });
+        res.cookie('authcookie', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true });
         return res.status(200).json({ msg: "Usuário Logado!" })
     } catch (err: any) {
         return res.status(400).json({ msg: err.message });
     }
-    })
+})
 router.post("/check_user", async (req, res, next) => {
     try {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {
             const user = jwt.verify(token, secret) as TUser;
-            return res.status(200).json({logged:true,profile:user.profile})
+            return res.status(200).json({ logged: true, profile: user.profile })
         }
         return res.status(200).json({ logged: false });
     } catch (err) {
-        return res.status(400).json({ msg:"Falha de conexão", err:err });
+        return res.status(400).json({ msg: "Falha de conexão", err: err });
     }
 
 })
-router.get("/logout", async (req,res,next) => {
+router.get("/logout", async (req, res, next) => {
     try {
         res.clearCookie('authcookie');
-        return res.status(200).json({msg:"Usuário Deslogado"});
+        return res.status(200).json({ msg: "Usuário Deslogado" });
     } catch (err) {
-       return res.status(400).json({msg:"Erro ao tentar sair", error:err}) 
+        return res.status(400).json({ msg: "Erro ao tentar sair", error: err })
     }
+})
+router.patch("/add_client", async (req, res, next) => {
+    try {
+        const userEmail = req.body.email;
+        const secret = process.env.SECRET as Secret;
+        const token = req.cookies.authcookie;
+        if (token) {
+            const user = jwt.verify(token, secret) as TUser;
+            if (user.profile !== "trainer") return res.status(202).json({ msg: "Conta sem permissão" });
+            const verifyUser = await User.findOne({ where: { email: userEmail } })
+            if (!verifyUser) return res.status(202).json({msg:"Cliente não encontrado."})
+            const trainer = await User.findOne({where:{user_id:user.user_id}})
+            const listOfClients = [trainer.trainer_clients]
+            listOfClients.push(userEmail)
+            await trainer.update({trainer_clients:listOfClients});
+            await trainer.save();
+            return res.status(200).json({msg:"Cliente adicionado."})
+        }
+
+        return res.status(204).json({ msg: "Faça login." })
+    } catch (err) {
+        console.log(err);
+    }
+
 })
 export { router }

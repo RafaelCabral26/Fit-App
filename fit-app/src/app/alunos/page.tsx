@@ -6,13 +6,9 @@ import { useRouter } from "next/navigation"
 import { SetStateAction, useContext, useEffect, useState } from "react"
 
 const ManageClients = () => {
-    const globalState = useContext(GlobalContext);
     const [addClientModal, showAddClientModal] = useState<boolean>(false);
 
 
-    const handleAddNewClient = () => {
-
-    }
     return (
         <>
             <div className="container flex flex-col  m-auto  ">
@@ -31,10 +27,19 @@ const ManageClients = () => {
     )
 }
 const ClientModal = ({ showAddClientModal }: { showAddClientModal: React.Dispatch<SetStateAction<boolean>> }) => {
-    const [userEmail, setUserEmail] = useState<string>();
-    const handleSubmit = (event:React.SyntheticEvent) => {
+    const globalState = useContext(GlobalContext);
+    const [userEmail, setUserEmail] = useState<string>("");
+    const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
         console.log(userEmail);
+        myHTTP.patch("/add_client", {email:userEmail})
+            .then(res => {
+                console.log(res);
+                globalState?.setToast({type:"success",message:res.data.msg})            
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
     return (
         <div onSubmit={handleSubmit} className="fixed top-20 h-screen w-screen z-10">
@@ -44,7 +49,7 @@ const ClientModal = ({ showAddClientModal }: { showAddClientModal: React.Dispatc
                         <span className="label-text">Email do Cliente</span>
                         <button onClick={() => showAddClientModal(false)} className="text-2xl">X</button>
                     </label>
-                    <input value={userEmail} onChange={e => setUserEmail(e.target.value)}  type="text" className="my-input" autoFocus />
+                    <input value={userEmail} onChange={e => setUserEmail(e.target.value)} type="text" className="my-input" autoFocus />
                     <div className="flex justify-between">
                         <button className="my-btn" type="submit">
                             Adicionar

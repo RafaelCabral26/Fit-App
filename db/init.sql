@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `password` VARCHAR(255) NOT NULL,
     `profile` VARCHAR(255) DEFAULT 'user' CHECK(profile in ('user', 'trainer')),
     `active` TINYINT(1) DEFAULT true,
+    `trainer_clients` JSON,
     `createdAt` DATETIME NOT NULL,
     `updatedAt` DATETIME NOT NULL,
     PRIMARY KEY (`user_id`));

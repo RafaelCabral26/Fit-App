@@ -61,6 +61,7 @@ router.get("/logout", async (req, res, next) => {
         return res.status(400).json({ msg: "Erro ao tentar sair", error: err })
     }
 })
+
 router.patch("/add_client", async (req, res, next) => {
     try {
         const userEmail = req.body.email;
@@ -68,21 +69,25 @@ router.patch("/add_client", async (req, res, next) => {
         const token = req.cookies.authcookie;
         if (token) {
             const user = jwt.verify(token, secret) as TUser;
-            if (user.profile !== "trainer") return res.status(202).json({ msg: "Conta sem permissão" });
-            const verifyUser = await User.findOne({ where: { email: userEmail } })
-            if (!verifyUser) return res.status(202).json({msg:"Cliente não encontrado."})
-            const trainer = await User.findOne({where:{user_id:user.user_id}})
-            const listOfClients = [trainer.trainer_clients]
-            listOfClients.push(userEmail)
-            await trainer.update({trainer_clients:listOfClients});
+            if (user.profile !== "trainer") throw new Error("Conta sem permissão");
+            const verifyUser = await User.findOne({ where: { email: userEmail } });
+            if (!verifyUser) throw new Error("Cliente não encontrado")
+            const trainer = await User.findOne({ where: { user_id: user.user_id } });
+            if (trainer.trainer_clients === null) {
+                trainer.trainer_clients = [userEmail];
+                await trainer.save();
+                return res.status(200).json({ msg: "Cliente adicionado." });
+            }
+            trainer.trainer_clients.forEach((element: any) => {
+                if (element === userEmail) throw new Error("Cliente já foi adicionado")
+            });
+            trainer.trainer_clients = [...trainer.trainer_clients, userEmail]
             await trainer.save();
-            return res.status(200).json({msg:"Cliente adicionado."})
+            return res.status(200).json({ msg: "Cliente adicionado." });
         }
-
-        return res.status(204).json({ msg: "Faça login." })
-    } catch (err) {
-        console.log(err);
+        return res.status(204).json({ err: "Faça login." });
+    } catch (err: any) {
+        return res.status(402).json({ msg: err.message })
     }
-
 })
 export { router }

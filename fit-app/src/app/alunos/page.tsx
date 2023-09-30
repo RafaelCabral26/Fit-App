@@ -31,14 +31,12 @@ const ClientModal = ({ showAddClientModal }: { showAddClientModal: React.Dispatc
     const [userEmail, setUserEmail] = useState<string>("");
     const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        console.log(userEmail);
         myHTTP.patch("/add_client", {email:userEmail})
             .then(res => {
-                console.log(res);
-                globalState?.setToast({type:"success",message:res.data.msg})            
+                globalState?.setToast({type:"success",message:res.data.msg});
             })
             .catch(err => {
-                console.log(err);
+                globalState?.setToast({type:"warning", message:err.response.data.msg})
             })
     }
     return (

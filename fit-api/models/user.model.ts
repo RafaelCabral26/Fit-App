@@ -38,6 +38,9 @@ const User = sequelize.define("user", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    trainer_clients:{
+    type:DataTypes.JSON,
+    },
     profile: {
         type: DataTypes.STRING,
         defaultValue: "user",

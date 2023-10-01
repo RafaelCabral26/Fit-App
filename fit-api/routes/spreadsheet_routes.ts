@@ -94,12 +94,10 @@ router.post("/get_client_spreadsheet", async (req, res, next) => {
     try {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
-        console.log(req.body.client_email);
         const trainer = jwt.verify(token, secret) as TUser;
         if (!trainer) throw new Error("Faça login.");
         const user = await User.findOne({ where: { email: req.body.client_email }});
         const userSpreadsheets = await Spreadsheet.findAll({where: {user_id:user.user_id}});
-        console.log(userSpreadsheets);
         return res.status(200).json({user_spreadsheets:userSpreadsheets})
     } catch (err) {
         console.log(err);

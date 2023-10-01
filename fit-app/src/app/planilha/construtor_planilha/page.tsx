@@ -10,6 +10,7 @@ import { GlobalContext, TToast } from "@/services/MyToast"
 import { useRouter, useSearchParams } from "next/navigation"
 import OpenedLockSvg from "@/svgs/openedLock"
 import ClosedLockSvg from "@/svgs/closedLock"
+import SendSpreadsheetModal from "./modalSendSpreadsheet"
 
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
     const result = list;
@@ -21,9 +22,10 @@ const reorder = (list: any[], startIndex: number, endIndex: number) => {
 const SpreadsheetBuilder: React.FC = () => {
     const globalState = useContext(GlobalContext);
     const searchParams = useSearchParams();
-    const [editingSpreadsheet, setEditingSpreadsheet] = useState<boolean>(false);
     const router = useRouter();
+    const [editingSpreadsheet, setEditingSpreadsheet] = useState<boolean>(false);
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
+    const [sendModal, showSendModal] = useState<boolean>(false);
 
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
@@ -100,18 +102,6 @@ const SpreadsheetBuilder: React.FC = () => {
                 console.log(err);
             })
     }
-    const handleSendSpreadsheet = () => {
-        const spreadsheetInvalid = validateSpreadsheet(daysArray, globalState);
-        if (spreadsheetInvalid) return globalState?.setToast(spreadsheetInvalid);
-        myHTTP.post("/send_spreadsheet", { daysArray: daysArray })
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
     return (
         <DragDropContext onDragEnd={handleDnd} >
             <div className="flex h-screen w-screen">
@@ -128,7 +118,7 @@ const SpreadsheetBuilder: React.FC = () => {
                         <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">Salvar</button>
                         {
                             globalState?.userType === "trainer" &&
-                            <button className="my-btn" type="button">Enviar</button>
+                            <button onClick={() => showSendModal(true)} className="my-btn" type="button">Enviar</button>
                         }
                     </div>
                     <Droppable direction={window.innerWidth > 560 ? "horizontal" : "vertical"} type="droppableDay" droppableId="droppableContainer">
@@ -153,7 +143,12 @@ const SpreadsheetBuilder: React.FC = () => {
                                 </div>)
                         }}
                     </Droppable>
+
                 </div>
+                {
+                    sendModal &&
+                    <SendSpreadsheetModal showSendModal={showSendModal} daysArray={daysArray}></SendSpreadsheetModal>
+                }
             </div>
         </DragDropContext>
     )

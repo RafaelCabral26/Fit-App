@@ -5,8 +5,8 @@ import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea
 import DayComponent from "./DayComponent"
 import myHTTP from "@/services/axiosconfig"
 import { TDays } from "./Spreadsheet_Types"
-import { formatExercisesStorage, triggerDnd } from "./Spreadsheet_Utilities"
-import { GlobalContext } from "@/services/MyToast"
+import { formatExercisesStorage, triggerDnd, validateSpreadsheet } from "./Spreadsheet_Utilities"
+import { GlobalContext, TToast } from "@/services/MyToast"
 import { useRouter, useSearchParams } from "next/navigation"
 import OpenedLockSvg from "@/svgs/openedLock"
 import ClosedLockSvg from "@/svgs/closedLock"
@@ -68,18 +68,12 @@ const SpreadsheetBuilder: React.FC = () => {
         globalState?.setToast({ type: "warning", message: "Máximo de 7 dias" });
     }
 
-    const handleDnd = (result:DropResult) => {
-        triggerDnd(result, daysArray, setNewDayArray,editingSpreadsheet);
+    const handleDnd = (result: DropResult) => {
+        triggerDnd(result, daysArray, setNewDayArray, editingSpreadsheet);
     }
     const handleSaveSpreadsheet = () => {
-        if (globalState?.userType === null) return globalState?.setToast({ type: "warning", message: "Faça login para salvar." });
-        if (daysArray.length === 0) return globalState?.setToast({ type: "warning", message: "Adicione dias." });
-        let emptyDay = false
-        daysArray.forEach((ele: any) => {
-            if (ele.exercises.length === 0) emptyDay = true;
-        })
-        if (emptyDay) return globalState?.setToast({ type: "warning", message: "Preencha todos os dias." });
-
+        const spreadsheetInvalid = validateSpreadsheet(daysArray, globalState)
+        if (spreadsheetInvalid) return globalState?.setToast(spreadsheetInvalid)
         if (editingSpreadsheet) {
             myHTTP.patch("/update_spreadsheet", { spreadsheet_id: searchParams.get("spreadsheet_id"), spreadsheet_days: daysArray })
                 .then(res => {
@@ -106,8 +100,16 @@ const SpreadsheetBuilder: React.FC = () => {
                 console.log(err);
             })
     }
-    const handleTrainerSendSpreadsheet = () => {
-        
+    const handleSendSpreadsheet = () => {
+        const spreadsheetInvalid = validateSpreadsheet(daysArray, globalState);
+        if (spreadsheetInvalid) return globalState?.setToast(spreadsheetInvalid);
+        myHTTP.post("/send_spreadsheet", { daysArray: daysArray })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (

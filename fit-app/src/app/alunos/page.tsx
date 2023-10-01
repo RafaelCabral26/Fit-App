@@ -62,8 +62,10 @@ const ManageClients = () => {
     )
 }
 const ClientModal = ({ showAddClientModal }: { showAddClientModal: React.Dispatch<SetStateAction<boolean>> }) => {
+
     const globalState = useContext(GlobalContext);
     const [userEmail, setUserEmail] = useState<string>("");
+
     const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
         myHTTP.patch("/add_client", { email: userEmail })

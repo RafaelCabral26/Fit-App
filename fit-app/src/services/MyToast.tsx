@@ -1,11 +1,11 @@
 "use client"
 import { SetStateAction, createContext, useContext, useEffect, useState } from "react"
 
-type TToast = {
+export type TToast = {
     type: "success" | "warning" | "error" | null,
     message: string | null,
 }
-type TPropsGlobalContext = {
+export type TPropsGlobalContext = {
     toast: TToast,
     setToast: React.Dispatch<SetStateAction<TToast>>,
     isDragDisabledState: boolean

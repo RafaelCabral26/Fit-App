@@ -2,20 +2,55 @@
 
 import { GlobalContext } from "@/services/MyToast"
 import myHTTP from "@/services/axiosconfig"
+import { warn } from "console"
 import { useRouter } from "next/navigation"
 import { SetStateAction, useContext, useEffect, useState } from "react"
 
 const ManageClients = () => {
     const [addClientModal, showAddClientModal] = useState<boolean>(false);
+    const [clientList, setClientList] = useState<[] | null>();
+    const [selectedClient, setSelectedClient] = useState<string | null>(null);
+    useEffect(() => {
+        myHTTP.get("/client_list")
+            .then(res => {
 
-
+                setClientList(res.data.client_list)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, []);
+    useEffect(() => {
+        if (selectedClient === null) return
+        myHTTP.post("/get_client_spreadsheet", {client_email:selectedClient})
+        .then(res => {
+                console.log(res);
+            })
+        .catch(err => {
+                console.log(err);
+            })
+    }, [selectedClient])
     return (
         <>
             <div className="container flex flex-col  m-auto  ">
-                <div className="flex justify-center">
+                <div className="flex gap-2 justify-center items-center">
                     <div>
                         <button onClick={() => { showAddClientModal(true) }} className="my-btn">Adicionar Cliente</button>
                     </div>
+                    <select className="my-input">
+                        <option hidden>Selecionar cliente...</option>
+                        {
+                            clientList?.map((ele: any) => {
+                                return (
+                                    <option key={ele} onClick={e => setSelectedClient(ele)}>
+                                        {ele}
+                                    </option>
+                                )
+                            })
+                        }
+                    </select>
+                </div>
+                <div className="container">
                 </div>
             </div>
             {
@@ -31,13 +66,15 @@ const ClientModal = ({ showAddClientModal }: { showAddClientModal: React.Dispatc
     const [userEmail, setUserEmail] = useState<string>("");
     const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        myHTTP.patch("/add_client", {email:userEmail})
+        myHTTP.patch("/add_client", { email: userEmail })
             .then(res => {
-                globalState?.setToast({type:"success",message:res.data.msg});
+                globalState?.setToast({ type: "success", message: res.data.msg });
+                showAddClientModal(false)
             })
             .catch(err => {
-                globalState?.setToast({type:"warning", message:err.response.data.msg})
+                globalState?.setToast({ type: "warning", message: err.response.data.msg })
             })
+
     }
     return (
         <div onSubmit={handleSubmit} className="fixed top-20 h-screen w-screen z-10">
@@ -45,7 +82,7 @@ const ClientModal = ({ showAddClientModal }: { showAddClientModal: React.Dispatc
                 <form className="my-form-modal">
                     <label className="label">
                         <span className="label-text">Email do Cliente</span>
-                        <button onClick={() => showAddClientModal(false)} className="text-2xl">X</button>
+                        <button type="button" onClick={() => showAddClientModal(false)} className="text-2xl">X</button>
                     </label>
                     <input value={userEmail} onChange={e => setUserEmail(e.target.value)} type="text" className="my-input" autoFocus />
                     <div className="flex justify-between">

@@ -16,7 +16,6 @@ router.post("/register", async (req, res, next) => {
         user.password = await auth.createEncryptedPass(user.password)
         await User.create(user);
         res.status(200).json({ msg: "Usuário Cadastrado!" })
-        next();
     } catch (err) {
         res.status(403).send({ msg: err })
     }
@@ -90,4 +89,18 @@ router.patch("/add_client", async (req, res, next) => {
         return res.status(402).json({ msg: err.message })
     }
 })
+router.get("/client_list", async (req, res, next) => {
+    try {
+        const secret = process.env.SECRET as Secret;
+        const token = req.cookies.authcookie;
+        if (token) {
+            const user = jwt.verify(token, secret) as TUser;
+            if (user.profile !== "trainer") throw new Error("Usuário sem permissão");
+            const trainer = await User.findOne({ where: { user_id: user.user_id } });
+            return res.status(200).json({ client_list: trainer.trainer_clients })
+        }
+    } catch (err) {
+        console.log(err);
+    }
+});
 export { router }

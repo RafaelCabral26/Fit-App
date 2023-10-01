@@ -1,13 +1,14 @@
 "use client"
 import { Router } from "express";
 import jwt, { Secret } from "jsonwebtoken";
-import { TUser } from "../models/user.model";
+import User, { TUser } from "../models/user.model";
 import Spreadsheet from "../models/spreadsheet.model";
 
 const router = Router();
 
 router.post("/new_spreadsheet", async (req, res, next) => {
     try {
+        console.log(req.body);
         if (!req.cookies.authcookie) {
             return res.status(202).json({ msg: "Faça login para salvar planilha." })
         }
@@ -87,5 +88,22 @@ router.patch("/update_spreadsheet", async (req, res,next) => {
        console.log(err);
        return res.status(402).json({msg:"Erro ao atualizar."}); 
     }
-})
+});
+
+router.post("/get_client_spreadsheet", async (req, res, next) => {
+    try {
+        const secret = process.env.SECRET as Secret;
+        const token = req.cookies.authcookie;
+        console.log(req.body.client_email);
+        const trainer = jwt.verify(token, secret) as TUser;
+        if (!trainer) throw new Error("Faça login.");
+        const user = await User.findOne({ where: { email: req.body.client_email }});
+        const userSpreadsheets = await Spreadsheet.findAll({where: {user_id:user.user_id}});
+        console.log(userSpreadsheets);
+        return res.status(200).json({user_spreadsheets:userSpreadsheets})
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 export { router }

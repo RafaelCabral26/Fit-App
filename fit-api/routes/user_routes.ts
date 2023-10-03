@@ -103,12 +103,4 @@ router.get("/client_list", async (req, res, next) => {
         return res.status(402).json({msg:err.message})
     }
 });
-router.post("/send_spreadsheet", async (req,res,next) => {
-    try{
-        console.log(req.body.spreadsheet);
-        return res.status(200).json({msg:"Planilha enviada!"});
-    } catch (err) {
-        console.log(err);
-    }
-})
 export { router }

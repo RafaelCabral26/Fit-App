@@ -2,24 +2,23 @@
 
 import { GlobalContext } from "@/services/MyToast"
 import myHTTP from "@/services/axiosconfig"
-import { warn } from "console"
-import { useRouter } from "next/navigation"
 import { SetStateAction, useContext, useEffect, useState } from "react"
 
 const ManageClients = () => {
     const [addClientModal, showAddClientModal] = useState<boolean>(false);
     const [clientList, setClientList] = useState<[] | null>();
     const [selectedClient, setSelectedClient] = useState<string | null>(null);
+    const [ triggerRequest, setTriggerRequest] = useState<boolean>(false);
+
     useEffect(() => {
         myHTTP.get("/client_list")
             .then(res => {
-
                 setClientList(res.data.client_list)
             })
             .catch(err => {
                 console.log(err);
             })
-    }, []);
+    }, [triggerRequest]);
     useEffect(() => {
         if (selectedClient === null) return
         myHTTP.post("/get_client_spreadsheet", {client_email:selectedClient})
@@ -55,13 +54,13 @@ const ManageClients = () => {
             </div>
             {
                 addClientModal &&
-                <ClientModal showAddClientModal={showAddClientModal}></ClientModal>
+                <AddClientModal showAddClientModal={showAddClientModal} triggerRequest={triggerRequest} setTriggerRequest={setTriggerRequest}></AddClientModal>
             }
 
         </>
     )
 }
-const ClientModal = ({ showAddClientModal }: { showAddClientModal: React.Dispatch<SetStateAction<boolean>> }) => {
+const AddClientModal = ({ showAddClientModal, triggerRequest, setTriggerRequest }: { showAddClientModal: React.Dispatch<SetStateAction<boolean>>, triggerRequest:boolean, setTriggerRequest:React.Dispatch<SetStateAction<boolean>> }) => {
 
     const globalState = useContext(GlobalContext);
     const [userEmail, setUserEmail] = useState<string>("");
@@ -71,10 +70,11 @@ const ClientModal = ({ showAddClientModal }: { showAddClientModal: React.Dispatc
         myHTTP.patch("/add_client", { email: userEmail })
             .then(res => {
                 globalState?.setToast({ type: "success", message: res.data.msg });
-                showAddClientModal(false)
+                showAddClientModal(false);
+                setTriggerRequest(!triggerRequest);
             })
             .catch(err => {
-                globalState?.setToast({ type: "warning", message: err.response.data.msg })
+                globalState?.setToast({ type: "warning", message: err.response.data.msg });
             })
 
     }

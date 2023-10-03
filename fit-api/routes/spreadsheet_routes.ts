@@ -16,8 +16,7 @@ router.post("/new_spreadsheet", async (req, res, next) => {
         const user = jwt.verify(req.cookies.authcookie, secret) as TUser;
         const stringfiedDayArray = JSON.stringify(req.body)
         const spreadsheetMould = {
-            trainer_id: null,
-            user_id: user.user_id,
+            fk_user_id: user.user_id,
             spreadsheet_days: stringfiedDayArray,
         }
         const { count, rows } = await Spreadsheet.findAndCountAll({
@@ -56,37 +55,37 @@ router.delete("/delete_spreadsheet/:id", async (req, res, next) => {
     try {
         Spreadsheet.destroy({
             where: {
-                spreadsheet_id:req.params.id
+                spreadsheet_id: req.params.id
             }
-        }) 
-        return res.status(200).json({msg:"Planilha deletada."});
+        })
+        return res.status(200).json({ msg: "Planilha deletada." });
     } catch (err) {
         console.log(err);
-        return res.status(402).json({msg:"Erro ao tentar deletar."});
+        return res.status(402).json({ msg: "Erro ao tentar deletar." });
 
     }
 })
-router.get("/search_spreadsheet/:spreadsheet_id", async (req, res,next) => {
-    try{
-    const queriedSpreadsheet = await Spreadsheet.findByPk(req.params.spreadsheet_id)
-   return res.status(200).json({spreadsheet:queriedSpreadsheet}) ;
-    } catch(err) {
+router.get("/search_spreadsheet/:spreadsheet_id", async (req, res, next) => {
+    try {
+        const queriedSpreadsheet = await Spreadsheet.findByPk(req.params.spreadsheet_id)
+        return res.status(200).json({ spreadsheet: queriedSpreadsheet });
+    } catch (err) {
         console.log(err);
-        return res.status(400).json({msg:"Erro ao buscar planilha."});
+        return res.status(400).json({ msg: "Erro ao buscar planilha." });
     }
 })
-router.patch("/update_spreadsheet", async (req, res,next) => {
+router.patch("/update_spreadsheet", async (req, res, next) => {
     try {
         const stringfiedDayArray = JSON.stringify(req.body.spreadsheet_days);
-        await Spreadsheet.update({spreadsheet_days:stringfiedDayArray}, {
+        await Spreadsheet.update({ spreadsheet_days: stringfiedDayArray }, {
             where: {
-                spreadsheet_id:req.body.spreadsheet_id,
+                spreadsheet_id: req.body.spreadsheet_id,
             }
-        }) 
-        return res.status(200).json({msg:"Planilha atualizada."});
+        })
+        return res.status(200).json({ msg: "Planilha atualizada." });
     } catch (err) {
-       console.log(err);
-       return res.status(402).json({msg:"Erro ao atualizar."}); 
+        console.log(err);
+        return res.status(402).json({ msg: "Erro ao atualizar." });
     }
 });
 
@@ -96,11 +95,35 @@ router.post("/get_client_spreadsheet", async (req, res, next) => {
         const token = req.cookies.authcookie;
         const trainer = jwt.verify(token, secret) as TUser;
         if (!trainer) throw new Error("Faça login.");
-        const user = await User.findOne({ where: { email: req.body.client_email }});
-        const userSpreadsheets = await Spreadsheet.findAll({where: {user_id:user.user_id}});
-        return res.status(200).json({user_spreadsheets:userSpreadsheets})
+        const user = await User.findOne({ where: { email: req.body.client_email } });
+        const userSpreadsheets = await Spreadsheet.findAll({ where: { user_id: user.user_id } });
+        return res.status(200).json({ user_spreadsheets: userSpreadsheets })
     } catch (err) {
         console.log(err);
+    }
+});
+
+router.post("/send_spreadsheet", async (req, res, next) => {
+    try {
+        const secret = process.env.SECRET as Secret;
+        const token = req.cookies.authcookie;
+        const stringfiedDayArray = JSON.stringify(req.body.daysArray);
+        if (token) {
+            const trainer = jwt.verify(token, secret) as TUser;
+            if (trainer.profile !== "trainer") throw new Error("Usuário sem permissão");
+            const client = await User.findOne({where:{email:req.body.client_email}});
+            console.log("client",client.user_id);
+            const spreadsheetMould = {
+                fk_trainer_id: trainer.user_id,
+                fk_user_id: client.user_id,
+                spreadsheet_days: stringfiedDayArray,
+            }
+            console.log("mould", spreadsheetMould);
+            await Spreadsheet.create(spreadsheetMould)
+            return res.status(200).json({ msg: "Planilha enviada" })
+        }
+    } catch (err: any) {
+        return res.status(402).json({ msg: err.message })
     }
 });
 

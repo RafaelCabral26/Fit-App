@@ -21,13 +21,14 @@ CREATE TABLE IF NOT EXISTS `exercises_samples` (
 
 CREATE TABLE IF NOT EXISTS `spreadsheets` (
     `spreadsheet_id` CHAR(36) BINARY NOT NULL UNIQUE,
-    `user_id` CHAR(36)  BINARY NOT NULL,
-    `trainer_id` CHAR(36) BINARY,
+    `fk_user_id` CHAR(36)  BINARY NOT NULL,
+    `fk_trainer_id` CHAR(36) BINARY DEFAULT NULL,
     `spreadsheet_days` JSON,
     `createdAt` DATETIME NOT NULL,
     `updatedAt` DATETIME NOT NULL,
     PRIMARY KEY (`spreadsheet_id`),
-    FOREIGN KEY(`user_id`) REFERENCES `users`(`user_id`));
+    FOREIGN KEY(`fk_user_id`) REFERENCES `users`(`user_id`),
+    FOREIGN KEY(`fk_trainer_id`) REFERENCES `users`(`user_id`));
 
 SET NAMES utf8mb4;
 DELIMITER //

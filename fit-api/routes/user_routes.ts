@@ -3,6 +3,7 @@ import auth from "../services/auth";
 import User from "../models/user.model";
 import jwt, { Secret } from "jsonwebtoken";
 import { TUser } from "../models/user.model";
+import Trainer from "../models/trainer.model";
 const router = Router();
 
 router.post("/register", async (req, res, next) => {
@@ -11,10 +12,15 @@ router.post("/register", async (req, res, next) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            profile: req.body.profile
+            //profile: req.body.profile,
         };
         user.password = await auth.createEncryptedPass(user.password)
-        await User.create(user);
+
+        if (req.body.profile === "user") {
+            await User.create(user);
+        } else if (req.body.profile === "trainer") {
+            await Trainer.create(user);
+        }
         res.status(200).json({ msg: "Usuário Cadastrado!" })
     } catch (err) {
         res.status(403).send({ msg: err })
@@ -28,8 +34,11 @@ router.post("/login", async (req, res, next) => {
         if (!userInput.email || !userInput.password) {
             throw new Error("Preencha todos os campos.");
         }
-        const dbUser = await User.findOne({ where: { email: userInput.email } });
-        if (!dbUser) throw new Error("Usuário não encontrado");
+        let dbUser = await User.findOne({ where: { email: userInput.email } });
+        if (!dbUser) {
+            dbUser = await Trainer.findOne({ where: { email: userInput.email } });
+            throw new Error("Usuário não encontrado");
+        }
         await auth.comparePasswords(userInput.password, dbUser.password);
         const token = await auth.createToken(dbUser);
         res.cookie('authcookie', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true });
@@ -86,7 +95,7 @@ router.patch("/add_client", async (req, res, next) => {
         }
         return res.status(204).json({ err: "Faça login." });
     } catch (err: any) {
-        return res.status(402).json({ msg: err.message })
+        return res.status(402).json({ msg: err.message });
     }
 })
 router.get("/client_list", async (req, res, next) => {
@@ -99,8 +108,8 @@ router.get("/client_list", async (req, res, next) => {
             const trainer = await User.findOne({ where: { user_id: user.user_id } });
             return res.status(200).json({ client_list: trainer.trainer_clients })
         }
-    } catch (err:any) {
-        return res.status(402).json({msg:err.message})
+    } catch (err: any) {
+        return res.status(402).json({ msg: err.message })
     }
 });
 export { router }

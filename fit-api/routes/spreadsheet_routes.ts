@@ -8,7 +8,6 @@ const router = Router();
 
 router.post("/new_spreadsheet", async (req, res, next) => {
     try {
-        console.log(req.body);
         if (!req.cookies.authcookie) {
             return res.status(202).json({ msg: "Faça login para salvar planilha." })
         }
@@ -21,7 +20,7 @@ router.post("/new_spreadsheet", async (req, res, next) => {
         }
         const { count, rows } = await Spreadsheet.findAndCountAll({
             where: {
-                user_id: user.user_id
+                fk_user_id: user.user_id
             }
         })
         if (count >= 4) {
@@ -97,7 +96,7 @@ router.post("/get_client_spreadsheet", async (req, res, next) => {
         if (!trainer) throw new Error("Faça login.");
         const user = await User.findOne({ where: { email: req.body.client_email } });
         const userSpreadsheets = await Spreadsheet.findAll({ where: { user_id: user.user_id } });
-        return res.status(200).json({ user_spreadsheets: userSpreadsheets })
+        return res.status(200).json({ user_spreadsheets: userSpreadsheets });
     } catch (err) {
         console.log(err);
     }
@@ -112,18 +111,22 @@ router.post("/send_spreadsheet", async (req, res, next) => {
             const trainer = jwt.verify(token, secret) as TUser;
             if (trainer.profile !== "trainer") throw new Error("Usuário sem permissão");
             const client = await User.findOne({where:{email:req.body.client_email}});
-            console.log("client",client.user_id);
+        const { count, rows } = await Spreadsheet.findAndCountAll({
+            where: {
+                fk_trainer_id: trainer.user_id
+            }
+        })
+            if (count >= 10) throw new Error("Limite de planilhas alcançado(10)")
             const spreadsheetMould = {
                 fk_trainer_id: trainer.user_id,
                 fk_user_id: client.user_id,
                 spreadsheet_days: stringfiedDayArray,
-            }
-            console.log("mould", spreadsheetMould);
-            await Spreadsheet.create(spreadsheetMould)
-            return res.status(200).json({ msg: "Planilha enviada" })
+            };
+            await Spreadsheet.create(spreadsheetMould);
+            return res.status(200).json({ msg: "Planilha enviada" });
         }
     } catch (err: any) {
-        return res.status(402).json({ msg: err.message })
+        return res.status(402).json({ msg: err.message });
     }
 });
 

@@ -19,8 +19,9 @@ const ManageClients = () => {
                 console.log(err);
             })
     }, [triggerRequest]);
+
     useEffect(() => {
-        if (selectedClient === null) return
+        if (selectedClient === null) return;
         myHTTP.post("/get_client_spreadsheet", {client_email:selectedClient})
         .then(res => {
                 console.log(res);
@@ -28,7 +29,8 @@ const ManageClients = () => {
         .catch(err => {
                 console.log(err);
             })
-    }, [selectedClient])
+    }, [selectedClient]);
+
     return (
         <>
             <div className="container flex flex-col  m-auto  ">
@@ -56,7 +58,6 @@ const ManageClients = () => {
                 addClientModal &&
                 <AddClientModal showAddClientModal={showAddClientModal} triggerRequest={triggerRequest} setTriggerRequest={setTriggerRequest}></AddClientModal>
             }
-
         </>
     )
 }

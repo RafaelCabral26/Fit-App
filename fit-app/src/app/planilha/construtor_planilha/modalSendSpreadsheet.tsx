@@ -33,8 +33,6 @@ const SendSpreadsheetModal = ({showSendModal, daysArray}:{daysArray:TDays[], sho
                 localStorage.removeItem("Ongoing_Spreadsheet");
             })
             .catch(err => {
-                console.log(err.response.data.msg);
-                
                 globalState?.setToast({type:"warning", message:err.response.data.msg});
             })
     };

@@ -4,12 +4,21 @@ CREATE TABLE IF NOT EXISTS `users` (
     `name` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
-    `profile` VARCHAR(255) DEFAULT 'user' CHECK(profile in ('user', 'trainer')),
+    `active` TINYINT(1) DEFAULT true,
+    `createdAt` DATETIME NOT NULL,
+    `updatedAt` DATETIME NOT NULL,
+    PRIMARY KEY (`user_id`));
+
+CREATE TABLE IF NOT EXISTS `trainers` (
+    `trainer_id` CHAR(36) BINARY NOT NULL UNIQUE,
+    `name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `password` VARCHAR(255) NOT NULL,
     `active` TINYINT(1) DEFAULT true,
     `trainer_clients` JSON,
     `createdAt` DATETIME NOT NULL,
     `updatedAt` DATETIME NOT NULL,
-    PRIMARY KEY (`user_id`));
+    PRIMARY KEY (`trainer_id`));
 
 CREATE TABLE IF NOT EXISTS `exercises_samples` (
     `exercise_id` CHAR(36) BINARY UNIQUE ,
@@ -28,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `spreadsheets` (
     `updatedAt` DATETIME NOT NULL,
     PRIMARY KEY (`spreadsheet_id`),
     FOREIGN KEY(`fk_user_id`) REFERENCES `users`(`user_id`),
-    FOREIGN KEY(`fk_trainer_id`) REFERENCES `users`(`user_id`));
+    FOREIGN KEY(`fk_trainer_id`) REFERENCES `trainers`(`trainer_id`));
 
 SET NAMES utf8mb4;
 DELIMITER //

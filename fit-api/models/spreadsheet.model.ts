@@ -10,10 +10,11 @@ const Spreadsheet = sequelize.define("spreadsheets", {
         unique:true,
         primaryKey:true,
     },
-    trainer_id: {
-        type:DataTypes.UUID
+    fk_trainer_id: {
+        type:DataTypes.UUID,
+        defaultValue:null, 
     },
-    user_id: {
+    fk_user_id: {
         type:DataTypes.UUID
     },
     spreadsheet_days: {

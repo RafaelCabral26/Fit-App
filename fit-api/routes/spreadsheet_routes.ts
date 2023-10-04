@@ -3,6 +3,7 @@ import { Router } from "express";
 import jwt, { Secret } from "jsonwebtoken";
 import User, { TUser } from "../models/user.model";
 import Spreadsheet from "../models/spreadsheet.model";
+import { TTrainer } from "../models/trainer.model";
 
 const router = Router();
 
@@ -108,17 +109,17 @@ router.post("/send_spreadsheet", async (req, res, next) => {
         const token = req.cookies.authcookie;
         const stringfiedDayArray = JSON.stringify(req.body.daysArray);
         if (token) {
-            const trainer = jwt.verify(token, secret) as TUser;
-            if (trainer.profile !== "trainer") throw new Error("Usuário sem permissão");
+            const trainer = jwt.verify(token, secret) as TTrainer;
+            if (!trainer.trainer_id) throw new Error("Usuário sem permissão");
             const client = await User.findOne({where:{email:req.body.client_email}});
         const { count, rows } = await Spreadsheet.findAndCountAll({
             where: {
-                fk_trainer_id: trainer.user_id
+                fk_trainer_id: trainer.trainer_id,
             }
         })
-            if (count >= 10) throw new Error("Limite de planilhas alcançado(10)")
+            if (count >= 10) throw new Error("Limite de planilhas alcançado(10)");
             const spreadsheetMould = {
-                fk_trainer_id: trainer.user_id,
+                fk_trainer_id: trainer.trainer_id,
                 fk_user_id: client.user_id,
                 spreadsheet_days: stringfiedDayArray,
             };
@@ -127,7 +128,7 @@ router.post("/send_spreadsheet", async (req, res, next) => {
         }
     } catch (err: any) {
         return res.status(402).json({ msg: err.message });
-    }
+    };
 });
 
-export { router }
+export { router };

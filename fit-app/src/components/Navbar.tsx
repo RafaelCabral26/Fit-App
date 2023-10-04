@@ -37,6 +37,7 @@ export const Navbar = () => {
                 globalState?.setUserType(null)
             })
             .catch(err => {
+                console.log(err);
                 console.log("not Logged");
             })
     }, [handleLogout])

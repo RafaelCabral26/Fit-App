@@ -1,6 +1,5 @@
 import jwt, { Jwt, GetPublicKeyOrSecret, Secret } from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { TUser } from "../models/user.model";
 
 const auth = {
     createEncryptedPass: async (oldPassword: string) => {
@@ -11,9 +10,12 @@ const auth = {
         const checkedPassword = await bcrypt.compare(inputPassword, DbPassword);
         if (!checkedPassword) throw new Error("Senha Inválida.");
     },
-    createToken: async (user:TUser) => {
+    createToken: async (dbUser:any) => {
         const secret = process.env.SECRET as Secret;
-        const payload = { user_id: user.user_id, email: user.email, profile: user.profile };
+        let payload;
+        dbUser.user_id ?
+            payload = { user_id: dbUser.user_id, email: dbUser.email, name: dbUser.name } :
+            payload = { trainer_id: dbUser.trainer_id, email: dbUser.email, name: dbUser.name };
         const token = jwt.sign(payload, secret, { expiresIn: "10 days" });
         return token;
     },

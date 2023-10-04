@@ -1,21 +1,23 @@
 "use client"
 
 import myHTTP from "@/services/axiosconfig";
-import { useContext, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import { validateSpreadsheet } from "./Spreadsheet_Utilities";
 import { GlobalContext } from "@/services/MyToast";
 import { TDays } from "./Spreadsheet_Types";
+import { useRouter } from "next/navigation";
 
 
-const SendSpreadsheetModal = ({showSendModal, daysArray}:{daysArray:TDays[], showSendModal:React.Dispatch<React.SetStateAction<boolean>>}) => {
+const SendSpreadsheetModal = ({showSendModal, daysArray, setNewDayArray}:{daysArray:TDays[], showSendModal:React.Dispatch<React.SetStateAction<boolean>>,setNewDayArray:React.Dispatch<SetStateAction<TDays[]>>}) => {
     const globalState = useContext(GlobalContext);
+    const router = useRouter();
     const [ clientList, setClientList ] = useState<[] | null>();
-    const [selectedClient, setSelectedClient ] = useState<string | null>();
+    const [selectedClient, setSelectedClient ] = useState<{name:string,email:string} | null>();
 
     useEffect(() => {
        myHTTP.get("/client_list") 
         .then(res => {
-                setClientList(res.data.client_list);
+                setClientList(res.data.client_table);
             })
         .catch(err => {
                 globalState?.setToast({type:"error", message:err.response.data.msg});
@@ -27,10 +29,12 @@ const SendSpreadsheetModal = ({showSendModal, daysArray}:{daysArray:TDays[], sho
         const spreadsheetInvalid = validateSpreadsheet(daysArray, globalState);
         if (spreadsheetInvalid) return globalState?.setToast(spreadsheetInvalid);
         if (!clientList) return globalState?.setToast({type:"warning", message:"Escolha um cliente"});
-        myHTTP.post("/send_spreadsheet", { daysArray: daysArray, client_email:selectedClient })
+        myHTTP.post("/send_spreadsheet", { daysArray: daysArray, client_email:selectedClient?.email })
             .then(res => {
                 globalState?.setToast({type:"success", message:res.data.msg});
                 localStorage.removeItem("Ongoing_Spreadsheet");
+                showSendModal(false);
+                setNewDayArray([]);
             })
             .catch(err => {
                 globalState?.setToast({type:"warning", message:err.response.data.msg});
@@ -50,8 +54,8 @@ const SendSpreadsheetModal = ({showSendModal, daysArray}:{daysArray:TDays[], sho
                     {
                             clientList?.map((ele:any) => {
                                 return (
-                                <option key={ele} onClick={() => setSelectedClient(ele)}>
-                                        {ele}
+                                <option key={ele.name} onClick={() => setSelectedClient(ele)}>
+                                        {ele.name + ", " + ele.email}
                                     </option>
                                 )
                             })

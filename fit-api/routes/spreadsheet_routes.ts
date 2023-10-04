@@ -93,10 +93,10 @@ router.post("/get_client_spreadsheet", async (req, res, next) => {
     try {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
-        const trainer = jwt.verify(token, secret) as TUser;
+        const trainer = jwt.verify(token, secret) as TTrainer;
         if (!trainer) throw new Error("Faça login.");
         const user = await User.findOne({ where: { email: req.body.client_email } });
-        const userSpreadsheets = await Spreadsheet.findAll({ where: { user_id: user.user_id } });
+        const userSpreadsheets = await Spreadsheet.findAll({ where: { fk_user_id: user.user_id, fk_trainer_id:trainer.trainer_id } });
         return res.status(200).json({ user_spreadsheets: userSpreadsheets });
     } catch (err) {
         console.log(err);
@@ -111,12 +111,12 @@ router.post("/send_spreadsheet", async (req, res, next) => {
         if (token) {
             const trainer = jwt.verify(token, secret) as TTrainer;
             if (!trainer.trainer_id) throw new Error("Usuário sem permissão");
-            const client = await User.findOne({where:{email:req.body.client_email}});
-        const { count, rows } = await Spreadsheet.findAndCountAll({
-            where: {
-                fk_trainer_id: trainer.trainer_id,
-            }
-        })
+            const client = await User.findOne({ where: { email: req.body.client_email } });
+            const { count, rows } = await Spreadsheet.findAndCountAll({
+                where: {
+                    fk_trainer_id: trainer.trainer_id,
+                }
+            })
             if (count >= 10) throw new Error("Limite de planilhas alcançado(10)");
             const spreadsheetMould = {
                 fk_trainer_id: trainer.trainer_id,

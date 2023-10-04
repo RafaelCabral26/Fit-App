@@ -147,7 +147,7 @@ const SpreadsheetBuilder: React.FC = () => {
                 </div>
                 {
                     sendModal &&
-                    <SendSpreadsheetModal showSendModal={showSendModal} daysArray={daysArray}></SendSpreadsheetModal>
+                    <SendSpreadsheetModal showSendModal={showSendModal} daysArray={daysArray} setNewDayArray={setNewDayArray}></SendSpreadsheetModal>
                 }
             </div>
         </DragDropContext>

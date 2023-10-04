@@ -39,7 +39,7 @@ router.post("/login", async (req, res, next) => {
         }
         await auth.comparePasswords(userInput.password, dbUser.password);
         const token = await auth.createToken(dbUser);
-        
+
         res.cookie('authcookie', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true });
         return res.status(200).json({ msg: "Usuário Logado!" })
     } catch (err: any) {
@@ -77,18 +77,15 @@ router.get("/logout", async (req, res, next) => {
 router.patch("/add_client", async (req, res, next) => {
     try {
         const clientEmail = req.body.email;
-        console.log("teste", clientEmail);
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {
-            const user = jwt.verify(token, secret) as any ;
+            const user = jwt.verify(token, secret) as any;
             if (!user.trainer_id) throw new Error("Conta sem permissão");
             const verifyUser = await User.findOne({ where: { email: clientEmail } });
             if (!verifyUser) throw new Error("Cliente não encontrado");
             const trainer = await Trainer.findOne({ where: { trainer_id: user.trainer_id } });
-            console.log("client",trainer.trainer_clients);
-            
-            if (!trainer.trainer_clients ) {
+            if (!trainer.trainer_clients) {
                 trainer.trainer_clients = [clientEmail];
                 await trainer.save();
                 return res.status(200).json({ msg: "Cliente adicionado." });
@@ -113,7 +110,16 @@ router.get("/client_list", async (req, res, next) => {
             const trainerCookie = jwt.verify(token, secret) as TTrainer;
             if (!trainerCookie.trainer_id) throw new Error("Usuário sem permissão");
             const trainer = await Trainer.findOne({ where: { trainer_id: trainerCookie.trainer_id } });
-            return res.status(200).json({ client_list: trainer.trainer_clients })
+            if (trainer.trainer_clients) {
+                let userData: any[] = []
+                for (let key in trainer.trainer_clients) {
+                    console.log("key", key);
+                    let temp = await User.findOne({ where: { email: trainer.trainer_clients[key] } })
+                    userData.push({ name: temp.name, email: temp.email })
+                }
+                return res.status(200).json({ client_table: userData });
+            }
+            return res.status(200).json({ client_table: [] });
         }
     } catch (err: any) {
         return res.status(402).json({ msg: err.message })

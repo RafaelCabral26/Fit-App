@@ -38,6 +38,9 @@ const Trainer = sequelize.define("trainer", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    trainer_clients: {
+    type:DataTypes.JSON
+    },
     active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true

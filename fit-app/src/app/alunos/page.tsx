@@ -14,6 +14,8 @@ const ManageClients = () => {
         myHTTP.get("/client_list")
             .then(res => {
                 setClientList(res.data.client_list)
+                console.log(res.data.client_list);
+                
             })
             .catch(err => {
                 console.log(err);

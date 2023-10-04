@@ -3,7 +3,7 @@ import auth from "../services/auth";
 import User from "../models/user.model";
 import jwt, { Secret } from "jsonwebtoken";
 import { TUser } from "../models/user.model";
-import Trainer from "../models/trainer.model";
+import Trainer, { TTrainer } from "../models/trainer.model";
 const router = Router();
 
 router.post("/register", async (req, res, next) => {
@@ -12,10 +12,8 @@ router.post("/register", async (req, res, next) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            //profile: req.body.profile,
         };
         user.password = await auth.createEncryptedPass(user.password)
-
         if (req.body.profile === "user") {
             await User.create(user);
         } else if (req.body.profile === "trainer") {
@@ -37,23 +35,29 @@ router.post("/login", async (req, res, next) => {
         let dbUser = await User.findOne({ where: { email: userInput.email } });
         if (!dbUser) {
             dbUser = await Trainer.findOne({ where: { email: userInput.email } });
-            throw new Error("Usuário não encontrado");
+            if (!dbUser) throw new Error("Usuário não encontrado");
         }
         await auth.comparePasswords(userInput.password, dbUser.password);
         const token = await auth.createToken(dbUser);
+        
         res.cookie('authcookie', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true });
         return res.status(200).json({ msg: "Usuário Logado!" })
     } catch (err: any) {
         return res.status(400).json({ msg: err.message });
     }
 })
+export type TUserAndTrainer = {
+    trainer?: TTrainer,
+    user?: TUser
+}
 router.post("/check_user", async (req, res, next) => {
     try {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {
-            const user = jwt.verify(token, secret) as TUser;
-            return res.status(200).json({ logged: true, profile: user.profile })
+            const user = jwt.verify(token, secret) as any;
+            if (user.trainer_id) return res.status(200).json({ logged: true, profile: "trainer" });
+            if (user.user_id) return res.status(200).json({ logged: true, profile: "user" });
         }
         return res.status(200).json({ logged: false });
     } catch (err) {
@@ -72,24 +76,27 @@ router.get("/logout", async (req, res, next) => {
 
 router.patch("/add_client", async (req, res, next) => {
     try {
-        const userEmail = req.body.email;
+        const clientEmail = req.body.email;
+        console.log("teste", clientEmail);
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {
-            const user = jwt.verify(token, secret) as TUser;
-            if (user.profile !== "trainer") throw new Error("Conta sem permissão");
-            const verifyUser = await User.findOne({ where: { email: userEmail } });
-            if (!verifyUser) throw new Error("Cliente não encontrado")
-            const trainer = await User.findOne({ where: { user_id: user.user_id } });
-            if (trainer.trainer_clients === null) {
-                trainer.trainer_clients = [userEmail];
+            const user = jwt.verify(token, secret) as any ;
+            if (!user.trainer_id) throw new Error("Conta sem permissão");
+            const verifyUser = await User.findOne({ where: { email: clientEmail } });
+            if (!verifyUser) throw new Error("Cliente não encontrado");
+            const trainer = await Trainer.findOne({ where: { trainer_id: user.trainer_id } });
+            console.log("client",trainer.trainer_clients);
+            
+            if (!trainer.trainer_clients ) {
+                trainer.trainer_clients = [clientEmail];
                 await trainer.save();
                 return res.status(200).json({ msg: "Cliente adicionado." });
-            }
-            trainer.trainer_clients.forEach((element: any) => {
-                if (element === userEmail) throw new Error("Cliente já foi adicionado")
+            };
+            trainer?.trainer_clients.forEach((element: any) => {
+                if (element === clientEmail) throw new Error("Cliente já foi adicionado");
             });
-            trainer.trainer_clients = [...trainer.trainer_clients, userEmail]
+            trainer.trainer_clients = [...trainer.trainer_clients, clientEmail];
             await trainer.save();
             return res.status(200).json({ msg: "Cliente adicionado." });
         }
@@ -103,9 +110,9 @@ router.get("/client_list", async (req, res, next) => {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {
-            const user = jwt.verify(token, secret) as TUser;
-            if (user.profile !== "trainer") throw new Error("Usuário sem permissão");
-            const trainer = await User.findOne({ where: { user_id: user.user_id } });
+            const trainerCookie = jwt.verify(token, secret) as TTrainer;
+            if (!trainerCookie.trainer_id) throw new Error("Usuário sem permissão");
+            const trainer = await Trainer.findOne({ where: { trainer_id: trainerCookie.trainer_id } });
             return res.status(200).json({ client_list: trainer.trainer_clients })
         }
     } catch (err: any) {

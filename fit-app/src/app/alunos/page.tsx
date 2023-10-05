@@ -4,13 +4,17 @@ import { GlobalContext } from "@/services/MyToast"
 import myHTTP from "@/services/axiosconfig"
 import { SetStateAction, useContext, useEffect, useState } from "react"
 import AddClientModal from "./AddClientModal"
+import EditClientSpreadsheetModal from "./EditClientSpreadsheetModal"
+import { TDays } from "../planilha/construtor_planilha/Spreadsheet_Types"
 
 const ManageClients = () => {
     const [addClientModal, showAddClientModal] = useState<boolean>(false);
+    const [editModal, showEditModal] = useState<boolean>(false);
     const [clientList, setClientList] = useState<[] | null>();
     const [selectedClient, setSelectedClient] = useState<string[] | null>(null);
     const [triggerRequest, setTriggerRequest] = useState<boolean>(false);
-    const [ spreadsheets, setSpreadsheets ] = useState<string[]>();
+    const [spreadsheets, setSpreadsheets] = useState<any[]|null>();
+
     useEffect(() => {
         myHTTP.get("/client_list")
             .then(res => {
@@ -25,14 +29,24 @@ const ManageClients = () => {
         if (selectedClient === null) return;
         myHTTP.post("/get_client_spreadsheet", { client_email: selectedClient })
             .then(res => {
-                console.log("user user_spreadsheets",res.data.user_spreadsheets);
+                console.log("user user_spreadsheets", res.data.user_spreadsheets);
                 setSpreadsheets(res.data.user_spreadsheets)
             })
             .catch(err => {
                 console.log(err);
             })
     }, [selectedClient]);
-
+    const handleSelectedClient = () => {
+        myHTTP.post("/get_client_spreadsheet", { client_email: selectedClient })
+            .then(res => {
+                console.log("user user_spreadsheets", res.data.user_spreadsheets);
+                setSpreadsheets(res.data.user_spreadsheets)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        showEditModal(true)
+    }
     return (
         <>
             <div className="container flex flex-col  m-auto">
@@ -57,11 +71,9 @@ const ManageClients = () => {
                                     return (
                                         <tr key={ele.name}>
                                             <th>{String(index)}</th>
-                                            <td onClick={() => setSelectedClient(ele)}>
-                                                {ele.name}
-                                            </td>
+                                            <td>{ele.name}</td>
                                             <td>{ele.email}</td>
-                                            <td><button onClick={() => setSelectedClient(ele.email)} className="my-btn m-0">Ver</button></td>
+                                            <td><button onClick={() => { setSelectedClient(ele.email); showEditModal(true) }} className="my-btn m-0">Ver</button></td>
                                         </tr>
                                     )
                                 })
@@ -73,6 +85,9 @@ const ManageClients = () => {
             {
                 addClientModal &&
                 <AddClientModal showAddClientModal={showAddClientModal} triggerRequest={triggerRequest} setTriggerRequest={setTriggerRequest}></AddClientModal>
+            }
+            {editModal &&
+                <EditClientSpreadsheetModal spreadsheets={spreadsheets}></EditClientSpreadsheetModal>
             }
         </>
     )

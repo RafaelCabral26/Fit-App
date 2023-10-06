@@ -10,19 +10,21 @@ const router = Router();
 router.post("/new_spreadsheet", async (req, res, next) => {
     try {
         if (!req.cookies.authcookie) {
-            return res.status(202).json({ msg: "Faça login para salvar planilha." })
+            return res.status(202).json({ msg: "Faça login para salvar planilha." });
         }
         const secret = process.env.SECRET as Secret;
-        const user = jwt.verify(req.cookies.authcookie, secret) as TUser;
-        const stringfiedDayArray = JSON.stringify(req.body)
+        const user = jwt.verify(req.cookies.authcookie, secret) as any;
+        const stringfiedDayArray = JSON.stringify(req.body);
         const spreadsheetMould = {
-            fk_user_id: user.user_id,
+            fk_user_id: user.user_id ? user.user_id : null,
+            fk_trainer_id: user.trainer_id ? user.trainer_id : null,
             spreadsheet_days: stringfiedDayArray,
         }
+        let whereStatement = {}
+        if (user.user_id) whereStatement = { fk_user_id: user.user_id};
+        if(user.trainer_id) whereStatement = { fk_trainer_id: user.trainer_id};
         const { count, rows } = await Spreadsheet.findAndCountAll({
-            where: {
-                fk_user_id: user.user_id
-            }
+            where: whereStatement 
         })
         if (count >= 4) {
             return res.status(202).json({ msg: "Máximo de 4 planilhas por usuário." })
@@ -40,11 +42,12 @@ router.get("/list_user_spreadsheets", async (req, res, next) => {
             return res.status(202).json({ msg: "Faça login para ver planilhas." })
         }
         const secret = process.env.SECRET as Secret;
-        const user = jwt.verify(req.cookies.authcookie, secret) as TUser;
+        const user = jwt.verify(req.cookies.authcookie, secret) as any;
+        let whereStatement = {}
+        if (user.user_id) whereStatement = { fk_user_id: user.user_id};
+        if(user.trainer_id) whereStatement = { fk_trainer_id: user.trainer_id};
         const allSpreadsheets = await Spreadsheet.findAll({
-            where: {
-                user_id: user.user_id
-            }
+            where: whereStatement
         });
         res.status(200).json({ msg: "Bateu na API", spreadsheet: allSpreadsheets });
     } catch (err) {

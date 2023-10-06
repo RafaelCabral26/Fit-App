@@ -1,19 +1,16 @@
 "use client"
 
-import { GlobalContext } from "@/services/MyToast"
 import myHTTP from "@/services/axiosconfig"
-import { SetStateAction, useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import AddClientModal from "./AddClientModal"
 import EditClientSpreadsheetModal from "./EditClientSpreadsheetModal"
-import { TDays } from "../planilha/construtor_planilha/Spreadsheet_Types"
 
 const ManageClients = () => {
     const [addClientModal, showAddClientModal] = useState<boolean>(false);
     const [editModal, showEditModal] = useState<boolean>(false);
     const [clientList, setClientList] = useState<[] | null>();
-    const [selectedClient, setSelectedClient] = useState<string[] | null>(null);
     const [triggerRequest, setTriggerRequest] = useState<boolean>(false);
-    const [spreadsheets, setSpreadsheets] = useState<any[]|null>();
+    const [spreadsheets, setSpreadsheets] = useState<any[] | null>(null);
 
     useEffect(() => {
         myHTTP.get("/client_list")
@@ -25,22 +22,11 @@ const ManageClients = () => {
             })
     }, [triggerRequest]);
 
-    useEffect(() => {
-        if (selectedClient === null) return;
-        myHTTP.post("/get_client_spreadsheet", { client_email: selectedClient })
+    const handleSelectedClient = (email: string) => {
+        if (email === null) return;
+        myHTTP.post("/get_client_spreadsheet", { client_email: email })
             .then(res => {
-                console.log("user user_spreadsheets", res.data.user_spreadsheets);
-                setSpreadsheets(res.data.user_spreadsheets)
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, [selectedClient]);
-    const handleSelectedClient = () => {
-        myHTTP.post("/get_client_spreadsheet", { client_email: selectedClient })
-            .then(res => {
-                console.log("user user_spreadsheets", res.data.user_spreadsheets);
-                setSpreadsheets(res.data.user_spreadsheets)
+                setSpreadsheets(res.data.user_spreadsheets);
             })
             .catch(err => {
                 console.log(err);
@@ -73,7 +59,7 @@ const ManageClients = () => {
                                             <th>{String(index)}</th>
                                             <td>{ele.name}</td>
                                             <td>{ele.email}</td>
-                                            <td><button onClick={() => { setSelectedClient(ele.email); showEditModal(true) }} className="my-btn m-0">Ver</button></td>
+                                            <td><button onClick={() => {handleSelectedClient(ele.email)}} className="my-btn m-0">Ver</button></td>
                                         </tr>
                                     )
                                 })
@@ -87,7 +73,7 @@ const ManageClients = () => {
                 <AddClientModal showAddClientModal={showAddClientModal} triggerRequest={triggerRequest} setTriggerRequest={setTriggerRequest}></AddClientModal>
             }
             {editModal &&
-                <EditClientSpreadsheetModal spreadsheets={spreadsheets}></EditClientSpreadsheetModal>
+                <EditClientSpreadsheetModal spreadsheets={spreadsheets} showEditModal={showEditModal}></EditClientSpreadsheetModal>
             }
         </>
     )

@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `exercises_samples` (
 
 CREATE TABLE IF NOT EXISTS `spreadsheets` (
     `spreadsheet_id` CHAR(36) BINARY NOT NULL UNIQUE,
-    `fk_user_id` CHAR(36)  BINARY NOT NULL,
+    `fk_user_id` CHAR(36)  BINARY DEFAULT NULL,
     `fk_trainer_id` CHAR(36) BINARY DEFAULT NULL,
     `spreadsheet_days` JSON,
     `createdAt` DATETIME NOT NULL,

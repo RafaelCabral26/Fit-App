@@ -6,7 +6,7 @@ import DayComponent from "./DayComponent"
 import myHTTP from "@/services/axiosconfig"
 import { TDays } from "./Spreadsheet_Types"
 import { formatExercisesStorage, triggerDnd, validateSpreadsheet } from "./Spreadsheet_Utilities"
-import { GlobalContext, TToast } from "@/services/MyToast"
+import { GlobalContext } from "@/services/MyToast"
 import { useRouter, useSearchParams } from "next/navigation"
 import OpenedLockSvg from "@/svgs/openedLock"
 import ClosedLockSvg from "@/svgs/closedLock"
@@ -41,6 +41,7 @@ const SpreadsheetBuilder: React.FC = () => {
         };
         const previousUrlCheck = searchParams.get("spreadsheet_id");
         if (previousUrlCheck) {
+
             myHTTP.get(`/search_spreadsheet/${searchParams.get("spreadsheet_id")}`)
                 .then(res => {
                     const parsedSpreadsheet = JSON.parse(res.data.spreadsheet.spreadsheet_days);
@@ -51,7 +52,7 @@ const SpreadsheetBuilder: React.FC = () => {
                     console.log(err);
                 })
             return;
-            ;
+            
         }
         if (cachedSpreadsheet) setNewDayArray((JSON.parse(cachedSpreadsheet)));
     }, [])
@@ -73,19 +74,20 @@ const SpreadsheetBuilder: React.FC = () => {
     const handleDnd = (result: DropResult) => {
         triggerDnd(result, daysArray, setNewDayArray, editingSpreadsheet);
     }
+
     const handleSaveSpreadsheet = () => {
-        const spreadsheetInvalid = validateSpreadsheet(daysArray, globalState)
-        if (spreadsheetInvalid) return globalState?.setToast(spreadsheetInvalid)
+        const spreadsheetInvalid = validateSpreadsheet(daysArray, globalState);
+        if (spreadsheetInvalid) return globalState?.setToast(spreadsheetInvalid);
         if (editingSpreadsheet) {
             myHTTP.patch("/update_spreadsheet", { spreadsheet_id: searchParams.get("spreadsheet_id"), spreadsheet_days: daysArray })
                 .then(res => {
-                    globalState?.setToast({ type: "success", message: res.data.msg })
+                    globalState?.setToast({ type: "success", message: res.data.msg });
                 })
                 .catch(err => {
-                    globalState?.setToast({ type: "warning", message: err.response.data.msg })
+                    globalState?.setToast({ type: "warning", message: err.response.data.msg });
                 })
             return;
-        }
+        };
 
         myHTTP.post("/new_spreadsheet", daysArray)
             .then(res => {
@@ -93,12 +95,12 @@ const SpreadsheetBuilder: React.FC = () => {
                     return globalState?.setToast({ type: "warning", message: res.data.msg });
                 }
                 globalState?.setToast({ type: "success", message: res.data.msg });
-                setNewDayArray([])
+                setNewDayArray([]);
                 localStorage.removeItem("Ongoing_Spreadsheet");
-                router.replace("/")
+                router.replace("/");
             })
             .catch(err => {
-                globalState?.setToast({ type: "error", message: err.response.data.msg })
+                globalState?.setToast({ type: "error", message: err.response.data.msg });
                 console.log(err);
             })
     }
@@ -115,9 +117,16 @@ const SpreadsheetBuilder: React.FC = () => {
                 <div className="flex flex-col w-full h-auto items-center gap-4 m-4 ">
                     <div className="flex gap-4 justify-center rounded-xl">
                         <button onClick={addNewDay} type="button" className="my-btn">+</button>
-                        <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">Salvar</button>
+                        <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">
+                            {
+                                editingSpreadsheet ?
+                                    <span>Alterar</span>
+                                   :<span>Salvar</span>
+                            }
+                        </button>
                         {
-                            globalState?.userType === "trainer" &&
+                            (globalState?.userType === "trainer" && !editingSpreadsheet) 
+                            &&
                             <button onClick={() => showSendModal(true)} className="my-btn" type="button">Enviar</button>
                         }
                     </div>

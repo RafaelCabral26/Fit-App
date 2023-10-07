@@ -11,6 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import OpenedLockSvg from "@/svgs/openedLock"
 import ClosedLockSvg from "@/svgs/closedLock"
 import SendSpreadsheetModal from "./modalSendSpreadsheet"
+import Link from "next/link"
 
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
     const result = list;
@@ -26,6 +27,7 @@ const SpreadsheetBuilder: React.FC = () => {
     const [editingSpreadsheet, setEditingSpreadsheet] = useState<boolean>(false);
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
     const [sendModal, showSendModal] = useState<boolean>(false);
+    const [previousUrl, setPreviousUrl] = useState<string>("")
 
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
@@ -38,9 +40,10 @@ const SpreadsheetBuilder: React.FC = () => {
                 .catch(err => {
                     console.log(err);
                 })
+
         };
-        const previousUrlCheck = searchParams.get("spreadsheet_id");
-        if (previousUrlCheck) {
+        const previousUrlIdCheck = searchParams.get("spreadsheet_id");
+        if (previousUrlIdCheck) {
 
             myHTTP.get(`/search_spreadsheet/${searchParams.get("spreadsheet_id")}`)
                 .then(res => {
@@ -51,8 +54,12 @@ const SpreadsheetBuilder: React.FC = () => {
                 .catch(err => {
                     console.log(err);
                 })
+            const previousUrl = searchParams.get("previous_url")
+            if(previousUrl) {
+                setPreviousUrl(previousUrl)
+            }
             return;
-            
+
         }
         if (cachedSpreadsheet) setNewDayArray((JSON.parse(cachedSpreadsheet)));
     }, [])
@@ -78,16 +85,6 @@ const SpreadsheetBuilder: React.FC = () => {
     const handleSaveSpreadsheet = () => {
         const spreadsheetInvalid = validateSpreadsheet(daysArray, globalState);
         if (spreadsheetInvalid) return globalState?.setToast(spreadsheetInvalid);
-        if (editingSpreadsheet) {
-            myHTTP.patch("/update_spreadsheet", { spreadsheet_id: searchParams.get("spreadsheet_id"), spreadsheet_days: daysArray })
-                .then(res => {
-                    globalState?.setToast({ type: "success", message: res.data.msg });
-                })
-                .catch(err => {
-                    globalState?.setToast({ type: "warning", message: err.response.data.msg });
-                })
-            return;
-        };
 
         myHTTP.post("/new_spreadsheet", daysArray)
             .then(res => {
@@ -98,12 +95,25 @@ const SpreadsheetBuilder: React.FC = () => {
                 setNewDayArray([]);
                 localStorage.removeItem("Ongoing_Spreadsheet");
                 router.replace("/");
+
             })
             .catch(err => {
                 globalState?.setToast({ type: "error", message: err.response.data.msg });
                 console.log(err);
             })
     }
+    const handleEditSpreadsheet = () => {
+        const spreadsheetInvalid = validateSpreadsheet(daysArray, globalState);
+        if (spreadsheetInvalid) return globalState?.setToast(spreadsheetInvalid);
+        myHTTP.patch("/update_spreadsheet", { spreadsheet_id: searchParams.get("spreadsheet_id"), spreadsheet_days: daysArray })
+            .then(res => {
+                globalState?.setToast({ type: "success", message: res.data.msg });
+            })
+            .catch(err => {
+                globalState?.setToast({ type: "warning", message: err.response.data.msg });
+            })
+    };
+
     return (
         <DragDropContext onDragEnd={handleDnd} >
             <div className="flex h-screen w-screen">
@@ -117,15 +127,21 @@ const SpreadsheetBuilder: React.FC = () => {
                 <div className="flex flex-col w-full h-auto items-center gap-4 m-4 ">
                     <div className="flex gap-4 justify-center rounded-xl">
                         <button onClick={addNewDay} type="button" className="my-btn">+</button>
-                        <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">
-                            {
-                                editingSpreadsheet ?
-                                    <span>Alterar</span>
-                                   :<span>Salvar</span>
-                            }
-                        </button>
                         {
-                            (globalState?.userType === "trainer" && !editingSpreadsheet) 
+                            editingSpreadsheet ?
+                                <>
+                                    <button onClick={handleEditSpreadsheet} className="my-btn" type="button">
+                                        <span>Alterar</span>
+                                    </button>
+                                    <Link className="my-btn" href={"/" + previousUrl}>Voltar</Link>
+                                </>
+                                :
+                                <button onClick={handleSaveSpreadsheet} className="my-btn" type="button">
+                                    <span>Salvar</span>
+                                </button>
+                        }
+                        {
+                            (globalState?.userType === "trainer" && !editingSpreadsheet)
                             &&
                             <button onClick={() => showSendModal(true)} className="my-btn" type="button">Enviar</button>
                         }

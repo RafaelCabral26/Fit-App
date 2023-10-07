@@ -1,12 +1,21 @@
-import { SetStateAction } from "react";
+import createQueryString from "@/services/createQueryString";
+import { useRouter } from "next/navigation";
+import { SetStateAction, useState } from "react";
 
-const EditClientSpreadsheetModal = ({spreadsheets, showEditModal}:{spreadsheets:any[]|null, showEditModal:React.Dispatch<SetStateAction<boolean>>}) => {
-   console.log(spreadsheets);
-    
-    
+const EditClientSpreadsheetModal = ({ spreadsheets, showEditModal }: { spreadsheets: any[] | null, showEditModal: React.Dispatch<SetStateAction<boolean>> }) => {
+    const router = useRouter();
+    const [selectedSpreadsheet, setSelectedSpreadsheet] = useState<string | null>(null);
+    const handleSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(event.target.value);
+        setSelectedSpreadsheet(event.target.value);
+
+    }
+    const redirectToEditSpreadsheet = () => {
+        router.replace(`/planilha/construtor_planilha?${createQueryString("spreadsheet_id", selectedSpreadsheet)}&${createQueryString("previous_url","alunos")}`)
+    }
     return (
         <div className="fixed top-20 h-screen w-screen z-10">
-                <form className="my-form-modal">
+            <form className="my-form-modal">
                 <div className="flex justify-between ">
                     <h1>Planilhas - {}</h1>
                     <button onClick={() => showEditModal(false)} type="button" className="text-2xl">X</button>
@@ -14,21 +23,21 @@ const EditClientSpreadsheetModal = ({spreadsheets, showEditModal}:{spreadsheets:
                 <label className="label">
                     <span className="text-[8px] leading-4 text-secondary">(Mais recentes primeiro)</span>
                 </label>
-                <select className="my-input bg-base-300">
+                <select onChange={handleSelected} className="my-input bg-base-300">
                     <option hidden>Escolher Planilha...</option>
-                    {spreadsheets?.map((ele:any,index:number) => {
+                    {spreadsheets?.map((ele: any, index: number) => {
                         return (
-                        <option key={ele.spreadsheet_id}>Planilha { String(index+1)} - {ele.updatedAt.substr(0,9)}</option>
+                            <option value={ele.spreadsheet_id} key={ele.spreadsheet_id}>Planilha {String(index + 1)} - {ele.updatedAt.substr(0, 9)}</option>
                         )
                     })}
                 </select>
                 <div className="flex justify-evenly">
-                    <button type="button" className="my-btn">Editar</button>
+                    <button onClick={redirectToEditSpreadsheet} type="button" className="my-btn">Editar</button>
                     <button type="button" className="my-btn-red">Deletar</button>
                 </div>
-                </form>
+            </form>
         </div>
     )
-} 
+}
 
 export default EditClientSpreadsheetModal;

@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `trainers` (
     `active` TINYINT(1) DEFAULT true,
     `trainer_clients` JSON,
     `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL,
+    `updatedAt` DATETIME NOT NULL, 
     PRIMARY KEY (`trainer_id`));
 
 CREATE TABLE IF NOT EXISTS `exercises_samples` (
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS `spreadsheets` (
     `fk_user_id` CHAR(36)  BINARY DEFAULT NULL,
     `fk_trainer_id` CHAR(36) BINARY DEFAULT NULL,
     `spreadsheet_days` JSON,
-    `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL,
+    `createdAt` DATETIME NOT NULL, 
+    `updatedAt` DATETIME NOT NULL, 
     PRIMARY KEY (`spreadsheet_id`),
     FOREIGN KEY(`fk_user_id`) REFERENCES `users`(`user_id`),
     FOREIGN KEY(`fk_trainer_id`) REFERENCES `trainers`(`trainer_id`));

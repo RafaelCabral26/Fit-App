@@ -78,7 +78,7 @@ export const Navbar = () => {
                                 {globalState?.userType === "trainer" &&
                                     (<>
                                         <li><button className="my-list-item" >Perfil</button></li>
-                                        <li><Link href={"/alunos"} className="my-list-item" >Alunos</Link></li>
+                                        <li><a  href={"/alunos"} className="my-list-item" >Alunos</a></li>
                                         <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
                                     </>)
                                 }

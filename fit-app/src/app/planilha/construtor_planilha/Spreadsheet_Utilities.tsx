@@ -2,13 +2,18 @@ import { DropResult } from "@hello-pangea/dnd"
 import { TDays, TExercise } from "./Spreadsheet_Types"
 import React, { SetStateAction } from "react"
 import { TToast } from "@/services/MyToast"
-
+import { format } from "date-fns"
 export const ValidateAddExercise = (exercise: TExercise) => {
     if (!exercise.exercise_name || !exercise.quantity || !exercise.sets) {
         alert("Preencha todos os campos")
         return false
     }
     return true
+}
+
+export const formatDate = (dateStr:string) => {
+    const parsedString = new Date(dateStr) 
+    return format(parsedString, 'dd-MM-yyyy HH:mm')
 }
 
 export const validateSpreadsheet = (daysArray: any, globalState: any) => {

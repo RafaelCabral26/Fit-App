@@ -45,6 +45,12 @@ const Trainer = sequelize.define("trainer", {
         type: DataTypes.BOOLEAN,
         defaultValue: true
     },
+    createdAt: {
+        type:DataTypes.DATE
+    },
+    updatedAt: {
+        type:DataTypes.DATE
+    },
 }) 
 Trainer.sync();
 export default Trainer;

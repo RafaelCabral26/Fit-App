@@ -1,16 +1,17 @@
-import { Sequelize, DataTypes } from "sequelize"
-const sequelize = require("./index.ts")
-export type TUser = {
-    user_id?: string,
+import { DataTypes } from "sequelize";
+
+const sequelize = require("./index.ts");
+
+export type TTrainer = {
+    trainer_id?: string,
     name?: string,
     password?: string,
     email: string,
     active?: boolean
 }
+const Trainer = sequelize.define("trainer", {
 
-
-const User = sequelize.define("user", {
-    user_id: {
+    trainer_id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
@@ -37,6 +38,9 @@ const User = sequelize.define("user", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    trainer_clients: {
+    type:DataTypes.JSON
+    },
     active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
@@ -47,6 +51,6 @@ const User = sequelize.define("user", {
     updatedAt: {
         type:DataTypes.DATE
     },
-})
-User.sync()
-export default User
+}) 
+Trainer.sync();
+export default Trainer;

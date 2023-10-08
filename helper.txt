@@ -1,8 +1,5 @@
-add:edit spreadsheet api & UI
-add:trainer send spreadsheet
-UI add exercise name or choose name 
-add:trainer send spreadsheet to user
-
+add:UI trainer managing
+refactor:change global context file(myToast)
 
 
 

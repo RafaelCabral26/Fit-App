@@ -1,6 +1,6 @@
 import { SetStateAction, useContext, useEffect, useState } from "react"
-import { TDays, TExercise, TMuscleGroups, TSubgroups } from "./nova_planilha_Types"
-import { ValidateAddExercise } from "./nova_planilha_Utilities"
+import { TDays, TExercise, TMuscleGroups, TSubgroups } from "./Spreadsheet_Types"
+import { ValidateAddExercise } from "./Spreadsheet_Utilities"
 import { GlobalContext } from "@/services/MyToast";
 
 const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[], daysArray: TDays[] }) => {

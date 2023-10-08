@@ -34,7 +34,7 @@ router.post("/login", async (req, res, next) => {
         if (!dbUser) throw new Error("Usuário não encontrado");
         await auth.comparePasswords(userInput.password, dbUser.password);
         const token = await auth.createToken(dbUser);
-        res.cookie('authcookie', token, { httpOnly: true, maxAge: 36000 * 60, sameSite: "none", secure: true });
+        res.cookie('authcookie', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true });
         return res.status(200).json({ msg: "Usuário Logado!" })
     } catch (err: any) {
         return res.status(400).json({ msg: err.message });

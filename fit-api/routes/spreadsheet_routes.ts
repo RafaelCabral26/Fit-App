@@ -4,6 +4,7 @@ import jwt, { Secret } from "jsonwebtoken";
 import User, { TUser } from "../models/user.model";
 import Spreadsheet from "../models/spreadsheet.model";
 import { TTrainer } from "../models/trainer.model";
+import { Sequelize } from "sequelize";
 
 const router = Router();
 

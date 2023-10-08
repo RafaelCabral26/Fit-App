@@ -45,7 +45,16 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                 showRegisterModal(false);
             })
             .catch(err => {
-                return globalState?.setToast({ type: "error", message: err.response.data.msg.errors[0].message })
+                if (err?.response?.data?.msg?.errors?.[0]?.message){
+                    return globalState?.setToast({ type: "error", message: err.response.data.msg.errors[0].message })
+                } else if (err.response.data.msg.name) {
+
+                return globalState?.setToast({type:"error", message:err.response.data.msg.name})
+                } 
+                
+               console.log("MEU ERRAOOOO",err);
+                
+                return globalState?.setToast({type:"error", message:err.response.data.msg})
             })
     }
     const handlePasswordView = () => {

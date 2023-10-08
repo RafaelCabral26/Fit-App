@@ -1,4 +1,3 @@
-add:trainer send spreadsheet to user
 add:UI trainer managing
 refactor:change global context file(myToast)
 

@@ -14,11 +14,11 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en" data-theme="dark">
+        <html lang="en" data-theme="corporate">
             <body className='h-screen overflow-x-hidden relative'>
                 <GlobalProvider>
                     <Navbar></Navbar>
-                <div className=''>
+                <div className="">
                         <MyToast></MyToast>
                     {children}
                 </div>

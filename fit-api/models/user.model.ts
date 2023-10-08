@@ -41,6 +41,12 @@ const User = sequelize.define("user", {
         type: DataTypes.BOOLEAN,
         defaultValue: true
     },
+    createdAt: {
+        type:DataTypes.DATE
+    },
+    updatedAt: {
+        type:DataTypes.DATE
+    },
 })
 User.sync()
 export default User

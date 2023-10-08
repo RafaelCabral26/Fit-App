@@ -2,8 +2,8 @@ import { Draggable, DraggableProvided, } from "@hello-pangea/dnd"
 import TrashSvg from "@/svgs/trashsvg"
 import EditPencilSvg from "@/svgs/editpencil"
 import { SetStateAction, useContext, useState } from "react"
-import { TDays, TExercise } from "./nova_planilha_Types"
-import { ValidateAddExercise } from "./nova_planilha_Utilities"
+import { TDays, TExercise } from "./Spreadsheet_Types"
+import { ValidateAddExercise } from "./Spreadsheet_Utilities"
 import { GlobalContext } from "@/services/MyToast"
 
 const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: TExercise, index: number, daysArray: TDays[], dayIndex: number, setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
@@ -19,6 +19,7 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
         setNewDayArray([...newArray]);
 
     };
+
     const handleEditModal = (myBoolean: boolean) => {
         openEditModal(!editModal);
         globalState?.isDragDisabledSwitch(myBoolean);

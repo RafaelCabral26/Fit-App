@@ -18,7 +18,7 @@ export default function RootLayout({
             <body className='h-screen overflow-x-hidden relative'>
                 <GlobalProvider>
                     <Navbar></Navbar>
-                <div className=''>
+                <div className="">
                         <MyToast></MyToast>
                     {children}
                 </div>

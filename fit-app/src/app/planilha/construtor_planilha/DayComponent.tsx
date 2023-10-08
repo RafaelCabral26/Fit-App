@@ -2,7 +2,7 @@ import { SetStateAction, useContext, useEffect, useRef, useState } from "react";
 import { Droppable } from "@hello-pangea/dnd";
 import ExerciseComponent from "./ExerciseComponent"
 import AddExerciseFormModal from "./modalAddNewExercise"
-import { TDays, TExercise } from "./nova_planilha_Types";
+import { TDays, TExercise } from "./Spreadsheet_Types";
 import { GlobalContext } from "@/services/MyToast";
 import { useOnClickOutside } from "@/services/ClickOutsideHook";
 

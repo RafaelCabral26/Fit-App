@@ -57,7 +57,7 @@ router.get("/list_user_spreadsheets", async (req, res, next) => {
 })
 router.delete("/delete_spreadsheet/:id", async (req, res, next) => {
     try {
-        Spreadsheet.destroy({
+        await Spreadsheet.destroy({
             where: {
                 spreadsheet_id: req.params.id
             }
@@ -69,14 +69,23 @@ router.delete("/delete_spreadsheet/:id", async (req, res, next) => {
 
     }
 })
-router.delete("/delete_client_spreadsheet/:id", async (req,res,next) => {
+
+router.delete("/delete_client_spreadsheet/:spreadsheet_id", async (req,res,next) => {
     try {
-        console.log(req.params.id);
-            
-    } catch (err) {
-        console.log(res);
-    }
-})
+        const secret = process.env.SECRET as Secret;
+        const user = jwt.verify(req.cookies.authcookie, secret) as any;
+        if (!user.trainer_id) throw new Error("Usuário sem permissão");
+        await Spreadsheet.destroy({where: {
+            spreadsheet_id:req.params.spreadsheet_id,
+            fk_trainer_id:user.trainer_id,
+        }});
+        return res.status(200).json({msg:"Planilha deletada."});
+    } catch (err:any) {
+        if (err.message) return res.status(402).json({msg:err.message});
+        return res.status(402).json({msg:"Erro, tente novamente."});
+            }
+});
+
 router.get("/search_spreadsheet/:spreadsheet_id", async (req, res, next) => {
     try {
         const queriedSpreadsheet = await Spreadsheet.findByPk(req.params.spreadsheet_id)

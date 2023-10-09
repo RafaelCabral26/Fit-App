@@ -1,21 +1,25 @@
 "use client"
 
 import myHTTP from "@/services/axiosconfig"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import AddClientModal from "./AddClientModal"
 import EditClientSpreadsheetModal from "./EditClientSpreadsheetModal"
+import { GlobalContext } from "@/services/MyToast"
+import { useRouter } from "next/navigation"
 
 const ManageClients = () => {
+    const globalState = useContext(GlobalContext);
     const [addClientModal, showAddClientModal] = useState<boolean>(false);
     const [editModal, showEditModal] = useState<boolean>(false);
     const [clientList, setClientList] = useState<[] | null>();
     const [triggerRequest, setTriggerRequest] = useState<boolean>(false);
     const [spreadsheets, setSpreadsheets] = useState<any[] | null>(null);
-
+    const router = useRouter();
     useEffect(() => {
         myHTTP.get("/client_list")
             .then(res => {
                 setClientList(res.data.client_table)
+                console.log(clientList);
             })
             .catch(err => {
                 console.log(err);
@@ -33,6 +37,17 @@ const ManageClients = () => {
             })
         showEditModal(true)
     }
+    const handleRemoveClient = (clientEmail:string) => {
+        myHTTP.patch("/remove_client", {client_email:clientEmail})
+            .then(res => {
+                globalState?.setToast({type:"success", message:res.data.msg})
+                setTriggerRequest(!triggerRequest);
+            })
+        .catch(err => {
+                console.log(err);
+                globalState?.setToast({type:"warning", message:err.response.data.msg})
+            })
+    }
     return (
         <>
             <div className="container flex flex-col  m-auto">
@@ -49,6 +64,7 @@ const ManageClients = () => {
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>Planilhas</th>
+                                <th>Deletar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,6 +76,7 @@ const ManageClients = () => {
                                             <td>{ele.name}</td>
                                             <td>{ele.email}</td>
                                             <td><button onClick={() => {handleSelectedClient(ele.email)}} className="my-btn m-0">Ver</button></td>
+                                            <td><button onClick={() => {handleRemoveClient(ele.email)}} type="button" className="my-btn m-0">DEL</button></td>
                                         </tr>
                                     )
                                 })

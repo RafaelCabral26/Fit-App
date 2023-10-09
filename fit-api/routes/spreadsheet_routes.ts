@@ -69,6 +69,14 @@ router.delete("/delete_spreadsheet/:id", async (req, res, next) => {
 
     }
 })
+router.delete("/delete_client_spreadsheet/:id", async (req,res,next) => {
+    try {
+        console.log(req.params.id);
+            
+    } catch (err) {
+        console.log(res);
+    }
+})
 router.get("/search_spreadsheet/:spreadsheet_id", async (req, res, next) => {
     try {
         const queriedSpreadsheet = await Spreadsheet.findByPk(req.params.spreadsheet_id)

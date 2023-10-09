@@ -2,19 +2,28 @@ import createQueryString from "@/services/createQueryString";
 import { useRouter } from "next/navigation";
 import { SetStateAction, useState } from "react";
 import { formatDate } from "../planilha/construtor_planilha/Spreadsheet_Utilities";
+import myHTTP from "@/services/axiosconfig";
 
-const EditClientSpreadsheetModal = ({ spreadsheets, showEditModal }: { spreadsheets: any[] | null, showEditModal: React.Dispatch<SetStateAction<boolean>> }) => {
+const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selectedClient: any[] | null, showEditModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const router = useRouter();
     const [selectedSpreadsheet, setSelectedSpreadsheet] = useState<string | null>(null);
     const handleSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedSpreadsheet(event.target.value);
-        console.log(spreadsheets);
-        
     }
     
     const redirectToEditSpreadsheet = () => {
         router.replace(`/planilha/construtor_planilha?${createQueryString("spreadsheet_id", selectedSpreadsheet)}&${createQueryString("previous_url","alunos")}`);
     }
+    const handleDeleteClientSpreadsheet = (clientSpreadsheetId:string | null) => {
+        if (clientSpreadsheetId === null) return;
+        myHTTP.delete(`delete_client_spreadsheet/${clientSpreadsheetId}`)
+            .then(res => {
+                console.log(res);
+            })
+        .catch(err => {
+                console.log(err);
+            });
+    };
     
     return (
         <div className="fixed top-20 h-screen w-screen z-10">
@@ -28,7 +37,7 @@ const EditClientSpreadsheetModal = ({ spreadsheets, showEditModal }: { spreadshe
                 </label>
                 <select onChange={handleSelected} className="my-input bg-base-300">
                     <option hidden>Escolher Planilha...</option>
-                    {spreadsheets?.map((ele: any, index: number) => {
+                    {selectedClient?.map((ele: any, index: number) => {
                         return (
                             <option value={ele.spreadsheet_id} key={ele.spreadsheet_id}>Planilha {String(index + 1)} - {formatDate(ele.updatedAt)} </option>
                         )
@@ -36,7 +45,7 @@ const EditClientSpreadsheetModal = ({ spreadsheets, showEditModal }: { spreadshe
                 </select>
                 <div className="flex justify-evenly">
                     <button onClick={redirectToEditSpreadsheet} type="button" className="my-btn">Editar</button>
-                    <button type="button" className="my-btn-red">Deletar</button>
+                    <button onClick={() => handleDeleteClientSpreadsheet(selectedSpreadsheet)} type="button" className="my-btn-red">Deletar</button>
                 </div>
             </form>
         </div>

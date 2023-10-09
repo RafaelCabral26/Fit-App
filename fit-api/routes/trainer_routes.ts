@@ -3,6 +3,7 @@ import { Router } from "express"
 import jwt, { Secret } from "jsonwebtoken";
 import User from "../models/user.model";
 import Trainer, { TTrainer } from "../models/trainer.model";
+import Spreadsheet from "../models/spreadsheet.model";
 
 const router = Router();
 
@@ -72,6 +73,7 @@ router.patch("/remove_client", async (req, res, next) => {
             if (!trainer.trainer_clients) {
                 return res.status(200).json({ msg: "Lista já está vazia." });
             }
+            await Spreadsheet.destroy({where:{ fk_trainer_id:user.trainer_id}});
             trainer.trainer_clients = await trainer.trainer_clients.filter((ele: any) => ele !== clientEmail);
             await trainer.save();
             return res.status(200).json({ msg: "Cliente Removido." });

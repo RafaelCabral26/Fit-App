@@ -27,18 +27,18 @@ export const Navbar = () => {
                 globalState?.setToast({ type: "error", message: err.response.data.msg })
             })
     }
-
+ 
     useEffect(() => {
         myHTTP.post("/check_user")
             .then(res => {
                 if (res.data.logged) {
                     return globalState?.setUserType(res.data.profile)
                 }
-                globalState?.setUserType(null)
+                globalState?.setUserType(null);
+                
             })
             .catch(err => {
-                console.log(err);
-                console.log("not Logged");
+                globalState?.setToast({type:"warning", message: err.response.data.msg});
             })
     }, [handleLogout])
 

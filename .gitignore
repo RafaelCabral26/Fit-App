@@ -6,7 +6,7 @@ node_modules/
 /.pnp
 .pnp.js
 Session.vim
-
+helper.txt
 
 # testing
 /coverage

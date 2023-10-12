@@ -6,7 +6,7 @@ import RegisterModal from "./RegisterModal"
 import myHTTP from "@/services/axiosconfig"
 import { GlobalContext } from "@/services/MyToast"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
+
 export const Navbar = () => {
     const globalState = useContext(GlobalContext);
     const router = useRouter();
@@ -16,31 +16,32 @@ export const Navbar = () => {
     const handleLogout = () => {
         myHTTP.get("/logout")
             .then(res => {
-                globalState?.setToast({ type: "success", message: res.data.msg })
-                globalState?.setUserType(null)
+                globalState?.setToast({ type: "success", message: res.data.msg });
+                globalState?.setUserType(null);
             })
             .then(() => {
-                showLoginModal(false)
+                showLoginModal(false);
                 router.replace("/");
             })
             .catch(err => {
-                globalState?.setToast({ type: "error", message: err.response.data.msg })
+                globalState?.setToast({ type: "error", message: err.response.data.msg });
             })
-    }
- 
+    };
+
     useEffect(() => {
         myHTTP.post("/check_user")
             .then(res => {
                 if (res.data.logged) {
-                    return globalState?.setUserType(res.data.profile)
+                    return globalState?.setUserType(res.data.profile);
                 }
                 globalState?.setUserType(null);
-                
+
             })
             .catch(err => {
-                globalState?.setToast({type:"warning", message: err.response.data.msg});
+                console.log(err);
+                globalState?.setToast({ type: "warning", message: err.response.data.msg });
             })
-    }, [handleLogout])
+    }, [handleLogout]);
 
     return (
         <>
@@ -71,14 +72,14 @@ export const Navbar = () => {
                                 }
                                 {globalState?.userType === "user" &&
                                     (<>
-                                        <li><button className="my-list-item" >Perfil</button></li>
+                                        <li><a href="/perfil" className="my-list-item" >Perfil</a></li>
                                         <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
                                     </>)
                                 }
                                 {globalState?.userType === "trainer" &&
                                     (<>
                                         <li><button className="my-list-item" >Perfil</button></li>
-                                        <li><a  href={"/alunos"} className="my-list-item" >Alunos</a></li>
+                                        <li><a href={"/alunos"} className="my-list-item" >Alunos</a></li>
                                         <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
                                     </>)
                                 }

@@ -80,7 +80,6 @@ router.patch("/remove_client", async (req, res, next) => {
         }
 
     } catch (err) {
-        console.log(err);
         return res.status(402).json({ msg: "Erro ao remover cliente." });
     }
 });

@@ -9,6 +9,7 @@ const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selecte
     const router = useRouter();
     const [selectedSpreadsheet, setSelectedSpreadsheet] = useState<string | null>(null);
     const globalState = useContext(GlobalContext);
+
     const handleSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedSpreadsheet(event.target.value);
     };

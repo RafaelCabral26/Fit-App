@@ -33,20 +33,22 @@ const MinhasPlanilhas = () => {
                 console.log(err);
             });
     }, []);
+
     const handleSelectSpreadsheet = (index: number) => {
         if (allSpreadsheets !== undefined) setSelectedSpreadSheet(allSpreadsheets[index]);
     }
+
     const deleteSpreadsheet = () => {
         myHTTP.delete(`/delete_spreadsheet/${selectedSpreadsheet?.spreadsheet_id}`)
             .then(res => {
-                globalState?.setToast({ type: "success", message: res.data.msg })
-                setSelectedSpreadSheet(undefined)
-                window.location.reload()
+                globalState?.setToast({ type: "success", message: res.data.msg });
+                setSelectedSpreadSheet(undefined);
+                window.location.reload();
             })
             .catch(err => {
                 console.log(err);
-            })
-    }
+            });
+    };
 
     return (
         <>
@@ -68,11 +70,11 @@ const MinhasPlanilhas = () => {
                     </>
                 }
             </div>
-            <div className="container m-auto flex flex-col md:flex-row justify-center">
+            <div className="m-auto flex flex-col md:flex-row justify-center">
                 {
                     selectedSpreadsheet?.days.map((ele: TDays, index: number) => {
                         return (
-                            <div key={crypto.randomUUID()} className="rounded-lg md:w-[22%] shadow-lg m-2 border-2 border-secondary bg-base-200">
+                            <div key={crypto.randomUUID()} className="rounded-lg lg:basis-[15%] shadow-lg m-2 border-2 border-secondary bg-base-200">
                                 <div className="flex justify-between p-2 bg-base-300 rounded-t-sm border-secondary ">
                                     <span className="m-2">{("Dia " + String(index + 1))}</span>
                                 </div>

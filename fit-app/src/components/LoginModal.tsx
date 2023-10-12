@@ -21,22 +21,22 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
         e.preventDefault();
         myHTTP.post("/login", loginInput)
             .then((res:any) => {
-                globalState?.setToast({type:"success", message:res.data.msg})
+                globalState?.setToast({type:"success", message:res.data.msg});
                 showLoginModal(false);
-                router.replace("/")
+                router.replace("/");
             })
             .catch((err:any) => {
-                const myMessage = err.response.data.msg ? err.response.data.msg : "Erro Desconhecido"
-                globalState?.setToast({type:"warning", message:myMessage})
+                const myMessage = err.response.data.msg ? err.response.data.msg : "Erro Desconhecido";
+                globalState?.setToast({type:"warning", message:myMessage});
             })
-    }
+    };
 
     const handlePasswordView = () => {
        if (passwordViewState) {
-            return setPasswordViewState(false)
+            return setPasswordViewState(false);
         } 
         setPasswordViewState(true);
-    }
+    };
     return (
         <div className="fixed top-0  h-screen w-screen z-10">
             <div className="relative w-80 p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

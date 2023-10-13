@@ -7,8 +7,8 @@ import { GlobalContext } from "@/services/MyToast"
 
 const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selectedClient: any[] | null, showEditModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const router = useRouter();
-    const [selectedSpreadsheet, setSelectedSpreadsheet] = useState<string | null>(null);
     const globalState = useContext(GlobalContext);
+    const [selectedSpreadsheet, setSelectedSpreadsheet] = useState<string | null>(null);
 
     const handleSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedSpreadsheet(event.target.value);

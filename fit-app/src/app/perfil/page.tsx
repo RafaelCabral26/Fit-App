@@ -6,6 +6,7 @@ import EditProfileModal from "./EditProfileModal";
 
 const ProfilePage = () => {
     const [userData, setUserData] = useState<{ name: string, email: string }>();
+    const [ modalEditProfile, showModalEditProfile ] = useState<boolean>(false);
     useEffect(() => {
         myHTTP.get("/user_profile")
             .then(res => {
@@ -31,7 +32,7 @@ const ProfilePage = () => {
                         <span>{userData?.email}</span>
                     }
                     <div className="flex  gap-2">
-                        <button className="my-btn">Editar</button>
+                        <button onClick={() => showModalEditProfile(true)} type="button" className="my-btn">Editar</button>
                         <button className="my-btn-red">Deletar</button>
                     </div>
                 </div>
@@ -43,7 +44,10 @@ const ProfilePage = () => {
 
                 </div>
             </div>
-            <EditProfileModal></EditProfileModal>
+            {
+                modalEditProfile &&
+                    <EditProfileModal showModalEditProfile={showModalEditProfile} userData={userData}></EditProfileModal>
+            }
         </div>
     )
 }

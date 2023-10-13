@@ -54,7 +54,6 @@ router.post("/check_user", async (req, res, next) => {
         const token = req.cookies.authcookie;
         if (token) {
             const user = jwt.verify(token, secret) as any;
-            console.log("check_user", user);
 
             if (user.trainer_id) return res.status(200).json({ logged: true, profile: "trainer" });
             if (user.user_id) return res.status(200).json({ logged: true, profile: "user" });
@@ -95,6 +94,18 @@ router.patch("/edit_user", async (req, res, next) => {
         const token = req.cookies.authcookie;
         if (!token) throw new Error("Usuário deslogado.");
         const user = jwt.verify(token, secret) as any;
+        if (user.name === req.body.name && user.email === req.body.email) {
+            throw new Error("Nenhum campo alterado");
+        };
+        if (user.user_id) {
+            await User.update({ name: req.body.name, email: req.body.email }
+                , { where: { user_id: user.user_id } });
+        };
+        if (user.trainer_id) {
+            await Trainer.update({ name: req.body.name, email: req.body.email }
+                , { where: { trainer_id: user.trainer_id } });
+        };
+        return res.status(200).json({ msg: "Dados atualizados." });
     } catch (err) {
         return res.status(402).json({ msg: "Erro ao editar dados." });
     }

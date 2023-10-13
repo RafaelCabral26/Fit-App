@@ -20,3 +20,17 @@ export const ValidateRegisterInput = (registerInput: TRegisterInput): { valid: b
     }
     return {valid:true, message:"Cadastro realizado."}
 }
+
+export const ValidateEditInput = (editInput:{name:string,email:string}  ): { valid: boolean, message: string } => {
+    for (const e in editInput) {
+        if (e.length === 0) {
+            return { valid: false, message: "Preencha todos os campos." }
+        }
+    };
+    if (editInput?.name?.length < 5) {
+        return { valid: false, message: "Nome mínimo de 5 dígitos." }
+    }  else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(editInput.email) === false){
+        return {valid:false, message:"Formato do Email inválido."}
+    }
+    return {valid:true, message:"Cadastro realizado."}
+}

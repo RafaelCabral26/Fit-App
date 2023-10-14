@@ -1,5 +1,6 @@
 import jwt, { Jwt, GetPublicKeyOrSecret, Secret } from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { AppError } from "./AppError";
 
 const auth = {
     createEncryptedPass: async (oldPassword: string) => {
@@ -8,7 +9,7 @@ const auth = {
     },
     comparePasswords: async (inputPassword: string, DbPassword:string) => {
         const checkedPassword = await bcrypt.compare(inputPassword, DbPassword);
-        if (!checkedPassword) throw new Error("Senha Inválida.");
+        if (!checkedPassword) throw new AppError(402,"Senha Inválida.");
     },
     createToken: async (dbUser:any) => {
         const secret = process.env.SECRET as Secret;

@@ -4,7 +4,7 @@ import myHTTP from "@/services/axiosconfig"
 import { useContext, useEffect, useState } from "react"
 import AddClientModal from "./AddClientModal"
 import EditClientSpreadsheetModal from "./EditClientSpreadsheetModal"
-import { GlobalContext } from "@/services/MyToast"
+import { GlobalContext } from "@/services/GlobalContext"
 import { useRouter } from "next/navigation"
 import RemoveClientModal from "./RemoveClientModal"
 

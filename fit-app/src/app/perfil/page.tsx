@@ -1,10 +1,14 @@
 "use client"
 
 import myHTTP from "@/services/axiosconfig";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import EditProfileModal from "./EditProfileModal";
+import { GlobalContext } from "@/services/GlobalContext";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
+    const globalState = useContext(GlobalContext);
+    const router = useRouter();
     const [userData, setUserData] = useState<{ name: string, email: string }>();
     const [ modalEditProfile, showModalEditProfile ] = useState<boolean>(false);
     useEffect(() => {
@@ -13,7 +17,9 @@ const ProfilePage = () => {
                 setUserData(res.data);
             })
             .catch(err => {
-                console.log(err);
+                globalState?.setToast({type:"warning", message:err.response.data.msg});
+                router.replace("/");
+                
             })
 
     }, []);

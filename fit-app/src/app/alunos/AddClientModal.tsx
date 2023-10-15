@@ -1,4 +1,4 @@
-import { GlobalContext } from "@/services/MyToast";
+import { GlobalContext } from "@/services/GlobalContext";
 import myHTTP from "@/services/axiosconfig";
 import { SetStateAction, useContext, useState } from "react";
 

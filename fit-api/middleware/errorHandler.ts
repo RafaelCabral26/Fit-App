@@ -1,13 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../services/AppError";
+import { Sequelize, SequelizeScopeError, ValidationError } from "sequelize";
 
 const errorHandler = (error:any, req:Request, res:Response, next:NextFunction) => {
-  console.log(error);
 
-  if (error.name === "ValidationError") {
-    return res.status(400).send({
-      type: "ValidationError",
-      details: error.details,
+  if ( error instanceof ValidationError) {
+    return res.status(303).send({
+      msg: error.errors[0].message,
     });
   }
 

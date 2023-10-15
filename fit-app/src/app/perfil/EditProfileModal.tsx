@@ -1,6 +1,6 @@
 
 import { ValidateEditInput } from '@/components/ValidationUserInput';
-import { GlobalContext } from '@/services/MyToast';
+import { GlobalContext } from '@/services/GlobalContext';
 import myHTTP from '@/services/axiosconfig';
 import { useRouter } from 'next/navigation';
 import React, { SetStateAction, useContext, useEffect, useState } from 'react'

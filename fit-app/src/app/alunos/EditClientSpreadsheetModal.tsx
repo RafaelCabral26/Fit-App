@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useContext, SetStateAction, useState } from "react";
 import { formatDate } from "../planilha/construtor_planilha/Spreadsheet_Utilities";
 import myHTTP from "@/services/axiosconfig";
-import { GlobalContext } from "@/services/MyToast"
+import { GlobalContext } from "@/services/GlobalContext"
 
 const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selectedClient: any[] | null, showEditModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const router = useRouter();

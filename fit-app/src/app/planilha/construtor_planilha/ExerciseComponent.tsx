@@ -4,7 +4,7 @@ import EditPencilSvg from "@/svgs/editpencil"
 import { SetStateAction, useContext, useState } from "react"
 import { TDays, TExercise } from "./Spreadsheet_Types"
 import { ValidateAddExercise } from "./Spreadsheet_Utilities"
-import { GlobalContext } from "@/services/MyToast"
+import { GlobalContext } from "@/services/GlobalContext"
 
 const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: TExercise, index: number, daysArray: TDays[], dayIndex: number, setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
 

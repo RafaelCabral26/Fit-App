@@ -1,4 +1,4 @@
-import { GlobalContext } from "@/services/MyToast";
+import { GlobalContext } from "@/services/GlobalContext";
 import { HidePassSvg, ShowPassSvg } from "@/svgs/show-hide-eyes";
 import myHTTP from "@/services/axiosconfig";
 import { SetStateAction, useContext, useEffect, useState } from "react"
@@ -45,15 +45,6 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                 showRegisterModal(false);
             })
             .catch(err => {
-                if (err?.response?.data?.msg?.errors?.[0]?.message){
-                    return globalState?.setToast({ type: "error", message: err.response.data.msg.errors[0].message })
-                } else if (err.response.data.msg.name) {
-
-                return globalState?.setToast({type:"error", message:err.response.data.msg.name})
-                } 
-                
-               console.log("MEU ERRAOOOO",err);
-                
                 return globalState?.setToast({type:"error", message:err.response.data.msg})
             })
     }

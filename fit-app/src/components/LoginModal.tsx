@@ -2,8 +2,9 @@
 import myHTTP from "@/services/axiosconfig";
 import { ShowPassSvg, HidePassSvg } from "@/svgs/show-hide-eyes";
 import React, { SetStateAction, SyntheticEvent, useContext, useState } from "react"
-import { GlobalContext } from "@/services/MyToast";
+import { GlobalContext } from "@/services/GlobalContext";
 import { useRouter } from "next/navigation";
+import { AxiosError, AxiosResponse } from "axios";
 
 const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const [loginInput, setLoginInput] = useState({ email: "", password: "" });
@@ -20,14 +21,13 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
     const tryLogin = (e:React.SyntheticEvent) => {
         e.preventDefault();
         myHTTP.post("/login", loginInput)
-            .then((res:any) => {
+            .then((res) => {
                 globalState?.setToast({type:"success", message:res.data.msg});
                 showLoginModal(false);
                 router.replace("/");
             })
-            .catch((err:any) => {
-                const myMessage = err.response.data.msg ? err.response.data.msg : "Erro Desconhecido";
-                globalState?.setToast({type:"warning", message:myMessage});
+            .catch((err) => {
+                return globalState?.setToast({type:"warning", message:err.response.data.msg});
             })
     };
 

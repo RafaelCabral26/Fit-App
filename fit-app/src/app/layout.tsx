@@ -1,7 +1,7 @@
-import { createContext } from 'vm'
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
-import { MyToast, GlobalProvider } from '@/services/MyToast'
+import {  GlobalProvider } from '@/services/GlobalContext'
+import { MyToast } from '@/services/MyToast'
 
 
 export const metadata = {
@@ -14,7 +14,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en" data-theme="corporate">
+        <html lang="en" data-theme="dark">
             <body className='h-screen overflow-x-hidden relative'>
                 <GlobalProvider>
                     <Navbar></Navbar>

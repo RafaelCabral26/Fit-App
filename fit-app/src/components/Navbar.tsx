@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react"
 import LoginModal from "./LoginModal"
 import RegisterModal from "./RegisterModal"
 import myHTTP from "@/services/axiosconfig"
-import { GlobalContext } from "@/services/MyToast"
+import { GlobalContext } from "@/services/GlobalContext"
 import { useRouter } from "next/navigation"
 
 export const Navbar = () => {

@@ -3,7 +3,7 @@ import { Droppable } from "@hello-pangea/dnd";
 import ExerciseComponent from "./ExerciseComponent"
 import AddExerciseFormModal from "./modalAddNewExercise"
 import { TDays, TExercise } from "./Spreadsheet_Types";
-import { GlobalContext } from "@/services/MyToast";
+import { GlobalContext } from "@/services/GlobalContext";
 import { useOnClickOutside } from "@/services/ClickOutsideHook";
 
 const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number, day: TDays, daysArray: TDays[], setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {

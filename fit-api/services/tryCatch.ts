@@ -1,4 +1,8 @@
-export const tryCatch = (controller:any) => async (req:any, res:any, next:any) => {
+import { NextFunction, Request, Response } from "express";
+
+
+export const tryCatch =  ( controller: (req:Request, res:Response) => Promise<Response>
+) => async (req:Request, res:Response, next:NextFunction) => {
   try {
     await controller(req, res);
   } catch (error) {

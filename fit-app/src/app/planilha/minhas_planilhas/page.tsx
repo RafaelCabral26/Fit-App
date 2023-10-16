@@ -30,7 +30,7 @@ const MinhasPlanilhas = () => {
                 setAllSpreadSheets(placeholderDaysArray);
             })
             .catch(err => {
-                console.log(err);
+                globalState?.setToast({type:"warning", message:err.response.data.msg});
             });
     }, []);
 

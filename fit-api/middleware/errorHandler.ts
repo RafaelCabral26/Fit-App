@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../services/AppError";
-import { Sequelize, SequelizeScopeError, ValidationError } from "sequelize";
+import { Error, Sequelize, SequelizeScopeError, ValidationError } from "sequelize";
 
-const errorHandler = (error:any, req:Request, res:Response, next:NextFunction) => {
+const errorHandler = (error:Error, req:Request, res:Response, next:NextFunction) => {
 
   if ( error instanceof ValidationError) {
     return res.status(303).send({

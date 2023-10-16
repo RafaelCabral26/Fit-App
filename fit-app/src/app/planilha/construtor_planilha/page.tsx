@@ -13,13 +13,6 @@ import ClosedLockSvg from "@/svgs/closedLock"
 import SendSpreadsheetModal from "./modalSendSpreadsheet"
 import Link from "next/link"
 
-const reorder = (list: any[], startIndex: number, endIndex: number) => {
-    const result = list;
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result
-}
-
 const SpreadsheetBuilder: React.FC = () => {
     const globalState = useContext(GlobalContext);
     const searchParams = useSearchParams();
@@ -27,7 +20,7 @@ const SpreadsheetBuilder: React.FC = () => {
     const [editingSpreadsheet, setEditingSpreadsheet] = useState<boolean>(false);
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
     const [sendModal, showSendModal] = useState<boolean>(false);
-    const [previousUrl, setPreviousUrl] = useState<string>("")
+    const [previousUrl, setPreviousUrl] = useState<string>("");
 
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
@@ -38,10 +31,10 @@ const SpreadsheetBuilder: React.FC = () => {
                     formatExercisesStorage(res.data.exercises);
                 })
                 .catch(err => {
-                    console.log(err);
-                })
-
+                    globalState?.setToast({ type: "warning", message: err.response.data.msg });
+                });
         };
+
         const previousUrlIdCheck = searchParams.get("spreadsheet_id");
         if (previousUrlIdCheck) {
 
@@ -52,14 +45,13 @@ const SpreadsheetBuilder: React.FC = () => {
                     return setNewDayArray(parsedSpreadsheet);
                 })
                 .catch(err => {
-                    console.log(err);
+                    globalState?.setToast({ type: "error", message: err.response.data.msg });
                 })
             const previousUrl = searchParams.get("previous_url")
-            if(previousUrl) {
+            if (previousUrl) {
                 setPreviousUrl(previousUrl)
             }
             return;
-
         }
         if (cachedSpreadsheet) setNewDayArray((JSON.parse(cachedSpreadsheet)));
     }, [])
@@ -68,7 +60,7 @@ const SpreadsheetBuilder: React.FC = () => {
         if (editingSpreadsheet) return;
         const cachedSpreadsheet = localStorage.getItem("Ongoing_Spreadsheet");
         if (!cachedSpreadsheet) localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray));
-    }, [daysArray])
+    }, [daysArray]);
 
     const addNewDay = () => {
         if (daysArray.length < 7) {

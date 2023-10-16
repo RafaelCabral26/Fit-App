@@ -22,20 +22,20 @@ tryCatch(async (req:Request,res:Response) => {
         } else if (req.body.profile === "trainer") {
             await Trainer.create(user);
         }
-        res.status(200).json({ msg: "Usuário Cadastrado!" })
+        return res.status(200).json({ msg: "Usuário Cadastrado!" });
     })
-)
+);
 
 router.post("/login",
 tryCatch(async (req:Request,res:Response) => {
         const userInput: TUser = req.body;
         if (!userInput.email || !userInput.password) {
         throw new AppError(402,"Preencha todos os campos.");
-        }
+        };
         let dbUser = await User.findOne({ where: { email: userInput.email } });
         if (!dbUser) {
             dbUser = await Trainer.findOne({ where: { email: userInput.email } });
-            if (!dbUser) throw new AppError(402,"Usuário não encontrado");
+            if (!dbUser) throw new AppError(403,"Usuário não encontrado");
         }
         await auth.comparePasswords(userInput.password, dbUser.password);
         const userOrTrainer = dbUser.user_id ? { name: dbUser.name, email: dbUser.email, user_id: dbUser.user_id } : { name: dbUser.name, email: dbUser.email, trainer_id: dbUser.trainer_id };

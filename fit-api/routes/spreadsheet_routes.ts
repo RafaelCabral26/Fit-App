@@ -1,18 +1,22 @@
 "use client"
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import jwt, { Secret } from "jsonwebtoken";
 import User, { TUser } from "../models/user.model";
 import Spreadsheet from "../models/spreadsheet.model";
 import { TTrainer } from "../models/trainer.model";
 import { Sequelize } from "sequelize";
+import { tryCatch } from "../services/tryCatch";
+import { AppError } from "../services/AppError";
 
 const router = Router();
 
-router.post("/new_spreadsheet", async (req, res, next) => {
-    try {
+router.patch("/new_spreadsheet",
+    tryCatch(async (req: Request, res: Response) => {
+
         if (!req.cookies.authcookie) {
-            return res.status(202).json({ msg: "Faça login para salvar planilha." });
+            throw new AppError(403, "Faça login para salvar planilha.");
         }
+        if (!req.body) throw new AppError(403, "PLanilha vazia.");
         const secret = process.env.SECRET as Secret;
         const user = jwt.verify(req.cookies.authcookie, secret) as any;
         const stringfiedDayArray = JSON.stringify(req.body);
@@ -20,83 +24,69 @@ router.post("/new_spreadsheet", async (req, res, next) => {
             fk_user_id: user.user_id ? user.user_id : null,
             fk_trainer_id: user.trainer_id ? user.trainer_id : null,
             spreadsheet_days: stringfiedDayArray,
-        }
-        let whereStatement = {}
-        if (user.user_id) whereStatement = { fk_user_id: user.user_id};
-        if(user.trainer_id) whereStatement = { fk_trainer_id: user.trainer_id};
+        };
+        let whereStatement = {};
+        if (user.user_id) whereStatement = { fk_user_id: user.user_id };
+        if (user.trainer_id) whereStatement = { fk_trainer_id: user.trainer_id };
         const { count, rows } = await Spreadsheet.findAndCountAll({
-            where: whereStatement 
-        })
+            where: whereStatement
+        });
         if (count >= 4) {
-            return res.status(202).json({ msg: "Máximo de 4 planilhas por usuário." })
+            throw new AppError(403, "Máximo de 4 planilhas por usuário.");
         }
-        await Spreadsheet.create(spreadsheetMould)
-        res.status(200).json({ msg: "Planilha Criada" })
-    } catch (err) {
-        console.log(err);
-        res.status(400).json({ msg: "Erro ao criar planilha." })
-    }
-})
-router.get("/list_user_spreadsheets", async (req, res, next) => {
-    try {
+        await Spreadsheet.create(spreadsheetMould);
+        return res.status(200).json({ msg: "Planilha Criada" });
+    }));
+
+router.patch("/list_user_spreadsheets",
+    tryCatch(async (req: Request, res: Response) => {
         if (!req.cookies.authcookie) {
-            return res.status(202).json({ msg: "Faça login para ver planilhas." })
+            throw new AppError(403, "Faça login para ver planilhas.");
         }
         const secret = process.env.SECRET as Secret;
         const user = jwt.verify(req.cookies.authcookie, secret) as any;
         let whereStatement = {}
-        if (user.user_id) whereStatement = { fk_user_id: user.user_id};
-        if(user.trainer_id) whereStatement = { fk_trainer_id: user.trainer_id};
+        if (user.user_id) whereStatement = { fk_user_id: user.user_id };
+        if (user.trainer_id) whereStatement = { fk_trainer_id: user.trainer_id };
         const allSpreadsheets = await Spreadsheet.findAll({
             where: whereStatement
         });
-        res.status(200).json({ msg: "Bateu na API", spreadsheet: allSpreadsheets });
-    } catch (err) {
-        console.log(err);
-    }
-})
-router.delete("/delete_spreadsheet/:id", async (req, res, next) => {
-    try {
+        return res.status(200).json({ msg: "Bateu na API", spreadsheet: allSpreadsheets });
+    }));
+
+router.delete("/delete_spreadsheet/:id",
+    tryCatch(async (req: Request, res: Response) => {
         await Spreadsheet.destroy({
             where: {
                 spreadsheet_id: req.params.id
             }
         })
         return res.status(200).json({ msg: "Planilha deletada." });
-    } catch (err) {
-        console.log(err);
-        return res.status(402).json({ msg: "Erro ao tentar deletar." });
+    }));
 
-    }
-})
-
-router.delete("/delete_client_spreadsheet/:spreadsheet_id", async (req,res,next) => {
-    try {
+router.delete("/delete_client_spreadsheet/:spreadsheet_id",
+    tryCatch(async (req: Request, res: Response) => {
         const secret = process.env.SECRET as Secret;
         const user = jwt.verify(req.cookies.authcookie, secret) as any;
         if (!user.trainer_id) throw new Error("Usuário sem permissão");
-        await Spreadsheet.destroy({where: {
-            spreadsheet_id:req.params.spreadsheet_id,
-            fk_trainer_id:user.trainer_id,
-        }});
-        return res.status(200).json({msg:"Planilha deletada."});
-    } catch (err:any) {
-        if (err.message) return res.status(402).json({msg:err.message});
-        return res.status(402).json({msg:"Erro, tente novamente."});
+        await Spreadsheet.destroy({
+            where: {
+                spreadsheet_id: req.params.spreadsheet_id,
+                fk_trainer_id: user.trainer_id,
             }
-});
+        });
+        return res.status(200).json({ msg: "Planilha deletada." });
+    }));
 
-router.get("/search_spreadsheet/:spreadsheet_id", async (req, res, next) => {
-    try {
+router.get("/search_spreadsheet/:spreadsheet_id",
+    tryCatch(async (req: Request, res: Response) => {
         const queriedSpreadsheet = await Spreadsheet.findByPk(req.params.spreadsheet_id)
         return res.status(200).json({ spreadsheet: queriedSpreadsheet });
-    } catch (err) {
-        console.log(err);
-        return res.status(400).json({ msg: "Erro ao buscar planilha." });
-    }
-})
-router.patch("/update_spreadsheet", async (req, res, next) => {
-    try {
+    }));
+
+
+router.patch("/update_spreadsheet",
+    tryCatch(async (req: Request, res: Response) => {
         const stringfiedDayArray = JSON.stringify(req.body.spreadsheet_days);
         await Spreadsheet.update({ spreadsheet_days: stringfiedDayArray }, {
             where: {
@@ -104,52 +94,43 @@ router.patch("/update_spreadsheet", async (req, res, next) => {
             }
         })
         return res.status(200).json({ msg: "Planilha atualizada." });
-    } catch (err) {
-        console.log(err);
-        return res.status(402).json({ msg: "Erro ao atualizar." });
-    }
-});
+    }));
 
-router.post("/get_client_spreadsheet", async (req, res, next) => {
-    try {
+router.post("/get_client_spreadsheet",
+    tryCatch(async (req: Request, res: Response) => {
         const secret = process.env.SECRET as Secret;
+        if (!req.cookies.authcookie) throw new AppError(403, "Faça login.");
         const token = req.cookies.authcookie;
         const trainer = jwt.verify(token, secret) as TTrainer;
-        if (!trainer) throw new Error("Faça login.");
+        if (!trainer) throw new AppError(403, "Faça login.");
         const user = await User.findOne({ where: { email: req.body.client_email } });
-        const userSpreadsheets = await Spreadsheet.findAll({ where: { fk_user_id: user.user_id, fk_trainer_id:trainer.trainer_id } });
+        const userSpreadsheets = await Spreadsheet.findAll({ where: { fk_user_id: user.user_id, fk_trainer_id: trainer.trainer_id } });
         return res.status(200).json({ user_spreadsheets: userSpreadsheets });
-    } catch (err) {
-        console.log(err);
-    }
-});
+    }));
 
-router.post("/send_spreadsheet", async (req, res, next) => {
-    try {
+router.post("/send_spreadsheet",
+    tryCatch(async (req: Request, res: Response) => {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         const stringfiedDayArray = JSON.stringify(req.body.daysArray);
-        if (token) {
-            const trainer = jwt.verify(token, secret) as TTrainer;
-            if (!trainer.trainer_id) throw new Error("Usuário sem permissão");
-            const client = await User.findOne({ where: { email: req.body.client_email } });
-            const { count, rows } = await Spreadsheet.findAndCountAll({
-                where: {
-                    fk_trainer_id: trainer.trainer_id,
-                }
-            })
-            if (count >= 10) throw new Error("Limite de planilhas alcançado(10)");
-            const spreadsheetMould = {
+        if (!token) throw new AppError(403, "Faça login...");
+        const trainer = jwt.verify(token, secret) as TTrainer;
+        if (!trainer.trainer_id) throw new Error("Usuário sem permissão");
+        const client = await User.findOne({ where: { email: req.body.client_email } });
+        const { count, rows } = await Spreadsheet.findAndCountAll({
+            where: {
                 fk_trainer_id: trainer.trainer_id,
-                fk_user_id: client.user_id,
-                spreadsheet_days: stringfiedDayArray,
-            };
-            await Spreadsheet.create(spreadsheetMould);
-            return res.status(200).json({ msg: "Planilha enviada" });
-        }
-    } catch (err: any) {
-        return res.status(402).json({ msg: err.message });
-    };
-});
+            }
+        })
+        if (count >= 10) throw new Error("Limite de planilhas alcançado(10)");
+        const spreadsheetMould = {
+            fk_trainer_id: trainer.trainer_id,
+            fk_user_id: client.user_id,
+            spreadsheet_days: stringfiedDayArray,
+        };
+        await Spreadsheet.create(spreadsheetMould);
+        return res.status(200).json({ msg: "Planilha enviada" });
+
+    }));
 
 export { router };

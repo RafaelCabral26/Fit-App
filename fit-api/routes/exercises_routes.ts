@@ -1,14 +1,13 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import ExerciseSample from "../models/exercise_sample.model";
+import { tryCatch } from "../services/tryCatch";
 
 const router = Router();
 
-router.get("/list_exercises", async (req, res, next) => {
-    try {
+router.get("/list_exercises",
+tryCatch(async (req:Request,res:Response) => {
         const exerciseList = await ExerciseSample.findAll();
-        res.status(200).json({exercises:exerciseList})
-    } catch (err) {
-        res.status(401).json({msg:"Erro na busca de exercicios"});
-    }
+        return res.status(200).json({exercises:exerciseList});
 })
+);
 export { router }

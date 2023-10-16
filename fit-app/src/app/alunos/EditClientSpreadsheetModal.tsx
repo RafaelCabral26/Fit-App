@@ -8,7 +8,7 @@ import { GlobalContext } from "@/services/GlobalContext"
 const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selectedClient: any[] | null, showEditModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const router = useRouter();
     const globalState = useContext(GlobalContext);
-    const [selectedSpreadsheet, setSelectedSpreadsheet] = useState<string | null>(null);
+    const [selectedSpreadsheet, setSelectedSpreadsheet] = useState<string >("");
 
     const handleSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedSpreadsheet(event.target.value);

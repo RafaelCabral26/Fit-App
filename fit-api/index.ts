@@ -1,3 +1,4 @@
+import { Error } from "sequelize";
 import errorHandler from "./middleware/errorHandler";
 import { allRoutes } from "./routes/routes";
 require("dotenv").config()
@@ -16,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 sequelize.authenticate()
     .then(() => console.log("Connected to DB"))
-    .catch((err: any) => console.log(err))
+    .catch((err: Error) => console.log(err))
 app.use(allRoutes);
 app.use(errorHandler);
 const PORT = process.env.NODE_DOCKER_PORT || 8080;

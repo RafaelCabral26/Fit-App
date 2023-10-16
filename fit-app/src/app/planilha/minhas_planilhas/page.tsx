@@ -6,27 +6,33 @@ import { TDays, TExercise } from "../construtor_planilha/Spreadsheet_Types"
 import TrashSvg from "@/svgs/trashsvg"
 import Link from "next/link"
 import createQueryString from "@/services/createQueryString"
-
-type TSpreadsheets = {
+import { formatDate } from "../construtor_planilha/Spreadsheet_Utilities"
+type TParsedSpreadsheets = {
     spreadsheet_id: string,
-    days: TDays[]
+    spreadsheet_days:[],
+    updatedAt:string,
+}
+type TDbSpreadsheet = {
+    spreadsheet_id: string,
+    spreadsheet_days:string,
+    updatedAt:string,
 }
 const MinhasPlanilhas = () => {
 
     const globalState = useContext(GlobalContext);
-    const [allSpreadsheets, setAllSpreadSheets] = useState<TSpreadsheets[]>();
-    const [selectedSpreadsheet, setSelectedSpreadSheet] = useState<TSpreadsheets>();
+    const [allSpreadsheets, setAllSpreadSheets] = useState<TParsedSpreadsheets[]>();
+    const [selectedSpreadsheet, setSelectedSpreadSheet] = useState<TParsedSpreadsheets>();
     const [confirmDeleteModal, showConfirmDeleteModal] = useState<boolean>(false);
     useEffect(() => {
         myHTTP.get("/list_user_spreadsheets")
             .then(res => {
                 if (!res.data.spreadsheet) return globalState?.setToast({ type: "warning", message: res.data.msg });
                 const receivedSpreadsheets = res.data.spreadsheet;
-                let placeholderDaysArray = [] as TSpreadsheets[];
-                receivedSpreadsheets.forEach((ele: any) => {
-                    placeholderDaysArray.push({ spreadsheet_id: ele.spreadsheet_id, days: JSON.parse(ele.spreadsheet_days) });
+                console.log("receivedSpreadsheets", receivedSpreadsheets);
+                let placeholderDaysArray = [] as TParsedSpreadsheets[];
+                receivedSpreadsheets.forEach((ele: TDbSpreadsheet) => {
+                    placeholderDaysArray.push({ spreadsheet_id: ele.spreadsheet_id, spreadsheet_days: JSON.parse(ele.spreadsheet_days), updatedAt:ele.updatedAt });
                 });
-
                 setAllSpreadSheets(placeholderDaysArray);
             })
             .catch(err => {
@@ -55,8 +61,8 @@ const MinhasPlanilhas = () => {
             <div className="flex justify-center items-center gap-4 my-5">
                 <select className="my-input">
                     <option hidden>Planilhas...</option>
-                    {allSpreadsheets?.map((ele: any, index: any) => {
-                        return <option onClick={() => handleSelectSpreadsheet(index)} key={index} value={index}>Planilha - {index + 1}</option>
+                    {allSpreadsheets?.map((ele: TParsedSpreadsheets, index: number) => {
+                        return <option onClick={() => handleSelectSpreadsheet(index)} key={index} value={index}>Planilha - {formatDate(ele.updatedAt)}</option>
                     })};
                 </select>
                 {
@@ -72,7 +78,7 @@ const MinhasPlanilhas = () => {
             </div>
             <div className="m-auto flex flex-col md:flex-row justify-center">
                 {
-                    selectedSpreadsheet?.days.map((ele: TDays, index: number) => {
+                    selectedSpreadsheet?.spreadsheet_days.map((ele: TDays, index: number) => {
                         return (
                             <div key={crypto.randomUUID()} className="rounded-lg lg:basis-[15%] shadow-lg m-2 border-2 border-secondary bg-base-200">
                                 <div className="flex justify-between p-2 bg-base-300 rounded-t-sm border-secondary ">

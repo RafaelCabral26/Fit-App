@@ -2,13 +2,6 @@ import { DataTypes } from "sequelize";
 
 const sequelize = require("./index.ts");
 
-export type TTrainer = {
-    trainer_id?: string,
-    name?: string,
-    password?: string,
-    email: string,
-    active?: boolean
-}
 const Trainer = sequelize.define("trainer", {
 
     trainer_id: {

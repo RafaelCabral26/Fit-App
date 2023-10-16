@@ -7,12 +7,19 @@ import { GlobalContext } from "@/services/GlobalContext";
 import { TDays } from "./Spreadsheet_Types";
 import { useRouter } from "next/navigation";
 
+export type TUser = {
+    user_id?: string,
+    name?: string,
+    password?: string,
+    email: string,
+    active?: boolean
+};
 
 const SendSpreadsheetModal = ({showSendModal, daysArray, setNewDayArray}:{daysArray:TDays[], showSendModal:React.Dispatch<React.SetStateAction<boolean>>,setNewDayArray:React.Dispatch<SetStateAction<TDays[]>>}) => {
     const globalState = useContext(GlobalContext);
     const router = useRouter();
-    const [ clientList, setClientList ] = useState<[] | null>();
-    const [selectedClient, setSelectedClient ] = useState<{name:string,email:string} | null>();
+    const [ clientList, setClientList ] = useState<TUser[] | null>();
+    const [selectedClient, setSelectedClient ] = useState< TUser | null>();
 
     useEffect(() => {
        myHTTP.get("/client_list") 
@@ -52,7 +59,7 @@ const SendSpreadsheetModal = ({showSendModal, daysArray, setNewDayArray}:{daysAr
                 <select className="my-input">
                     <option className="" hidden>Cliente....</option>
                     {
-                            clientList?.map((ele:any) => {
+                            clientList?.map((ele:TUser) => {
                                 return (
                                 <option key={ele.name} onClick={() => setSelectedClient(ele)}>
                                         {ele.name + ", " + ele.email}

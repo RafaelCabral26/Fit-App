@@ -29,7 +29,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
     const handleRegisterInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         const value = e.target.value;
-        setRegisterInput((prev: any) => {
+        setRegisterInput((prev: TRegisterInput) => {
             return { ...prev, [name]: value  };
         })
     }

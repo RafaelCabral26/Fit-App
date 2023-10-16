@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import auth from "../services/auth";
 import User from "../models/user.model";
 import jwt, { Secret } from "jsonwebtoken";
-import { TUser } from "../models/user.model";
+import { TUser, myJwt, TTrainer } from "./types_routes";
 import Trainer from "../models/trainer.model";
 import { tryCatch } from "../services/tryCatch";
 import { AppError } from "../services/AppError";
@@ -51,10 +51,9 @@ tryCatch(async (req:Request,res:Response) => {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {
-            const user = jwt.verify(token, secret) as any;
-
+            const user = jwt.verify(token, secret) as myJwt;
             if (user.trainer_id) return res.status(200).json({ logged: true, profile: "trainer" });
-            if (user.user_id) return res.status(200).json({ logged: true, profile: "user" });
+            if ('user_id' in user && user.user_id) return res.status(200).json({ logged: true, profile: "user" });
         }
         return res.status(200).json({ logged: false });
 }));
@@ -74,7 +73,7 @@ tryCatch(async (req:Request,res:Response) => {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (!token) throw new AppError(403,"Usuário deslogado.");
-        const user = jwt.verify(token, secret) as any;
+        const user = jwt.verify(token, secret) as myJwt;
         return res.status(200).json({ email: user.email, name: user.name })
 }));
 
@@ -83,12 +82,12 @@ tryCatch(async (req:Request,res:Response) => {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (!token) throw new Error("Usuário deslogado.");
-        const user = jwt.verify(token, secret) as any;
+        const user = jwt.verify(token, secret) as myJwt;
         if (user.name === req.body.name) {
             throw new AppError(403,"Nenhum campo alterado");
         };
         let newToken;
-        if (user.user_id) {
+        if ("user_id" in user && user.user_id) {
             newToken = await User.findOne({ 
                 attributes: ['user_id','name', 'email'],
                 where: { user_id: user.user_id }});

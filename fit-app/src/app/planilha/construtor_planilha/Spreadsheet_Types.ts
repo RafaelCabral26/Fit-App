@@ -8,10 +8,19 @@ export type TExercise = {
 } & (TMuscleGroupsObj)
 
 export type TPossibleDays = "day1" | "day2" | "day3" | "day4" | "day5" | "day6" | "day7"
+
 export type TDays = {
     dayUID:string,
     exercises: TExercise[] | [],
 }
+
+export type TDbExerciseSample = {
+    exercise_id:string,
+    exercise_name:string,
+    muscle_group:string,
+    subgroup:string,
+}
+
 export type TMuscleGroupsObj = TArm | TBack | TChest | TLegs | TShoulder;
 export type TMuscleGroups = "Braços" | "Costas" | "Peitoral" | "Pernas" | "Ombros";
 export type TSubgroups = TArmSub | TBackSub | TChestSub | TLegsSub | TShoulderSub;

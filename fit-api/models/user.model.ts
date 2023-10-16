@@ -1,12 +1,5 @@
 import { Sequelize, DataTypes } from "sequelize"
 const sequelize = require("./index.ts")
-export type TUser = {
-    user_id?: string,
-    name?: string,
-    password?: string,
-    email: string,
-    active?: boolean
-}
 
 
 const User = sequelize.define("user", {

@@ -1,20 +1,23 @@
 "use client"
 import myHTTP from "@/services/axiosconfig";
 import { ShowPassSvg, HidePassSvg } from "@/svgs/show-hide-eyes";
-import React, { SetStateAction, SyntheticEvent, useContext, useState } from "react"
+import React, { SetStateAction, useContext, useState } from "react"
 import { GlobalContext } from "@/services/GlobalContext";
 import { useRouter } from "next/navigation";
-import { AxiosError, AxiosResponse } from "axios";
 
+ type TUserEmailAndPass = {
+    email:string
+    password:string,
+}
 const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStateAction<boolean>> }) => {
-    const [loginInput, setLoginInput] = useState({ email: "", password: "" });
+    const [loginInput, setLoginInput] = useState<TUserEmailAndPass>({ email: "", password: "" });
     const globalState = useContext(GlobalContext)
     const [passwordViewState, setPasswordViewState] = useState<boolean>(false)
     const router = useRouter();
     const handleLoginInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         const value = e.target.value;
-        setLoginInput((prev: any) => {
+        setLoginInput((prev: TUserEmailAndPass) => {
             return { ...prev, [name]: value };
         })
     }

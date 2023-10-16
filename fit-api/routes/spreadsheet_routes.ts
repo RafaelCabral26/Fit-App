@@ -1,10 +1,9 @@
 "use client"
 import { Request, Response, Router } from "express";
 import jwt, { Secret } from "jsonwebtoken";
-import User, { TUser } from "../models/user.model";
+import User  from "../models/user.model";
 import Spreadsheet from "../models/spreadsheet.model";
-import { TTrainer } from "../models/trainer.model";
-import { Sequelize } from "sequelize";
+import { TTrainer, myJwt } from "./types_routes";
 import { tryCatch } from "../services/tryCatch";
 import { AppError } from "../services/AppError";
 
@@ -18,15 +17,15 @@ router.patch("/new_spreadsheet",
         }
         if (!req.body) throw new AppError(403, "PLanilha vazia.");
         const secret = process.env.SECRET as Secret;
-        const user = jwt.verify(req.cookies.authcookie, secret) as any;
+        const user = jwt.verify(req.cookies.authcookie, secret) as myJwt;
         const stringfiedDayArray = JSON.stringify(req.body);
         const spreadsheetMould = {
-            fk_user_id: user.user_id ? user.user_id : null,
+            fk_user_id: "user_id" in  user && user.user_id ? user.user_id : null,
             fk_trainer_id: user.trainer_id ? user.trainer_id : null,
             spreadsheet_days: stringfiedDayArray,
         };
         let whereStatement = {};
-        if (user.user_id) whereStatement = { fk_user_id: user.user_id };
+        if ("user_id" in user && user.user_id) whereStatement = { fk_user_id: user.user_id };
         if (user.trainer_id) whereStatement = { fk_trainer_id: user.trainer_id };
         const { count, rows } = await Spreadsheet.findAndCountAll({
             where: whereStatement
@@ -38,15 +37,15 @@ router.patch("/new_spreadsheet",
         return res.status(200).json({ msg: "Planilha Criada" });
     }));
 
-router.patch("/list_user_spreadsheets",
+router.get("/list_user_spreadsheets",
     tryCatch(async (req: Request, res: Response) => {
         if (!req.cookies.authcookie) {
             throw new AppError(403, "Faça login para ver planilhas.");
         }
         const secret = process.env.SECRET as Secret;
-        const user = jwt.verify(req.cookies.authcookie, secret) as any;
+        const user = jwt.verify(req.cookies.authcookie, secret) as myJwt;
         let whereStatement = {}
-        if (user.user_id) whereStatement = { fk_user_id: user.user_id };
+        if ("user_id" in user && user.user_id) whereStatement = { fk_user_id: user.user_id };
         if (user.trainer_id) whereStatement = { fk_trainer_id: user.trainer_id };
         const allSpreadsheets = await Spreadsheet.findAll({
             where: whereStatement
@@ -67,7 +66,7 @@ router.delete("/delete_spreadsheet/:id",
 router.delete("/delete_client_spreadsheet/:spreadsheet_id",
     tryCatch(async (req: Request, res: Response) => {
         const secret = process.env.SECRET as Secret;
-        const user = jwt.verify(req.cookies.authcookie, secret) as any;
+        const user = jwt.verify(req.cookies.authcookie, secret) as myJwt;
         if (!user.trainer_id) throw new Error("Usuário sem permissão");
         await Spreadsheet.destroy({
             where: {
@@ -80,6 +79,7 @@ router.delete("/delete_client_spreadsheet/:spreadsheet_id",
 
 router.get("/search_spreadsheet/:spreadsheet_id",
     tryCatch(async (req: Request, res: Response) => {
+        if(!req.params.spreadsheet_id) throw new AppError(403, "Busca Incorreta");
         const queriedSpreadsheet = await Spreadsheet.findByPk(req.params.spreadsheet_id)
         return res.status(200).json({ spreadsheet: queriedSpreadsheet });
     }));

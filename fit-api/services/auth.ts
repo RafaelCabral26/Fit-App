@@ -1,19 +1,12 @@
-import jwt, { Jwt, GetPublicKeyOrSecret, Secret } from "jsonwebtoken";
+import jwt, {  Secret } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { AppError } from "./AppError";
-import { TTrainer } from "../models/trainer.model";
-import { TUser } from "../models/user.model";
+import { TTrainer, TUser } from "../routes/types_routes";
 
-type TCreateMethod = {
-    createEncryptedPass(param: string): Promise<string>,
-    comparePasswords(param1: string, param2: string): string,
-    createToken(param: TUser | TTrainer): void,
-
-}
 const auth = {
     createEncryptedPass: async (oldPassword: string) => {
         const salt = await bcrypt.genSalt(10);
-        return await bcrypt.hash(oldPassword, salt)
+        return await bcrypt.hash(oldPassword, salt);
     },
     comparePasswords: async (inputPassword: string, DbPassword: string) => {
         const checkedPassword = await bcrypt.compare(inputPassword, DbPassword);
@@ -34,4 +27,4 @@ const auth = {
     },
 
 }
-export default auth
+export default auth;

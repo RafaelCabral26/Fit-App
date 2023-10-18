@@ -31,10 +31,12 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
 
     const filterSelectedMuscleGroup = (muscleType: TMuscleGroups | null) => {
         if (muscleType === null) return setExerciseOptions(null)
-        if (exerciseList !== null) {
-            for (const key in exerciseList) {
+        if (exerciseList) {
+            for (let key of exerciseList) {
+                console.log("key", key, "muscleType", muscleType);
+                
                 if (key === muscleType) {
-                    console.log("key teste", exerciseList[key as keyof TMuscleGroups]);
+                    console.log("key teste", exerciseList[key]);
                     setExerciseOptions(exerciseList[key]);
                 }
             }

@@ -22,18 +22,23 @@ export type TDbExerciseSample = {
 }
 
 export type TMuscleGroupsObj = TArm | TBack | TChest | TLegs | TShoulder;
+
 export type TMuscleGroups = "Braços" | "Costas" | "Peitoral" | "Pernas" | "Ombros";
+
 export type TSubgroups = TArmSub | TBackSub | TChestSub | TLegsSub | TShoulderSub;
+
 export type TArm = {
     muscle_group?: "Braços" | "",
     subgroup?:TArmSub
 }
+
 export type TArmSub = "Biceps" | "Triceps" | "Antebraço" | "";
 
 export type TBack = {
     muscle_group?: "Costas" | "",
     subgroup?: TBackSub
 }
+
 export type TBackSub = "Superior" | "Dorsal" | "Inferior" | "";
 
 export type TChest = {
@@ -53,3 +58,4 @@ export type TShoulder = {
     subgroup?: TShoulderSub
 }
 export type TShoulderSub = "Anterior" | "Posterior" | "Lateral" | "";
+

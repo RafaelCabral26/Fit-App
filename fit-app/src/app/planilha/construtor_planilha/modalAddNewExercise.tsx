@@ -25,16 +25,18 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
     useEffect(() => {
         const list = localStorage.getItem("Exercises_list");
         if (list) {
+            console.log("list", JSON.parse(list));
+            
             setExerciseList(JSON.parse(list));
         }
     }, [])
 
     const filterSelectedMuscleGroup = (muscleType: TMuscleGroups | null) => {
         if (muscleType === null) return setExerciseOptions(null)
-        if (exerciseList !== null) {
+        if (exerciseList) {
             for (const key in exerciseList) {
                 if (key === muscleType) {
-                    console.log("key teste", exerciseList[key as keyof TMuscleGroups]);
+                    console.log("key teste", exerciseList[key]);
                     setExerciseOptions(exerciseList[key]);
                 }
             }

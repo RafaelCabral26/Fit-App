@@ -2,6 +2,7 @@ import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import {  GlobalProvider } from '@/services/GlobalContext'
 import { MyToast } from '@/services/MyToast'
+import Head from 'next/head'
 
 
 export const metadata = {
@@ -14,7 +15,10 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en" data-theme="corporate">
+        <html lang="pt-br" data-theme="corporate">
+            <Head>
+               <meta charSet='utf-8'/> 
+            </Head>
             <body className='h-screen overflow-x-hidden relative'>
                 <GlobalProvider>
                     <Navbar></Navbar>

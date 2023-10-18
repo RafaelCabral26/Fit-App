@@ -3,6 +3,7 @@ import { TDays, TExercise } from "./Spreadsheet_Types"
 import React, { SetStateAction } from "react"
 import { TToast } from "@/services/MyToast"
 import { format } from "date-fns"
+import { TPropsGlobalContext } from "@/services/GlobalContext"
 export const ValidateAddExercise = (exercise: TExercise) => {
     if (!exercise.exercise_name || !exercise.quantity || !exercise.sets) {
         alert("Preencha todos os campos")
@@ -11,16 +12,16 @@ export const ValidateAddExercise = (exercise: TExercise) => {
     return true
 }
 
-export const formatDate = (dateStr:string) => {
-    const parsedString = new Date(dateStr) 
+export const formatDate = (dateStr: string) => {
+    const parsedString = new Date(dateStr)
     return format(parsedString, 'dd-MM-yyyy HH:mm')
 }
 
-export const validateSpreadsheet = (daysArray: any, globalState: any) => {
+export const validateSpreadsheet = (daysArray: TDays[], globalState: TPropsGlobalContext) => {
     if (globalState?.userType === null) return { type: "warning", message: "Faça login para salvar." } as TToast;
     if (daysArray.length === 0) return { type: "warning", message: "Adicione dias." } as TToast;
     let emptyDay = false
-    daysArray.forEach((ele: any) => {
+    daysArray.forEach((ele: TDays) => {
         if (ele.exercises.length === 0) emptyDay = true;
     })
     if (emptyDay) return { type: "warning", message: "Preencha todos os dias." } as TToast;
@@ -35,7 +36,7 @@ export const formatExercisesStorage = (responseExerciseList: TExercise[]) => {
         Costas: TExercise[],
         Peitoral: TExercise[],
     } = {
-        Braços: [],
+        'Braços': [],
         Pernas: [],
         Ombros: [],
         Costas: [],
@@ -44,7 +45,7 @@ export const formatExercisesStorage = (responseExerciseList: TExercise[]) => {
 
     responseExerciseList.forEach((ele: TExercise) => {
         switch (ele.muscle_group) {
-            case "Braços":
+            case 'Braços':
                 ObjectifiedExerciseList.Braços.push(ele)
                 break;
 
@@ -66,10 +67,11 @@ export const formatExercisesStorage = (responseExerciseList: TExercise[]) => {
         }
     }
     )
+
     localStorage.setItem("Exercises_list", JSON.stringify(ObjectifiedExerciseList))
 }
 
-const reorder = (list: any[], startIndex: number, endIndex: number) => {
+const reorder = (list: TDays[], startIndex: number, endIndex: number) => {
     const result = list;
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);

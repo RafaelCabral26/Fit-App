@@ -20,7 +20,6 @@ const RemoveClientModal = ({ showConfirmDeleteModal, selectedClientEmail, trigge
                 showConfirmDeleteModal(false);
             })
             .catch(err => {
-                console.log(err);
                 globalState?.setToast({ type: "warning", message: err.response.data.msg });
             })
     }

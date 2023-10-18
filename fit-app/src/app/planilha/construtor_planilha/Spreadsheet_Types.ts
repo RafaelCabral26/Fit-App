@@ -1,4 +1,9 @@
 
+export type TClients = {
+    name:string,
+    email:string,
+};
+
 export type TExercise = {
     exercise_name: string,
     sets: number,
@@ -13,6 +18,14 @@ export type TDays = {
     dayUID:string,
     exercises: TExercise[] | [],
 }
+export type TDbSpreadsheet = {
+    spreadsheet_id:string,
+    spreadsheet_days:string,
+    fk_trainer_id:string | null,
+    fk_user_id:string | null,
+    createdAt:string,
+    updatedAt:string,
+}
 
 export type TDbExerciseSample = {
     exercise_id:string,
@@ -20,7 +33,9 @@ export type TDbExerciseSample = {
     muscle_group:string,
     subgroup:string,
 }
-
+export type TDbExerciseObjSample = {
+    [key:string]:TDbExerciseSample[]
+}
 export type TMuscleGroupsObj = TArm | TBack | TChest | TLegs | TShoulder;
 
 export type TMuscleGroups = "Braços" | "Costas" | "Peitoral" | "Pernas" | "Ombros";
@@ -32,7 +47,7 @@ export type TArm = {
     subgroup?:TArmSub
 }
 
-export type TArmSub = "Biceps" | "Triceps" | "Antebraço" | "";
+export type TArmSub = "Bíceps" | "Tríceps" | "Antebraço" | "";
 
 export type TBack = {
     muscle_group?: "Costas" | "",

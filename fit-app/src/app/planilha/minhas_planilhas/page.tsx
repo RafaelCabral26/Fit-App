@@ -28,7 +28,6 @@ const MinhasPlanilhas = () => {
             .then(res => {
                 if (!res.data.spreadsheet) return globalState?.setToast({ type: "warning", message: res.data.msg });
                 const receivedSpreadsheets = res.data.spreadsheet;
-                console.log("receivedSpreadsheets", receivedSpreadsheets);
                 let placeholderDaysArray = [] as TParsedSpreadsheets[];
                 receivedSpreadsheets.forEach((ele: TDbSpreadsheet) => {
                     placeholderDaysArray.push({ spreadsheet_id: ele.spreadsheet_id, spreadsheet_days: JSON.parse(ele.spreadsheet_days), updatedAt:ele.updatedAt });
@@ -52,7 +51,7 @@ const MinhasPlanilhas = () => {
                 window.location.reload();
             })
             .catch(err => {
-                console.log(err);
+                globalState?.setToast({type:"warning", message:err.response.data.msg});
             });
     };
 

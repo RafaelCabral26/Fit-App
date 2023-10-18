@@ -7,15 +7,16 @@ import EditClientSpreadsheetModal from "./EditClientSpreadsheetModal"
 import { GlobalContext } from "@/services/GlobalContext"
 import { useRouter } from "next/navigation"
 import RemoveClientModal from "./RemoveClientModal"
+import { TClients, TDbSpreadsheet } from "../planilha/construtor_planilha/Spreadsheet_Types"
 
 const ManageClients = () => {
     const globalState = useContext(GlobalContext);
     const [addClientModal, showAddClientModal] = useState<boolean>(false);
     const [editModal, showEditModal] = useState<boolean>(false);
     const [confirmDeleteModal, showConfirmDeleteModal] = useState<boolean>(false);
-    const [clientList, setClientList] = useState<[] | null>();
+    const [clientList, setClientList] = useState<TClients[] | null>();
     const [triggerRequest, setTriggerRequest] = useState<boolean>(false);
-    const [selectedClientSpreadSheet, setSelectedClientSpreadsheet] = useState<any[] | null>(null);
+    const [selectedClientSpreadSheet, setSelectedClientSpreadsheet] = useState<TDbSpreadsheet[] | null>(null);
     const [ selectedClientEmail, setSelectedClientEmail ] = useState<string | null>(null);
 
     useEffect(() => {
@@ -24,7 +25,7 @@ const ManageClients = () => {
                 setClientList(res.data.client_table)
             })
             .catch(err => {
-                console.log(err);
+                globalState?.setToast({type:"warning", message:err.response.data.msg})
             })
     }, [triggerRequest]);
 
@@ -35,7 +36,7 @@ const ManageClients = () => {
                 setSelectedClientSpreadsheet(res.data.user_spreadsheets);
             })
             .catch(err => {
-                console.log(err);
+                globalState?.setToast({type:"warning", message:err.response.data.msg})
             })
         showEditModal(true)
     }
@@ -64,7 +65,7 @@ const handleRemoveClientModal = (clientEmail:string) => {
                         </thead>
                         <tbody>
                             {
-                                clientList?.map((ele: any, index: number) => {
+                                clientList?.map((ele: TClients, index: number) => {
                                     return (
                                         <tr key={ele.name}>
                                             <th>{String(index)}</th>

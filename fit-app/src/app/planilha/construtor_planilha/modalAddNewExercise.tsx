@@ -1,15 +1,15 @@
 import { SetStateAction, useContext, useEffect, useState } from "react"
-import { TDays, TDbExerciseSample, TExercise, TMuscleGroups, TSubgroups } from "./Spreadsheet_Types"
+import { TDays, TDbExerciseObjSample, TDbExerciseSample, TExercise, TMuscleGroups, TSubgroups } from "./Spreadsheet_Types"
 import { ValidateAddExercise } from "./Spreadsheet_Utilities"
 import { GlobalContext } from "@/services/GlobalContext";
 
 const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[], daysArray: TDays[] }) => {
     const globalState = useContext(GlobalContext);
-    const [exerciseOptions, setExerciseOptions] = useState<any>();
-    const [exerciseList, setExerciseList] = useState<TDbExerciseSample[]>();
+    const [exerciseOptions, setExerciseOptions] = useState<TDbExerciseSample[] | null>();
+    const [exerciseList, setExerciseList] = useState<TDbExerciseObjSample>();
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<TMuscleGroups>()
     const [selectedSubGroup, setSelectedSubGroup] = useState<TSubgroups>()
-    const [optionsSubGroups, setOptionsSubGroups] = useState<string[] | null>()
+    const [optionsSubGroups, setOptionsSubGroups] = useState<TSubgroups[] | null>()
     const [selectedMuscleName, setSelectedMuscleName] = useState<string | null>();
     const [customExerciseInput, showCustomExerciseInput] = useState<boolean>(false);
     const [newExercise, setNewExercise] = useState<TExercise>({
@@ -20,29 +20,20 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
         subgroup: "",
         obs: "",
         uId: crypto.randomUUID(),
-    })
+    });
 
     useEffect(() => {
         const list = localStorage.getItem("Exercises_list");
         if (list) {
-            console.log("list", JSON.parse(list));
-            
             setExerciseList(JSON.parse(list));
         }
-    }, [])
+    }, []);
 
     const filterSelectedMuscleGroup = (muscleType: TMuscleGroups | null) => {
         if (muscleType === null) return setExerciseOptions(null)
         if (exerciseList) {
-<<<<<<< HEAD
-            for (let key of exerciseList) {
-                console.log("key", key, "muscleType", muscleType);
-                
-=======
             for (const key in exerciseList) {
->>>>>>> 6c10a694b2617ed1c322c734290d7a57eaf46f63
                 if (key === muscleType) {
-                    console.log("key teste", exerciseList[key]);
                     setExerciseOptions(exerciseList[key]);
                 }
             }
@@ -61,14 +52,14 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
             setOptionsSubGroups(null);
 
         }
-        setSelectedMuscleGroup(muscleType)
-    }
+        setSelectedMuscleGroup(muscleType);
+    };
 
     const filterSelectedSubgroups = (subgroup: TSubgroups) => {
         setSelectedSubGroup(subgroup)
-        if (selectedMuscleGroup) {
-            const choosenMuscle = exerciseList[selectedMuscleGroup];
-            const filteredMuscles = choosenMuscle.filter((ele: any) => {
+        if (selectedMuscleGroup && exerciseList) {
+            const choosenMuscle = exerciseList[selectedMuscleGroup] ;
+            const filteredMuscles = choosenMuscle.filter((ele: TDbExerciseSample) => {
                 return ele.subgroup === subgroup;
             })
             setExerciseOptions(filteredMuscles);
@@ -111,7 +102,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                 <select className="select select-xs select-primary rounded-lg">
                     <option key="subgroup" >Subgrupo</option>
                     {
-                        optionsSubGroups?.map((subgroup: any) => {
+                        optionsSubGroups?.map((subgroup: TSubgroups) => {
                             return (
                                 <option key={subgroup} onClick={() => { filterSelectedSubgroups(subgroup) }} value={subgroup}>{subgroup}</option>
                             )
@@ -133,7 +124,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                 <select defaultValue={"name exercise"} className={`${customExerciseInput ? "hidden" : "my-input"}`}>
                     <option key="name exercise" hidden>Nome do Exercício</option>
                     {
-                        exerciseOptions?.map((ele: any) => {
+                        exerciseOptions?.map((ele: TDbExerciseSample) => {
                             return (
                                 <option onClick={() => setSelectedMuscleName(ele.exercise_name)} key={ele.exercise_name} value={ele.exercise_name}>{ele.exercise_name}</option>
                             )

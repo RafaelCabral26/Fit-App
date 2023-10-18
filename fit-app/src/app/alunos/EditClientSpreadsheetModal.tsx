@@ -4,8 +4,9 @@ import { useContext, SetStateAction, useState } from "react";
 import { formatDate } from "../planilha/construtor_planilha/Spreadsheet_Utilities";
 import myHTTP from "@/services/axiosconfig";
 import { GlobalContext } from "@/services/GlobalContext"
+import { TDbSpreadsheet } from "../planilha/construtor_planilha/Spreadsheet_Types";
 
-const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selectedClient: any[] | null, showEditModal: React.Dispatch<SetStateAction<boolean>> }) => {
+const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selectedClient: TDbSpreadsheet[] | null, showEditModal: React.Dispatch<SetStateAction<boolean>> }) => {
     const router = useRouter();
     const globalState = useContext(GlobalContext);
     const [selectedSpreadsheet, setSelectedSpreadsheet] = useState<string >("");
@@ -42,7 +43,7 @@ const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selecte
                 </label>
                 <select onChange={handleSelected} className="my-input bg-base-300">
                     <option hidden>Escolher Planilha...</option>
-                    {selectedClient?.map((ele: any, index: number) => {
+                    {selectedClient?.map((ele: TDbSpreadsheet, index: number) => {
                         return (
                             <option value={ele.spreadsheet_id} key={ele.spreadsheet_id}>Planilha {String(index + 1)} - {formatDate(ele.updatedAt)} </option>
                         )

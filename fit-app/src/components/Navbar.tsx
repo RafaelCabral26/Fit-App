@@ -38,7 +38,6 @@ export const Navbar = () => {
 
             })
             .catch(err => {
-                console.log(err);
                 globalState?.setToast({ type: "warning", message: err.response.data.msg });
             })
     }, [handleLogout]);

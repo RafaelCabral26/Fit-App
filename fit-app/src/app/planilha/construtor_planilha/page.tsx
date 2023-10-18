@@ -91,7 +91,6 @@ const SpreadsheetBuilder: React.FC = () => {
             })
             .catch(err => {
                 globalState?.setToast({ type: "error", message: err.response.data.msg });
-                console.log(err);
             })
     }
     const handleEditSpreadsheet = () => {

@@ -8,6 +8,8 @@ import { GlobalContext } from "@/services/GlobalContext"
 import { useRouter } from "next/navigation"
 import RemoveClientModal from "./RemoveClientModal"
 import { TClients, TDbSpreadsheet } from "../planilha/construtor_planilha/Spreadsheet_Types"
+import TrashSvg from "@/svgs/trashsvg"
+import EditSpreadsheetSvg from "@/svgs/editSpreadsheet"
 
 const ManageClients = () => {
     const globalState = useContext(GlobalContext);
@@ -71,8 +73,12 @@ const handleRemoveClientModal = (clientEmail:string) => {
                                             <th>{String(index)}</th>
                                             <td>{ele.name}</td>
                                             <td>{ele.email}</td>
-                                            <td><button onClick={() => {handleSelectedClient(ele.email)}} className="my-btn m-0">Ver</button></td>
-                                            <td><button onClick={() => {handleRemoveClientModal(ele.email)}} type="button" className="my-btn m-0">DEL</button></td>
+                                            <td><button onClick={() => {handleSelectedClient(ele.email)}} className="my-btn m-0">
+                                                <EditSpreadsheetSvg></EditSpreadsheetSvg>
+                                            </button></td>
+                                            <td><button onClick={() => {handleRemoveClientModal(ele.email)}} type="button" className="my-btn m-0">
+                                                <TrashSvg color="#ffffff"></TrashSvg>
+                                            </button></td>
                                         </tr>
                                     )
                                 })

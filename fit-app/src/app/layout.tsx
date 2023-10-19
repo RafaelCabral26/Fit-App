@@ -15,11 +15,11 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="pt-br" data-theme="corporate">
+        <html lang="pt-br" data-theme="emerald">
             <Head>
                <meta charSet='utf-8'/> 
             </Head>
-            <body className='h-screen overflow-x-hidden relative'>
+            <body className='h-screen bg-base-200 overflow-x-hidden relative'>
                 <GlobalProvider>
                     <Navbar></Navbar>
                 <div className="">

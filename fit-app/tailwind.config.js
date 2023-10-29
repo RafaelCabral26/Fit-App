@@ -8,6 +8,13 @@ module.exports = {
 
   ],
   theme: {
+         extend: {
+      fontFamily: {
+        // 👇 Add CSS variables
+        sans: ["var(--font-josefin)"],
+        mono: ["var(--font-sourcesans)"],
+      },
+    },
   },
   plugins: [require("daisyui")],
     daisyui: {

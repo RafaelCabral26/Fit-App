@@ -17,7 +17,7 @@ export const formatDate = (dateStr: string) => {
     return format(parsedString, 'dd-MM-yyyy HH:mm')
 }
 
-export const validateSpreadsheet = (daysArray: TDays[], globalState: TPropsGlobalContext) => {
+export const validateSpreadsheet = (daysArray: TDays[], globalState: TPropsGlobalContext | null) => {
     if (globalState?.userType === null) return { type: "warning", message: "Faça login para salvar." } as TToast;
     if (daysArray.length === 0) return { type: "warning", message: "Adicione dias." } as TToast;
     let emptyDay = false

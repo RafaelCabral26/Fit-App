@@ -1,15 +1,15 @@
 'use client'
+
 import Image from "next/image"
-import { useState } from "react"
 
 export default function MyApp() {
 
     return (
         <>
-            <div className="m-auto scale-x-[-1] h-screen bg-cover  bg-no-repeat bg-center bg-[url('../../public/teste-2.jpg')]">
+            <div className='relative top-0 right-0 scale-x-[-1]  h-[95vh]  bg-no-repeat bg-cover bg-center bg-[url("../../public/photo1-woman.jpg")]' >
 
             </div>
-        </>
+       </>
     )
 }
 

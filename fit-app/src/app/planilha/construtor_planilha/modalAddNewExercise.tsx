@@ -58,7 +58,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
     const filterSelectedSubgroups = (subgroup: TSubgroups) => {
         setSelectedSubGroup(subgroup)
         if (selectedMuscleGroup && exerciseList) {
-            const choosenMuscle = exerciseList[selectedMuscleGroup] ;
+            const choosenMuscle = exerciseList[selectedMuscleGroup];
             const filteredMuscles = choosenMuscle.filter((ele: TDbExerciseSample) => {
                 return ele.subgroup === subgroup;
             })
@@ -69,6 +69,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
     const handleNewExerciseInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const name = e.target.name
         const value = e.target.value
+        const testString = /[0-9]+g/;
         setNewExercise((prev: TExercise) => {
             if (!customExerciseInput && selectedMuscleName) prev.exercise_name = selectedMuscleName;
             prev.muscle_group = selectedMuscleGroup
@@ -76,6 +77,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
             return { ...prev, [name]: value };
         });
     }
+
     const handleAddNewExercise = () => {
         const isExerciseValid = ValidateAddExercise(newExercise);
         if (!isExerciseValid) return;
@@ -84,6 +86,15 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
         globalState?.isDragDisabledSwitch(false);
         localStorage.setItem("Ongoing_Spreadsheet", JSON.stringify(daysArray));
 
+    }
+    const filterNumberInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Backspace" || e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "Delete" || e.key === "Enter") { 
+            return;
+        }
+        const testString = /^[0-9]*$/;
+        if (!testString.test(e.key)) {
+            e.preventDefault();
+        }
     }
     return (
         <div className="fixed top-0 h-full w-screen z-10">
@@ -136,12 +147,12 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                 <label className="label">
                     <span className="label-text-alt">Séries</span>
                 </label>
-                <input name="sets" type="number" onChange={handleNewExerciseInput} className="my-input" />
+                <input name="sets" type="text" pattern="[0-9]" inputMode="numeric" maxLength={3} onKeyDown={(e) => filterNumberInput(e)} onChange={handleNewExerciseInput} className="my-input" />
 
                 <label className="label">
                     <span className="label-text-alt">Repetições</span>
                 </label>
-                <input name="quantity" type="number" onChange={handleNewExerciseInput} className="my-input" />
+                <input name="quantity" type="text" pattern="[0-9]" inputMode="numeric" maxLength={3} onKeyDown={(e) => filterNumberInput(e)}  onChange={handleNewExerciseInput} className="my-input" />
                 <div className="form-control gap-2">
                     <label className="label-text">
                         <span>Observações</span>

@@ -34,7 +34,6 @@ const SpreadsheetBuilder: React.FC = () => {
                     globalState?.setToast({ type: "warning", message: err.response.data.msg });
                 });
         };
-
         const previousUrlIdCheck = searchParams.get("spreadsheet_id");
         if (previousUrlIdCheck) {
 
@@ -49,7 +48,7 @@ const SpreadsheetBuilder: React.FC = () => {
                 })
             const previousUrl = searchParams.get("previous_url")
             if (previousUrl) {
-                setPreviousUrl(previousUrl)
+                setPreviousUrl(previousUrl);
             }
             return;
         }
@@ -138,15 +137,15 @@ const SpreadsheetBuilder: React.FC = () => {
                         }
                     </div>
                     <Droppable direction={window.innerWidth > 560 ? "horizontal" : "vertical"} type="droppableDay" droppableId="droppableContainer">
-                        {(provided) => {
+                        {(provided, snapshot) => {
                             return (
-                                <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col md:flex-row w-full justify-center">
+                                <div ref={provided.innerRef} {...provided.droppableProps}  className={`flex flex-col md:flex-row w-full justify-center`}>
                                     {daysArray.map((e: TDays, index: number) => {
                                         return (
                                             <Draggable isDragDisabled={globalState?.isDragDisabledState} key={e.dayUID} draggableId={e.dayUID} index={index}>
                                                 {(provided, snapshot) => {
                                                     return (
-                                                        <div className="flex justify-center lg:basis-[15%] min-h-[300px]"
+                                                        <div className={`flex justify-center lg:basis-[15%] min-h-[300px]`} 
                                                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                             <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
                                                         </div>)

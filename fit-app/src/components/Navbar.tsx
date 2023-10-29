@@ -44,7 +44,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <div className='navbar bg-base-100 border-b-2  p-4 drop-shadow-lg'>
+            <div className='navbar fixed top-0 left-0 z-30 px-20'>
                 <div className='container flex justify-between m-auto'>
                     <div className='lg:hidden'>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -52,6 +52,9 @@ export const Navbar = () => {
                         </svg>
                     </div>
                     <a href="/" className='text-primary font-bold'>FitApp</a>
+                    <div>
+
+                    </div>
                     <div className='flex items-center font-bold gap-4'>
                         <div className="dropdown dropdown-end">
                             <label tabIndex={0} className=" m-1 cursor-pointer hover:text-primary">Planilha</label>

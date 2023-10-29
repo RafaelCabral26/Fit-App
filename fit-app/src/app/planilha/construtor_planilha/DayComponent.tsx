@@ -31,7 +31,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
             <Droppable type="droppableExercise" key={day.dayUID} droppableId={`${day.dayUID}`}>
                 {(provided, snapshot) => {
                     return (
-                        <div className={`my-day-container ${snapshot.isDraggingOver ? "bg-sky-500 bg-opacity-30" : "bg-base-200"}`}
+                        <div className={`my-day-container ${snapshot.isDraggingOver ? "bg-primary bg-opacity-80" : "bg-base-200"}`}
                             {...provided.droppableProps} ref={provided.innerRef}>
                             <div className="flex justify-between p-2 bg-base-300 rounded-t-md">
                                 <h2>{"Dia " + (index + 1)}</h2>

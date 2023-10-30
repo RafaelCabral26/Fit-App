@@ -32,7 +32,7 @@ export default function RootLayout({
             <Head>
                 <meta charSet='utf-8' />
             </Head>
-            <body className='h-screen bg-base-100 overflow-x-hidden relative'>
+            <body className='h-screen bg-base-300 overflow-x-hidden relative'>
                 <GlobalProvider>
                     <Navbar></Navbar>
                     <div className="">

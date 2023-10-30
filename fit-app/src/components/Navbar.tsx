@@ -45,7 +45,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <div className='navbar fixed z-30  justify-between px-[25vh]  p-4'>
+            <div className='navbar relative  z-30  justify-between px-[15vw] 2xl:px-[18vw] p-4 bg-gray-400/30'>
                 <div className='lg:hidden'>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
@@ -57,7 +57,7 @@ export const Navbar = () => {
 
                 <div className='flex items-center font-bold gap-4'>
                     <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="font-sans font-normal text-xl m-1 cursor-pointer hover:text-primary">Planilha</label>
+                        <label tabIndex={0} className="text-white font-sans font-normal text-xl m-1 cursor-pointer hover:text-primary">Planilha</label>
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                             <li className=""><a className="my-list-item" href="/planilha/construtor_planilha">Criar Planilha</a></li>
                             <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>

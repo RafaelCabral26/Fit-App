@@ -55,21 +55,21 @@ export const Navbar = () => {
 
     return (
         <>
-            <div className={`navbar relative  z-30  justify-between px-[15vw] 2xl:px-[18vw] p-4  bg-gray-200/20`}>
-                <a href="/" className='text-2xl text-primary font-bold'>
+            <div className={`navbar relative z-30 justify-center md:justify-between px-[15vw] 2xl:px-[18vw] p-4  bg-gray-200/20`}>
+                <a href="/" className='w-36 md:w-56'>
                     <FitAndAppLogo></FitAndAppLogo>
                 </a>
 
                 <div className='flex items-center font-bold gap-4'>
                     <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-primary" : "text-white" } font-mono font-normal text-lg m-1 cursor-pointer hover:text-primary`}>PLANILHA</label>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white" } font-normal font-sans  text-xs lg:text-lg m-1 cursor-pointer hover:text-primary`}>PLANILHA</label>
+                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100  w-56">
                             <li className=""><a className="my-list-item" href="/planilha/construtor_planilha">Criar Planilha</a></li>
                             <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>
                         </ul>
                     </div>
-                    <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="cursor-pointer"><ProfileSvg /></label>
+                    <div className="dropdown dropdown-end w-6">
+                        <label tabIndex={0} className="cursor-pointer w-32 hover:fill-red-500"><ProfileSvg /></label>
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                             {globalState?.userType === null &&
                                 <>

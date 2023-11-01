@@ -15,21 +15,24 @@ module.exports = {
             },
         },
     },
+     variants: {
+    fill: ['hover', 'focus'], 
+  },
     plugins: [require("daisyui")],
     daisyui: {
         themes: ["corporate", "retro", "dark", "emerald",
             {
-        mytheme: {
-            "primary": "#4C5B5C",
-            "secondary": "#0496FF",
-            "accent": "#F9E900",
-            "neutral": "#1D141F",
-            "base-100": "#F2F2F2",
-            "info": "#93B6E1",
-            "success": "#31C98C",
-            "warning": "#FCC93B",
-            "error": "#F53D46",
-        }
+                mytheme: {
+                    "primary": "#2d2d9e",
+                    "secondary": "#e24f00",
+                    "accent": "#163896",
+                    "neutral": "#191a1f",
+                    "base-100": "#f3f4f6",
+                    "info": "#225fec",
+                    "success": "#187746",
+                    "warning": "#db960a",
+                    "error": "#ed5a8b",
+                }
             }
         ],
     }

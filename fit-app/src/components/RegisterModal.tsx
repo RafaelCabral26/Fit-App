@@ -55,11 +55,10 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         setPasswordViewState(true);
     }
     return (
-        <div className="fixed top-20 h-screen w-screen z-10">
             <div className="relative w-80 p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
                 <form onSubmit={tryRegister} className="my-form-modal z-30">
                     <div className="flex justify-between">
-                        <h1 className="">Cadastro</h1>
+                        <h1 className="font-mono">CADASTRO</h1>
                         <button type="button" onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
                     <label className="label">
@@ -88,9 +87,8 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                     <input name="password_confirm" onChange={handleRegisterInput}
                         type="password" className="my-input" />
 
-                    <div className="">
                         <div className="flex flex-col justify-evenly">
-                            <span className="text-xs leading-4 text-secondary">Selecione o tipo de conta.(Treinador pode enviar planilhas.)</span>
+                            <span className="text-xs leading-4 text-primary-focus mt-1">Selecione o tipo de conta.(Treinador pode enviar planilhas.)</span>
                             <div className="flex">
                                 <label className="label ">
                                     <input type="checkbox" checked={userProfile === "user"} onChange={() => setUserProfile("user")} onClick={() => setUserProfile("user")} />
@@ -102,11 +100,9 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                                 </label>
                             </div>
                             <button type="submit" className="my-btn">Registrar</button>
-                        </div>
                     </div>
                 </form>
             </div>
-        </div>
     )
 }
 export default RegisterModal

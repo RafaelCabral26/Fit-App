@@ -63,7 +63,7 @@ function FitAndAppLogo() {
                         strokeLinejoin="round"
                         strokeMiterlimit="4"
                         strokeOpacity="0.965"
-                        strokeWidth="1.09"
+                        strokeWidth=".19"
                         baselineShift="baseline"
                         fontFamily="PT Sans"
                         fontSize="30.837"
@@ -80,7 +80,7 @@ function FitAndAppLogo() {
                             x="111.532"
                             y="49.256"
                             strokeDasharray="none"
-                            strokeWidth="1.09"
+                            strokeWidth=".19"
                             baselineShift="baseline"
                             fontFamily="PT Sans"
                             fontStretch="normal"
@@ -94,7 +94,6 @@ function FitAndAppLogo() {
                                     fontVariantCaps: "normal",
                                     fontVariantNumeric: "normal",
                                     fontVariantEastAsian: "normal",
-                                    WebkitTextAlign: "center",
                                     textAlign: "center",
                                 }}
                                 fill="#999"
@@ -102,7 +101,7 @@ function FitAndAppLogo() {
                                 stroke="#999"
                                 strokeDasharray="none"
                                 strokeOpacity="1"
-                                strokeWidth="1.09"
+                                strokeWidth=".19"
                                 fontFamily="PT Sans"
                                 fontSize="30.837"
                                 fontStretch="normal"
@@ -111,7 +110,31 @@ function FitAndAppLogo() {
                                 fontWeight="normal"
                                 textAnchor="middle"
                             >
-                                Fit&amp;
+                                Fit
+                            </tspan>
+                            <tspan
+                                style={{
+                                    fontVariantLigatures: "normal",
+                                    fontVariantCaps: "normal",
+                                    fontVariantNumeric: "normal",
+                                    fontVariantEastAsian: "normal",
+                                    textAlign: "center",
+                                }}
+                                fill="#999"
+                                fillOpacity="1"
+                                stroke="#999"
+                                strokeDasharray="none"
+                                strokeOpacity="1"
+                                strokeWidth=".19"
+                                fontFamily="PT Sans"
+                                fontSize="20.837"
+                                fontStretch="normal"
+                                fontStyle="normal"
+                                fontVariant="normal"
+                                fontWeight="normal"
+                                textAnchor="middle"
+                            >
+                                &amp;
                             </tspan>
                             <tspan
                                 style={{
@@ -124,7 +147,7 @@ function FitAndAppLogo() {
                                 fillOpacity="1"
                                 stroke="#e24f00"
                                 strokeOpacity="1"
-                                strokeWidth="1.09"
+                                strokeWidth=".19"
                                 fontFamily="PT Sans"
                                 fontSize="30.837"
                                 fontStretch="normal"

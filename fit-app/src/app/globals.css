@@ -4,16 +4,19 @@
 
 @layer components {
     .my-input {
-        @apply  input w-64 h-8 border-2 border-primary leading-none rounded-xl outline-none
+        @apply  input rounded-sm  w-fit h-8  border-primary 
     }
     .my-btn {
-        @apply bg-primary text-base-100 px-4 py-2 shadow-md rounded-lg my-2
+        @apply bg-primary hover:bg-primary-focus text-base-100 px-4 py-2 shadow-md my-2
     }
     .my-btn-red {
         @apply bg-red-500 text-base-100 px-4 py-2 shadow-md rounded-lg my-2
     }
     .my-form-modal {
-        @apply p-4 rounded-xl drop-shadow-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-base-100 border-2 border-secondary border-opacity-30 gap-2
+        @apply bg-white/90 p-4 rounded-sm drop-shadow-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  gap-2
+    }
+    .my-dropdown {
+        @apply dropdown-content menu p-2  font-mono font-normal bg-white/90 shadow w-56 
     }
     .my-day-container {
         @apply rounded-lg w-52 h-auto lg:w-full  shadow-lg m-2 border-2 border-secondary;
@@ -26,7 +29,7 @@
     }
     .my-list-item {
         text-decoration:none;
-        background-image: linear-gradient(#4c6cfb, #4c6cfb);
+        background-image: linear-gradient(#e24f00, #e24f00);
         background-size: 0% 0.1em;
         background-position-y: 100%;
         background-position-x: 0%;
@@ -36,7 +39,7 @@
     .my-list-item:hover,
     .my-list-item:focus,
     .my-list-item:active {
-        background-color:#ffffff;
         background-size: 100% 0.1em;
+        @apply bg-transparent;
     }
 }

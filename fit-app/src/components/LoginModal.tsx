@@ -30,7 +30,7 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
                 router.replace("/");
             })
             .catch((err) => {
-                return globalState?.setToast({type:"warning", message:err.response.data.msg});
+                if (err.response) globalState?.setToast({type:"warning", message:err.response.data.msg});
             })
     };
 
@@ -45,7 +45,7 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
             <div className="relative w-80 p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <form onSubmit={tryLogin} className="my-form-modal">
                     <div className="flex justify-between">
-                        <h1 className="">Login</h1>
+                        <h1 className="font-mono ">LOGIN</h1>
                         <button type="button" onClick={() => { showLoginModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
                     <label className="label">
@@ -62,7 +62,7 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
                         </button>
                     </div>
 
-                    <button onClick={tryLogin} onKeyDown={e => {if (e.key === "Enter") tryLogin}} className="my-btn" type="submit">Entrar</button>
+                    <button onClick={tryLogin} onKeyDown={e => {if (e.key === "Enter") tryLogin}} className="my-btn w-full" type="submit">Entrar</button>
                 </form>
             </div>
         </div>

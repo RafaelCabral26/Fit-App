@@ -101,7 +101,7 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
     }
 
     return (
-        <form className=" p-4 rounded-xl border-secondary border-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+        <form className="my-form-modal">
             <div className="flex justify-end">
                 <button type="button" onClick={() => { handleEditModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
             </div>
@@ -124,12 +124,12 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
                 <label className="label-text">
                     <span>Observações</span>
                 </label>
-                <textarea onChange={handleNewExerciseInput}  name="obs"  defaultValue={newExercise.obs} className="my-input resize-none h-20  border-primary border-2 rounded-xl p-2 " maxLength={100} />
+                <textarea onChange={handleNewExerciseInput}  name="obs"  defaultValue={newExercise.obs} className="my-input resize-none h-20 w-fit  border-primary rounded-xl " maxLength={100} />
 
             </div>
             <div>
-                <button onClick={updateExercise} type="button" className="btn btn-primary rounded-2xl my-2">
-                    Atualizar
+                <button onClick={updateExercise} type="button" className="my-btn w-full">
+                    ATUALIZAR
                 </button>
             </div>
         </form>

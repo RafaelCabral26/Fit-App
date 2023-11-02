@@ -98,41 +98,44 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
     }
     return (
         <div className="fixed top-0 h-full w-screen z-10">
-            <form className="my-form-modal  cursor-none z-10">
+            <form className="my-form-modal  cursor-none z-10 flex flex-col gap-2">
                 <div className="flex justify-end">
                     <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
                 </div>
-                <select className="select select-xs select-primary rounded-lg">
-                    <option key={"musculo"} onClick={() => filterSelectedMuscleGroup(null)}>Músculo</option>
-                    <option key={"bracos"} onClick={() => filterSelectedMuscleGroup("Braços")}>Braços</option>
-                    <option key={"costas"} onClick={() => filterSelectedMuscleGroup("Costas")}>Costas</option>
-                    <option key={"peito"} onClick={() => filterSelectedMuscleGroup("Peitoral")}>Peito</option>
-                    <option key={"pernas"} onClick={() => filterSelectedMuscleGroup("Pernas")}>Pernas</option>
-                    <option key={"ombros"} onClick={() => filterSelectedMuscleGroup("Ombros")}>Ombros</option>
-                </select>
-                <select className="select select-xs select-primary rounded-lg">
-                    <option key="subgroup" >Subgrupo</option>
-                    {
-                        optionsSubGroups?.map((subgroup: TSubgroups) => {
-                            return (
-                                <option key={subgroup} onClick={() => { filterSelectedSubgroups(subgroup) }} value={subgroup}>{subgroup}</option>
-                            )
-                        })
-                    }
-                </select>
+                <span className="text-primary-focus">Filtros</span>
+                <div>
+                    <select className="select select-xs select-primary rounded-sm">
+                        <option key={"musculo"} onClick={() => filterSelectedMuscleGroup(null)}>Músculo</option>
+                        <option key={"bracos"} onClick={() => filterSelectedMuscleGroup("Braços")}>Braços</option>
+                        <option key={"costas"} onClick={() => filterSelectedMuscleGroup("Costas")}>Costas</option>
+                        <option key={"peito"} onClick={() => filterSelectedMuscleGroup("Peitoral")}>Peito</option>
+                        <option key={"pernas"} onClick={() => filterSelectedMuscleGroup("Pernas")}>Pernas</option>
+                        <option key={"ombros"} onClick={() => filterSelectedMuscleGroup("Ombros")}>Ombros</option>
+                    </select>
+                    <select className="select select-xs select-primary rounded-sm">
+                        <option key="subgroup" >Subgrupo</option>
+                        {
+                            optionsSubGroups?.map((subgroup: TSubgroups) => {
+                                return (
+                                    <option key={subgroup} onClick={() => { filterSelectedSubgroups(subgroup) }} value={subgroup}>{subgroup}</option>
+                                )
+                            })
+                        }
+                    </select>
+                </div>
                 <label className="label">
                     <span className="label-text-alt">Exercício</span>
                 </label>
-                <label className={`${customExerciseInput ? "input-group" : "hidden"} `}>
-                    <input name="exercise_name" className="my-input !rounded-l-xl  w-56" onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
-                    <span className="bg-primary text-sm !rounded-r-xl">
-                        <button type="button" onClick={() => { showCustomExerciseInput(false) }}>
+                <div className="form-control">
+                    <label className={`${customExerciseInput ? "input-group" : "hidden"} relative `}>
+                        <input name="exercise_name" className="my-input" onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
+                        <span onClick={() => { showCustomExerciseInput(false) }} className="absolute h-full right-0 top-10 text-sm cursor-pointer !rounded-none">
                             Listar
-                        </button>
-                    </span>
-                </label>
+                        </span>
+                    </label>
+                </div>
 
-                <select defaultValue={"name exercise"} className={`${customExerciseInput ? "hidden" : "my-input"}`}>
+                <select defaultValue={"name exercise"} className={`${customExerciseInput ? "hidden" : "my-input"} w-full`}>
                     <option key="name exercise" hidden>Nome do Exercício</option>
                     {
                         exerciseOptions?.map((ele: TDbExerciseSample) => {
@@ -157,12 +160,12 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                     <label className="label-text">
                         <span>Observações</span>
                     </label>
-                    <textarea onChange={handleNewExerciseInput} name="obs" className="my-input resize-none h-20  border-primary border-2 rounded-xl p-2 " maxLength={100} />
+                    <textarea onChange={handleNewExerciseInput} name="obs" className="my-input resize-none h-20 w-full rounded-sm p-2 " maxLength={100} />
 
                 </div>
                 <div>
-                    <button onClick={handleAddNewExercise} type="button" className="my-btn">
-                        Criar
+                    <button onClick={handleAddNewExercise} type="button" className="my-btn w-full">
+                        CRIAR
                     </button>
                 </div>
             </form>

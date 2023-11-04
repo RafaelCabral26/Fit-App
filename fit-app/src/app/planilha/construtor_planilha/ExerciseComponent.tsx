@@ -43,7 +43,7 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
                                 <span>Repetições</span>
                                 {item.quantity}
                             </span>
-                            <span className="flex flex-col  break-words ">
+                            <span className="flex flex-col break-words ">
                                 <span>Obs</span>
                                 <span className="text-xs">
                                     {item.obs}

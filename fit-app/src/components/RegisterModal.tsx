@@ -55,7 +55,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         setPasswordViewState(true);
     }
     return (
-            <div className="relative w-80 p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+            <div className="absolute w-80 p-4 top-1/3 md:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
                 <form onSubmit={tryRegister} className="my-form-modal z-30">
                     <div className="flex justify-between">
                         <h1 className="font-mono">CADASTRO</h1>

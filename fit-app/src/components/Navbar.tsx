@@ -61,7 +61,7 @@ export const Navbar = () => {
                 </a>
                 <div className='flex items-center font-bold gap-4'>
                     <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono  text-xs lg:text-2xl m-1 cursor-pointer hover:text-secondary my-list-item`}>PLANILHA</label>
+                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono text-xs lg:text-xl m-1 cursor-pointer hover:text-secondary my-list-item`}>PLANILHA</label>
                         <ul tabIndex={0} className="my-dropdown">
                             <li className=""><a className="my-list-item" href="/planilha/construtor_planilha">Criar Planilha</a></li>
                             <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>

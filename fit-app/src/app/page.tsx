@@ -7,7 +7,7 @@ export default function MyApp() {
         <div>
             <div className='absolute top-0 right-0 z-0 scale-x-[-1]  w-full h-4/5 lg:h-[95%] 2xl:h-full  bg-no-repeat bg-cover bg-center bg-[url("../../public/teste-6.JPG")]' >
             </div>
-            <section className="relative h-[75vh] lg:h-[85vh] 2xl:h-[95vh] grid  xl:gap-y-12 2xl:gap-y-20 text-white w-full  grid-cols-12 grid-rows-6 border-2 border-secondary">
+            <section className="relative h-[75vh] lg:h-[85vh] 2xl:h-[95vh] grid  xl:gap-y-12 2xl:gap-y-20 text-white w-full  grid-cols-12 grid-rows-6 ">
                 <div className="place-self-center col-start-2 xl:col-start-2 2xl:col-start-2 col-span-12 xl:col-span-8 2xl:col-span-6  row-start-2 xl:row-start-3  ">
                     <span className="my-landing-text">Cuide de seu
                         <span className="my-landing-text text-secondary mx-4"> Corpo</span>

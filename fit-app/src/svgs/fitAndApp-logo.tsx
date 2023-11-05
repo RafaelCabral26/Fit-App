@@ -1,15 +1,14 @@
+"use client"
 import React from "react";
 
 function FitAndAppLogo() {
     return (
         <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="120"
-            height=""
             version="1.1"
-            viewBox="0 0 122.624 56"
+            viewBox="0 0 192.624 56"
+            className="w-56 "
         >
-            <g transform="translate(-28.752 -17)">
+            <g transform="translate(-28.752 -17)" >
                 <g
                     fillOpacity="1"
                     strokeLinejoin="bevel"
@@ -19,7 +18,7 @@ function FitAndAppLogo() {
                     <g
                         fill="#71c5a5"
                         stroke="#71c5a5"
-                        transform="translate(-3.507 -8.39)"
+                        transform="translate(10.507 -8.39)"
                     >
                         <path
                             strokeWidth="1.608"
@@ -52,9 +51,10 @@ function FitAndAppLogo() {
                 <text
                     xmlSpace="preserve"
                     style={{ lineHeight: "0" }}
-                    x="94.738"
-                    y="48.56"
+                    x=""
+                    y=""
                     fill="#0ff00f"
+                    alignmentBaseline="middle"
                     fillOpacity="0.985"
                     stroke="#2f419c"
                     strokeDasharray="none"
@@ -73,6 +73,7 @@ function FitAndAppLogo() {
                     opacity="0.98"
                     paintOrder="stroke fill markers"
                     transform="scale(.94507 1.05813)"
+                    className=""
                 >
                     <tspan
                         style={{ lineHeight: 2.06033 }}

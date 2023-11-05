@@ -1,9 +1,12 @@
+
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { GlobalProvider } from '@/services/GlobalContext'
 import { MyToast } from '@/services/MyToast'
 import Head from 'next/head'
 import {Josefin_Sans,Source_Sans_3} from 'next/font/google'
+import { usePathname } from 'next/navigation'
+import {headers} from 'next/headers'
 
 export const metadata = {
     title: 'Fit-App',
@@ -27,12 +30,13 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
+    
     return (
         <html lang="pt-br" data-theme="mytheme" className={`${Josefin.variable} ${SourceSans.variable} font-sans`}>
             <Head>
                 <meta charSet='utf-8' />
             </Head>
-            <body className='h-screen bg-white font-normal  overflow-x-hidden relative'>
+            <body className={`h-screen bg-white font-normal  overflow-x-hidden relative`}>
                 <GlobalProvider>
                     <Navbar></Navbar>
                     <div className="">

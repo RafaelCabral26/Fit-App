@@ -1,5 +1,6 @@
 'use client'
 
+import BoardSvg from "@/svgs/board"
 import DumbbellSvg from "@/svgs/dumbbell"
 
 
@@ -37,20 +38,41 @@ export default function MyPage() {
 const Section2 = () => {
     return (
 
-        <section className="container flex flex-col md:flex-row  m-auto ">
-            <div className="flex flex-col md:flex-row items-center gap-3 ">
-                <div className="flex  w-full justify-around">
-                    <div className="w-[14%] h-20 self-center text-primary mx-4 relative">
-                        <DumbbellSvg></DumbbellSvg>
+        <section className="container bg-white flex  flex-col md:flex-row  m-auto ">
+            <div className="flex  flex-col md:flex-row items-center gap-10 ">
+                <div className="flex flex-col gap-2">
+                    <div className="flex  w-full justify-around">
+                        <div className="w-[14%] h-20 self-center text-primary mx-4 relative">
+                            <DumbbellSvg></DumbbellSvg>
+                        </div>
+                        <div className="flex flex-col items-start basis-[65%]">
+                            <span className="text-xl  font-bold font-sans">TREINAMENTO <br />PERSONALIZADO</span>
+                            <span className="text-lg text-primary font-semibold font-mono uppercase">Acelere seu progresso e de seus clientes.</span>
+                        </div>
                     </div>
-                    <div className="flex flex-col items-start basis-[65%]">
-                        <span className="text-xl  font-bold font-sans">TREINAMENTO <br />PERSONALIZADO</span>
-                        <span className="text-lg text-primary font-semibold font-mono uppercase">Acelere seu progresso e de seus clientes.</span>
-                    </div>
+                    <div className="w-[90%] m-auto h-1 border-b-2 border-secondary/50 "></div>
+                    <span className="text-center mx-4 font-serif ">Nosso software de criação de planilhas de treinos para academia representam uma ferramenta valiosa para  treinadores e atletas, tornando o treinamento mais eficiente e personalizado. </span>
                 </div>
-                <div className="w-[90%] m-auto h-1 border-b-2 border-secondary/50 "></div>
-                <span className="text-center font-serif ">Ao utilizar ferramentas para </span>
+
+
+                <div className="flex flex-col gap-2">
+                    <div className="flex  w-full justify-around">
+                        <div className="w-[14%] h-20 self-center text-primary mx-4 relative">
+                            <BoardSvg></BoardSvg>
+                        </div>
+                        <div className="flex flex-col items-start basis-[65%]">
+                            <span className="text-xl  font-bold font-sans">TREINAMENTO <br />PERSONALIZADO</span>
+                            <span className="text-lg text-primary font-semibold font-mono uppercase">Acelere seu progresso e de seus clientes.</span>
+                        </div>
+                    </div>
+                    <div className="w-[90%] m-auto h-1 border-b-2 border-secondary/50 "></div>
+                    <span className="text-center mx-4 font-serif ">Nosso software de criação de planilhas de treinos para academia representam uma ferramenta valiosa para  treinadores e atletas, tornando o treinamento mais eficiente e personalizado. </span>
+                </div>
+
+
+
             </div>
+
         </section>
     )
 }

@@ -55,7 +55,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <div className={`navbar relative z-30 justify-center md:justify-between px-[15vw] 2xl:px-[18vw] p-4 ${myUrl !== "/" ? "bg-primary" : "bg-gray-200/20"}  `}>
+            <div className={`navbar relative z-30 justify-center md:justify-between px-[15vw] 2xl:px-[18vw] p-4 ${myUrl !== "/" ? "bg-base-200" : "bg-gray-200/20"}  `}>
                 <a href="/" className='w-48 md:w-56'>
                     <FitAndAppLogo></FitAndAppLogo>
                 </a>

@@ -11,16 +11,16 @@ import FitAndAppLogo from "@/svgs/fitAndApp-logo"
 export const Navbar = () => {
     const globalState = useContext(GlobalContext);
     const router = useRouter();
-    const [loginModal, showLoginModal] = useState<boolean>(false)
-    const [registerModal, showRegisterModal] = useState<boolean>(false)
-    const myUrl = usePathname()
-    const [ navFontColor, setNavFontColor ] = useState<string>("bg-gray-200/20");
+    const [loginModal, showLoginModal] = useState<boolean>(false);
+    const [registerModal, showRegisterModal] = useState<boolean>(false);
+    const myUrl = usePathname();
+    const [navFontColor, setNavFontColor] = useState<string>("bg-gray-200/20");
 
     useLayoutEffect(() => {
-       myUrl !== "/" ? 
-            setNavFontColor("text-primary") : 
+        myUrl !== "/" ?
+            setNavFontColor("text-primary") :
             setNavFontColor("text-white");
-    },[myUrl]);
+    }, [myUrl]);
 
     const handleLogout = () => {
         myHTTP.get("/logout")
@@ -33,7 +33,7 @@ export const Navbar = () => {
                 router.replace("/");
             })
             .catch(err => {
-                globalState?.setToast({ type: "error", message: err.response.data.msg });
+                if (err.response) globalState?.setToast({ type: "error", message: err.response.data.msg });
             })
     };
 
@@ -47,35 +47,34 @@ export const Navbar = () => {
 
             })
             .catch(err => {
-                globalState?.setToast({ type: "warning", message: err.response.data.msg });
+                if (err.response) globalState?.setToast({ type: "warning", message: err.response.data.msg });
             })
     }, [handleLogout]);
 
-    
+
 
     return (
         <>
-            <div className={`navbar relative  z-30  justify-between px-[15vw] 2xl:px-[18vw] p-4  bg-gray-200/20`}>
-                <a href="/" className='text-2xl text-primary font-bold'>
+            <div className={`navbar relative z-30 justify-center md:justify-between px-[15vw] 2xl:px-[18vw] p-4 ${myUrl !== "/" ? "bg-primary" : "bg-gray-200/20"}  `}>
+                <a href="/" className='w-48 md:w-56 font-sans'>
                     <FitAndAppLogo></FitAndAppLogo>
                 </a>
-
                 <div className='flex items-center font-bold gap-4'>
                     <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-primary" : "text-white" } font-mono font-normal text-lg m-1 cursor-pointer hover:text-primary`}>PLANILHA</label>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono text-xs lg:text-xl m-1 cursor-pointer hover:text-secondary my-list-item`}>PLANILHA</label>
+                        <ul tabIndex={0} className="my-dropdown">
                             <li className=""><a className="my-list-item" href="/planilha/construtor_planilha">Criar Planilha</a></li>
                             <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>
                         </ul>
                     </div>
-                    <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="cursor-pointer"><ProfileSvg /></label>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <div className="dropdown dropdown-end w-6">
+                        <label tabIndex={0} className={`cursor-pointer w-32 ${myUrl !== "/" ? "text-white" : "text-secondary"}`}><ProfileSvg /></label>
+                        <ul tabIndex={0} className="my-dropdown">
                             {globalState?.userType === null &&
-                                <>
-                                    <li><button className="my-list-item" onClick={() => { showLoginModal(true) }}>Login</button></li>
+                                <ul>
+                                    <li><button className="my-list-item " onClick={() => { showLoginModal(true) }}>Login</button></li>
                                     <li><button className="my-list-item" onClick={() => showRegisterModal(true)} >Cadastrar</button></li>
-                                </>
+                                </ul>
                             }
                             {globalState?.userType === "user" &&
                                 (<>

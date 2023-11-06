@@ -1,3 +1,4 @@
+
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { GlobalProvider } from '@/services/GlobalContext'
@@ -27,12 +28,13 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
+    
     return (
-        <html lang="pt-br" data-theme="mytheme" className={`${Josefin.variable} ${SourceSans.variable} font-sans`}>
+        <html lang="pt-br" data-theme="mytheme" className={`${Josefin.variable} ${SourceSans.variable} font-mono`}>
             <Head>
                 <meta charSet='utf-8' />
             </Head>
-            <body className='h-screen bg-white  overflow-x-hidden relative'>
+            <body className={`h-screen bg-white font-normal  overflow-x-hidden relative`}>
                 <GlobalProvider>
                     <Navbar></Navbar>
                     <div className="">

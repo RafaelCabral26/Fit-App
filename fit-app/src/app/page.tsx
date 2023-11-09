@@ -1,11 +1,13 @@
 'use client'
 
+import ArrowSvg from "@/svgs/arrowSvg"
 import BoardSvg from "@/svgs/board"
 import CheckSvg from "@/svgs/checkSvg"
 import DumbbellSvg from "@/svgs/dumbbell"
 import SmallDumbbellSvg from "@/svgs/smallDumbbell"
 import TapeSvg from "@/svgs/tape"
 import Image from "next/image"
+import { SetStateAction, useState } from "react"
 
 
 export default function MyPage() {
@@ -43,7 +45,7 @@ export default function MyPage() {
 }
 const Section2 = () => {
     return (
-        <section className="container  md:h-[50vh] bg-neutral flex  flex-col md:flex-row  m-auto ">
+        <section className="container my-20  md:h-[50vh] bg-neutral flex  flex-col md:flex-row  m-auto ">
 
             <div className="flex self-center   flex-col md:flex-row  items-baseline gap-10 md:gap-0 ">
                 <div className="flex flex-col gap-2 ">
@@ -125,6 +127,34 @@ const Section3 = () => {
 }
 
 const Section4 = () => {
+    const [activeIndex, setActiveIndex] = useState(0);
+    const carouselItems = [
+        {
+            title: "Lorem Ipsum",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. ",
+            image: "/slide1.jpg"
+        },
+        {
+            title: "Lorem Ipsum",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. ",
+            image: "/slide2.jpg"
+        },
+        {
+            title: "Lorem Ipsum",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. ",
+            image: "/slider-4.jpg"
+        },
+    ]
+
+    const updateIndex = (newIndex: any) => {
+        if (newIndex < 0) {
+            newIndex = 0;
+        } else if (newIndex >= carouselItems.length) {
+            newIndex = carouselItems.length - 1;
+        }
+        setActiveIndex(newIndex);
+    };
+
     return (
         <section className="w-full ">
             <div className="container m-auto my-20 ">
@@ -136,65 +166,52 @@ const Section4 = () => {
                         <div className="h-1 w-4 border-b-2 border-secondary/70"></div>
                     </div>
                 </div>
-                <div>
+                <div className="flex gap-1 float-right md:hidden">
+                    <button type="button" onClick={() => {
+                        updateIndex(activeIndex - 1);
+                    }} className="my-btn scale-[-1]">
+                        <ArrowSvg></ArrowSvg>
+                    </button>
+                    <button type="button" onClick={() => {
+                        updateIndex(activeIndex + 1);
+                    }} className="my-btn">
+                        <ArrowSvg></ArrowSvg>
+                    </button>
                 </div>
-                <Section4Images></Section4Images>
+
+
+
+                <div className=" flex flex-col w-full justify-center overflow-hidden   gap-8 m-auto py-14">
+                    <div id="inner" className=" flex w-[100vw] whitespace-nowrap justify-start transition-transform  "
+                        style={{
+                            transform: `translate(-${activeIndex * 100}%)`
+                        }}
+                    >
+                        {carouselItems.map((item: any, index: any) => {
+                            return (
+                                <div className="flex justify-center  border-2 border-secondary   ">
+                                    <div id="carousel-item" className="flex flex-col  items-center max-w-96   m-auto  border-white border-[0.1px] border-opacity-30 ">
+                                        <div id="image-container" className="relative w-[320px] h-[213.5px] ">
+                                            <Image src={`${item.image}`} width={0} height={0} sizes="100vw" className="w-full h-auto" alt="foto halteres"></Image>
+                                        </div>
+                                        <div className="relative h-1 flex justify-center ">
+                                            <div className="absolute bg-secondary text-white   w-10 h-10 self-center">
+                                                <SmallDumbbellSvg></SmallDumbbellSvg>
+                                            </div>
+                                        </div>
+                                        <div className="relative flex flex-col gap-3 text-center my-10">
+                                            <div className="w-16 relative self-center text-opacity-100">
+                                            </div>
+                                            <span className="text-white text-center font-serif text-lg  2xl:text-xl uppercase">{item.title}</span>
+                                            <p className="w-60 whitespace-normal text-neutral-300 m-4 font-serif ">{item.text}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
             </div>
         </section>
-    )
-}
-const Section4Images = () => {
-    return (
-        <div className="w-full flex flex-col md:flex-row  gap-8 m-auto py-14">
-            <div id="carousel-container" className=" flex flex-col items-center   w-fit m-auto  border-white border-[0.1px] border-opacity-30 ">
-                <div id="image-container" className="relative w-[320px] h-[213.5px] ">
-                    <Image src={"/slide1.jpg"} layout="fill" objectFit={'contain'} alt="foto halteres"></Image>
-                </div>
-                <div className="relative h-1 flex justify-center ">
-                    <div className="absolute bg-secondary text-neutral   w-10 h-10 self-center">
-                        <SmallDumbbellSvg></SmallDumbbellSvg>
-                    </div>
-                </div>
-                <div className="relative flex flex-col gap-3 text-center my-10">
-                    <div className="w-16 relative self-center text-opacity-100">
-                    </div>
-                    <span className="text-white font-serif text-lg  2xl:text-xl uppercase">Loren Ipsumm</span>
-                    <p className="w-60  self-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. </p>
-                </div>
-            </div>
-            <div id="carousel-container" className=" flex flex-col items-center   w-fit m-auto  border-white border-[0.1px] border-opacity-30 ">
-                <div id="image-container" className="relative w-[320px] h-[213.5px] ">
-                    <Image src={"/slide2.jpg"} layout="fill" objectFit={'contain'} alt="foto halteres"></Image>
-                </div>
-                <div className="relative h-1 flex justify-center ">
-                    <div className="absolute bg-secondary text-neutral   w-10 h-10 self-center">
-                        <SmallDumbbellSvg></SmallDumbbellSvg>
-                    </div>
-                </div>
-                <div className="relative flex flex-col gap-3 text-center my-10">
-                    <div className="w-16 relative self-center text-opacity-100">
-                    </div>
-                    <span className="text-white font-serif text-lg  2xl:text-xl uppercase">Loren Ipsumm</span>
-                    <p className="w-60  self-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. </p>
-                </div>
-            </div>
-
-            <div id="carousel-container" className=" flex flex-col items-center   w-fit m-auto  border-white border-[0.1px] border-opacity-30 ">
-                <div id="image-container" className="relative w-[320px] h-[213.5px] ">
-                    <Image src={"/slide3.jpg"} layout="fill" objectFit={'contain'} alt="foto halteres"></Image>
-                </div>
-                <div className="relative h-1 flex justify-center ">
-                    <div className="absolute bg-secondary text-neutral   w-10 h-10 self-center">
-                        <SmallDumbbellSvg></SmallDumbbellSvg>
-                    </div>
-                </div>
-                <div className="relative flex flex-col gap-3 text-center my-10">
-                    <div className="w-16 relative self-center text-opacity-100">
-                    </div>
-                    <span className="text-white font-serif text-lg  2xl:text-xl uppercase">Loren Ipsumm</span>
-                    <p className="w-60  self-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. </p>
-                </div>
-            </div>
-        </div>
     )
 }

@@ -23,10 +23,10 @@ module.exports = {
         themes: ["corporate", "retro", "dark", "emerald",
             {
                 mytheme: {
-                    "primary": "#225fec",
+                    "primary": "#1face1",
                     "secondary": "#e24f00",
                     "accent": "#163896",
-                    "neutral": "#191a1f",
+                    "neutral": "#02182B",
                     "base-100": "#f3f4f6",
                     "info": "#2d2d9e",
                     "success": "#187746",

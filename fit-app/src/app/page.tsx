@@ -3,7 +3,9 @@
 import BoardSvg from "@/svgs/board"
 import CheckSvg from "@/svgs/checkSvg"
 import DumbbellSvg from "@/svgs/dumbbell"
+import SmallDumbbellSvg from "@/svgs/smallDumbbell"
 import TapeSvg from "@/svgs/tape"
+import Image from "next/image"
 
 
 export default function MyPage() {
@@ -46,44 +48,44 @@ const Section2 = () => {
             <div className="flex self-center   flex-col md:flex-row  items-baseline gap-10 md:gap-0 ">
                 <div className="flex flex-col gap-2 ">
                     <div className="flex  w-full justify-around h-40">
-                        <div className="w-[64px]   self-center text-primary mx-4 relative">
+                        <div className="w-[64px]   self-center text-secondary mx-4 relative">
                             <DumbbellSvg></DumbbellSvg>
                         </div>
                         <div className="self-center flex flex-col items-start basis-[45%]">
                             <span className="text-lg text-white font-bold font-sans">TREINAMENTO <br />PERSONALIZADO</span>
-                            <span className="text-md text-primary font-semibold font-mono uppercase">Acelere seu progresso e de seus clientes.</span>
+                            <span className="text-md text-secondary font-semibold font-mono uppercase">Acelere seu progresso e de seus clientes.</span>
                         </div>
                     </div>
-                    <div className="w-[90%] my-4 m-auto h-1 border-b-2 border-secondary/50 "></div>
-                    <span className="text-center text-neutral-400 m-4 font-serif ">Nosso software de criação de planilhas de treinos para academia representam uma ferramenta valiosa para  treinadores e atletas, tornando o treinamento mais eficiente e personalizado. </span>
+                    <div className="w-[90%] my-4 m-auto h-1 border-b-2 border-neutral-300/50 "></div>
+                    <span className="text-center text-neutral-300 m-4 font-serif ">Nosso software de criação de planilhas de treinos para academia representam uma ferramenta valiosa para  treinadores e atletas, tornando o treinamento mais eficiente e personalizado. </span>
                 </div>
 
                 <div className="flex flex-col gap-2">
                     <div className="flex  w-full justify-around h-40 ">
-                        <div className="w-[64px]   self-center text-primary mx-4 relative">
+                        <div className="w-[64px]   self-center text-secondary mx-4 relative">
                             <BoardSvg></BoardSvg>
                         </div>
                         <div className="self-center flex flex-col items-start basis-[45%]">
                             <span className="text-lg text-white font-bold font-sans"> VARIEDADE DE EXERCÍCIOS</span>
-                            <span className="text-md text-primary font-semibold font-mono uppercase">CONSULTE OU CRIE<br /> SEUS EXERCÍCIOS</span>
+                            <span className="text-md text-secondary font-semibold font-mono uppercase">CONSULTE OU CRIE<br /> SEUS EXERCÍCIOS</span>
                         </div>
                     </div>
-                    <div className="w-[90%] my-4 m-auto h-1 border-b-2 border-secondary/50 "></div>
-                    <span className="text-center  text-neutral-400 m-4 font-serif ">A variedade é a chave para manter o interesse e a motivação durante o treinamento.  Disponibilizamos uma ampla gama de exercícios, permitindo que os clientes explorem diferentes modalidades e técnicas.</span>
+                    <div className="w-[90%] my-4 m-auto h-1 border-b-2 border-neutral-300/50 "></div>
+                    <span className="text-center  text-neutral-300 m-4 font-serif ">A variedade é a chave para manter o interesse e a motivação durante o treinamento.  Disponibilizamos uma ampla gama de exercícios, permitindo que os clientes explorem diferentes modalidades e técnicas.</span>
                 </div>
 
                 <div className="flex flex-col gap-2">
                     <div className="flex  w-full justify-around h-40 ">
-                        <div className="w-[64px]  self-center text-primary mx-4 relative">
+                        <div className="w-[64px]  self-center text-secondary mx-4 relative">
                             <TapeSvg></TapeSvg>
                         </div>
                         <div className="self-center flex flex-col items-start basis-[45%]">
                             <span className="text-lg text-white  font-bold font-sans">MONITORE A <br /> SUA EVOLUÇÃO</span>
-                            <span className="text-md text-primary font-semibold font-mono uppercase">ACOMPANHE A EVOLUÇÃO DE CARGAS E MEDIDAS</span>
+                            <span className="text-md text-secondary font-semibold font-mono uppercase">ACOMPANHE A EVOLUÇÃO DE CARGAS E MEDIDAS</span>
                         </div>
                     </div>
-                    <div className="w-[90%] md:my-4 m-auto h-1 border-b-2 border-secondary/50 "></div>
-                    <span className="text-center  text-neutral-400 m-4 font-serif ">A possibilidade de registrar e acompanhar o progresso  é uma ferramenta valiosa. Isso permite que atletas e treinadores avaliem o desempenho, identifiquem áreas de melhoria e ajustem os planos de treino de acordo.</span>
+                    <div className="w-[90%] md:my-4 m-auto h-1 border-b-2 border-neutral-300/50 "></div>
+                    <span className="text-center  text-neutral-300 m-4 font-serif ">A possibilidade de registrar e acompanhar o progresso  é uma ferramenta valiosa. Isso permite que atletas e treinadores avaliem o desempenho, identifiquem áreas de melhoria e ajustem os planos de treino de acordo.</span>
                 </div>
             </div>
         </section>
@@ -95,8 +97,8 @@ const Section3 = () => {
     return (
         <section className="w-full bg-white p-4 text-black">
             <div className="container  m-auto lg:flex my-4 ">
-                <div className="max-w-xl lg:max-w-2xl py-14 md:p-14 ">
-                    <p className="text-lg text-primary font-semibold font-mono uppercase">Fit & App</p>
+                <div className="max-w-xl xl:max-w-2xl py-14 md:p-14 ">
+                    <p className="text-lg text-secondary font-semibold font-mono uppercase">Fit & App</p>
                     <p className="text-2xl text-neutral font-semibold font-mono uppercase my-4">POR QUE ESCOLHER TREINAR COM O FIT&APP?</p>
                     <div id="divisor" className="flex gap-2 ">
                         <div className="h-1 w-10 border-b-2 border-secondary"></div>
@@ -109,11 +111,13 @@ const Section3 = () => {
                         <CheckSvg spanText="Projetado para ser intuitivo e fácil de usar." />
                         <CheckSvg spanText="Oferecemos uma ampla gama de exercícios para escolher." />
                         <CheckSvg spanText="Acesse facilmente os registros de treino anteriores." />
-                        <CheckSvg spanText="Compartilhar planilhas de treino de forma rápida e fácil." /> </div>
-                    <button className="btn btn-secondary rounded-sm xl:w-60">Registre-se agora!</button>
+                        <CheckSvg spanText="Compartilhar planilhas de treino de forma rápida e fácil." />
+
+                    </div>
+                    <a href="/planilha/construtor_planilha" className="btn btn-secondary rounded-sm xl:w-60">Teste agora!</a>
                 </div>
                 <div className="w-[100%]  m-auto  ">
-                    <div className='w-full top-0 right-0 z-0  h-[70vh] lg:h-[60vh]  bg-no-repeat bg-cover bg-center  bg-[url("../../public/teste-7-removebg-preview.png")]'></div>
+                    <div className='w-full   top-0 right-0 z-0  h-[50vh] xl:h-[60vh]  bg-no-repeat bg-cover bg-center  bg-[url("../../public/teste-7-removebg-preview.png")]'></div>
                 </div>
             </div>
         </section>
@@ -122,8 +126,75 @@ const Section3 = () => {
 
 const Section4 = () => {
     return (
-        <section>
-            Testeee
+        <section className="w-full ">
+            <div className="container m-auto my-20 ">
+                <div className="w-60 p-4 md:p-14 md:w-[]">
+                    <p className="text-lg text-secondary font-semibold font-mono uppercase">construtor de planilhas de treino</p>
+                    <p className="text-2xl text-white font-semibold font-mono uppercase my-4">unindo tecnologia e saúde</p>
+                    <div id="divisor" className="flex gap-2 ">
+                        <div className="h-1 w-10 border-b-2 border-secondary"></div>
+                        <div className="h-1 w-4 border-b-2 border-secondary/70"></div>
+                    </div>
+                </div>
+                <div>
+                </div>
+                <Section4Images></Section4Images>
+            </div>
         </section>
+    )
+}
+const Section4Images = () => {
+    return (
+        <div className="w-full flex flex-col md:flex-row  gap-8 m-auto py-14">
+            <div id="carousel-container" className=" flex flex-col items-center   w-fit m-auto  border-white border-[0.1px] border-opacity-30 ">
+                <div id="image-container" className="relative w-[320px] h-[213.5px] ">
+                    <Image src={"/slide1.jpg"} layout="fill" objectFit={'contain'} alt="foto halteres"></Image>
+                </div>
+                <div className="relative h-1 flex justify-center ">
+                    <div className="absolute bg-secondary text-neutral   w-10 h-10 self-center">
+                        <SmallDumbbellSvg></SmallDumbbellSvg>
+                    </div>
+                </div>
+                <div className="relative flex flex-col gap-3 text-center my-10">
+                    <div className="w-16 relative self-center text-opacity-100">
+                    </div>
+                    <span className="text-white font-serif text-lg  2xl:text-xl uppercase">Loren Ipsumm</span>
+                    <p className="w-60  self-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. </p>
+                </div>
+            </div>
+            <div id="carousel-container" className=" flex flex-col items-center   w-fit m-auto  border-white border-[0.1px] border-opacity-30 ">
+                <div id="image-container" className="relative w-[320px] h-[213.5px] ">
+                    <Image src={"/slide2.jpg"} layout="fill" objectFit={'contain'} alt="foto halteres"></Image>
+                </div>
+                <div className="relative h-1 flex justify-center ">
+                    <div className="absolute bg-secondary text-neutral   w-10 h-10 self-center">
+                        <SmallDumbbellSvg></SmallDumbbellSvg>
+                    </div>
+                </div>
+                <div className="relative flex flex-col gap-3 text-center my-10">
+                    <div className="w-16 relative self-center text-opacity-100">
+                    </div>
+                    <span className="text-white font-serif text-lg  2xl:text-xl uppercase">Loren Ipsumm</span>
+                    <p className="w-60  self-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. </p>
+                </div>
+            </div>
+
+            <div id="carousel-container" className=" flex flex-col items-center   w-fit m-auto  border-white border-[0.1px] border-opacity-30 ">
+                <div id="image-container" className="relative w-[320px] h-[213.5px] ">
+                    <Image src={"/slide3.jpg"} layout="fill" objectFit={'contain'} alt="foto halteres"></Image>
+                </div>
+                <div className="relative h-1 flex justify-center ">
+                    <div className="absolute bg-secondary text-neutral   w-10 h-10 self-center">
+                        <SmallDumbbellSvg></SmallDumbbellSvg>
+                    </div>
+                </div>
+                <div className="relative flex flex-col gap-3 text-center my-10">
+                    <div className="w-16 relative self-center text-opacity-100">
+                    </div>
+                    <span className="text-white font-serif text-lg  2xl:text-xl uppercase">Loren Ipsumm</span>
+                    <p className="w-60  self-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. </p>
+                </div>
+            </div>
+        </div>
     )
 }

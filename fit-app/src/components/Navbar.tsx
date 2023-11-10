@@ -90,7 +90,8 @@ export const Navbar = () => {
                     </div>
                 </div>
             </div>
-            {loginModal && <LoginModal showLoginModal={showLoginModal}></LoginModal>}
+            {loginModal && <LoginModal showLoginModal={showLoginModal}></LoginModal>
+            }
             {registerModal && <RegisterModal showRegisterModal={showRegisterModal}></RegisterModal>}
         </>
     )

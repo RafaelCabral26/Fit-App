@@ -4,6 +4,7 @@ import { ShowPassSvg, HidePassSvg } from "@/svgs/show-hide-eyes";
 import React, { SetStateAction, useContext, useState } from "react"
 import { GlobalContext } from "@/services/GlobalContext";
 import { useRouter } from "next/navigation";
+import { ProfileSvg } from "@/svgs/profilecircle";
 
  type TUserEmailAndPass = {
     email:string
@@ -41,11 +42,17 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
         setPasswordViewState(true);
     };
     return (
-        <div className="fixed top-0  h-screen w-screen z-10">
-            <div className="relative w-80 p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="fixed  top-0 backdrop-blur-lg bg-white/20  h-screen w-full z-50">
+            <div className="relative w-full p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <form onSubmit={tryLogin} className="my-form-modal">
-                    <div className="flex justify-between">
-                        <h1 className="font-mono ">LOGIN</h1>
+                    <div className="absolute flex items-center justify-center left-0 top-0 bg-secondary w-full h-14 ">
+                        <div className="w-12 h-12 p-2 border-2 rounded-sm">
+                                <ProfileSvg></ProfileSvg>
+
+                        </div>
+                    </div>
+                    <div className="flex justify-between mt-14">
+                        <h1 className="font-sans text-secondary">LOGIN</h1>
                         <button type="button" onClick={() => { showLoginModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
                     <label className="label">

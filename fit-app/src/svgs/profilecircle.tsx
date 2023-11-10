@@ -9,7 +9,7 @@ export const ProfileSvg = () => {
             <svg
                 className={`flex   ${myUrl !== "/" ? "text-secondary" : "text-white" } hover:text-secondary`}
                 viewBox="0 0 20 20">
-                <g className="hover:fill-red-500hover:fill-current hover:text-red-500">
+                <g className="">
                     <g fill="currentColor" fillRule="evenodd" stroke="none" strokeWidth="2">
                         <g   transform="translate(-380 -2159)">
                             <g transform="translate(56 160)">

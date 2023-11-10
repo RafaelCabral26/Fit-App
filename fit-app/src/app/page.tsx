@@ -6,7 +6,9 @@ import CheckSvg from "@/svgs/checkSvg"
 import DumbbellSvg from "@/svgs/dumbbell"
 import SmallDumbbellSvg from "@/svgs/smallDumbbell"
 import TapeSvg from "@/svgs/tape"
+import WhatsAppSvg from "@/svgs/whatsappSvg"
 import Image from "next/image"
+import Link from "next/link"
 import { SetStateAction, useState } from "react"
 
 
@@ -40,6 +42,7 @@ export default function MyPage() {
             <Section2></Section2>
             <Section3></Section3>
             <Section4></Section4>
+            <Footer></Footer>
         </div>
     )
 }
@@ -130,18 +133,18 @@ const Section4 = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const carouselItems = [
         {
-            title: "Lorem Ipsum",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. ",
-            image: "/slide1.jpg"
-        },
-        {
-            title: "Lorem Ipsum",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. ",
+            title: "Perca Peso",
+            text: "A prática regular de exercícios é uma maneira eficaz de controlar o peso corporal, pois queima calorias e ajuda na manutenção de um peso saudável.",
             image: "/slide2.jpg"
         },
         {
-            title: "Lorem Ipsum",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit erat vitae neque volutpat, at. ",
+            title: "Ganhe Força",
+            text: "O treino de força é fundamental para o crescimento e fortalecimento dos músculos, proporcionando maior resistência e definição muscular ao longo do temp",
+            image: "/slide1.jpg"
+        },
+        {
+            title: "Saúde em dia",
+            text: "Estudos indicam que a prática regular de treino de força está associada a uma maior expectativa de vida, destacando os benefícios duradouros para a saúde.",
             image: "/slider-4.jpg"
         },
     ]
@@ -156,9 +159,9 @@ const Section4 = () => {
     };
 
     return (
-        <section className="w-full ">
-            <div className="container m-auto my-20 ">
-                <div className="w-60 p-4 md:p-14 md:w-[]">
+        <section className="w-full  ">
+            <div className="container m-auto my-20  ">
+                <div className="w-full p-4 xl:pl-14 2xl:pl-24 m-auto ">
                     <p className="text-lg text-secondary font-semibold font-mono uppercase">construtor de planilhas de treino</p>
                     <p className="text-2xl text-white font-semibold font-mono uppercase my-4">unindo tecnologia e saúde</p>
                     <div id="divisor" className="flex gap-2 ">
@@ -166,44 +169,49 @@ const Section4 = () => {
                         <div className="h-1 w-4 border-b-2 border-secondary/70"></div>
                     </div>
                 </div>
-                <div className="flex gap-1 float-right md:hidden">
+                <div className="flex gap-2 float-right sm:hidden m-4">
                     <button type="button" onClick={() => {
                         updateIndex(activeIndex - 1);
-                    }} className="my-btn scale-[-1]">
+                    }} className="flex justify-center items-center w-8 h-8 p-0 bg-secondary scale-[-1] rounded-sm">
                         <ArrowSvg></ArrowSvg>
                     </button>
                     <button type="button" onClick={() => {
                         updateIndex(activeIndex + 1);
-                    }} className="my-btn">
+                    }} className="flex justify-center items-center w-8 h-8 p-0 bg-secondary rounded-sm ">
                         <ArrowSvg></ArrowSvg>
                     </button>
                 </div>
 
 
 
-                <div className=" flex flex-col w-full justify-center overflow-hidden   gap-8 m-auto py-14">
-                    <div id="inner" className=" flex w-[100vw] whitespace-nowrap justify-start transition-transform  "
+                <div className=" flex flex-col w-full justify-center overflow-hidden   gap-8 m-auto ">
+                    <div id="inner" className="flex w-full whitespace-nowrap justify-start transition-transform   "
                         style={{
                             transform: `translate(-${activeIndex * 100}%)`
                         }}
                     >
                         {carouselItems.map((item: any, index: any) => {
                             return (
-                                <div className="flex justify-center  border-2 border-secondary   ">
-                                    <div id="carousel-item" className="flex flex-col  items-center max-w-96   m-auto  border-white border-[0.1px] border-opacity-30 ">
-                                        <div id="image-container" className="relative w-[320px] h-[213.5px] ">
-                                            <Image src={`${item.image}`} width={0} height={0} sizes="100vw" className="w-full h-auto" alt="foto halteres"></Image>
-                                        </div>
-                                        <div className="relative h-1 flex justify-center ">
-                                            <div className="absolute bg-secondary text-white   w-10 h-10 self-center">
-                                                <SmallDumbbellSvg></SmallDumbbellSvg>
+                                <div className="flex w-screen ">
+                                    <div id="carousel-item" className="flex flex-col items-center w-screen sm:w-full m-auto pb-10  ">
+
+                                        <div className=" items-center border-white border-[0.1px] border-opacity-30 ">
+
+                                            <div id="image-container" className="relative w-[320px] sm:w-[210px] lg:w-[320px] h-[213.5px] sm:h-[187px] lg:h-[213.5px]  ">
+                                                <Image src={`${item.image}`} width={0} height={0} sizes="100vw" className="w-full h-auto" alt="foto halteres"></Image>
                                             </div>
-                                        </div>
-                                        <div className="relative flex flex-col gap-3 text-center my-10">
-                                            <div className="w-16 relative self-center text-opacity-100">
+                                            <div className="relative h-1 flex justify-center ">
+                                                <div className="absolute bg-secondary text-white   w-10 h-10 self-center">
+                                                    <SmallDumbbellSvg></SmallDumbbellSvg>
+                                                </div>
                                             </div>
-                                            <span className="text-white text-center font-serif text-lg  2xl:text-xl uppercase">{item.title}</span>
-                                            <p className="w-60 whitespace-normal text-neutral-300 m-4 font-serif ">{item.text}</p>
+                                            <div className="relative flex flex-col gap-3 text-center items-center my-10">
+                                                <div className="w-16 relative self-center text-opacity-100">
+                                                </div>
+                                                <span className="text-white text-center font-serif text-lg  2xl:text-xl uppercase">{item.title}</span>
+                                                <p className="w-60 sm:w-36 lg:w-60 whitespace-normal text-neutral-300 m-4 font-serif ">{item.text}</p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -212,6 +220,19 @@ const Section4 = () => {
                     </div>
                 </div>
             </div>
+        </section>
+    )
+}
+ const Footer = () => {
+    return (
+    <section id="footer" className="flex flex-col items-center justify-center w-full bg-secondary text-white font-sans  ">
+            <div className="flex text-lg justify-center items-center">
+                Entre em Contato:
+                <Link href="https://wa.me/5521988357489">
+                    <WhatsAppSvg/>
+                </Link>
+            </div>
+                <span>© 2023 - Fit & App  | Website by Rafael Cabral</span>
         </section>
     )
 }

@@ -139,7 +139,7 @@ const Section4 = () => {
         },
         {
             title: "Ganhe Força",
-            text: "O treino de força é fundamental para o crescimento e fortalecimento dos músculos, proporcionando maior resistência e definição muscular ao longo do temp",
+            text: "O treino de força é fundamental para o crescimento e forta- lecimento dos músculos, proporcionando maior resistência e definição muscular ao longo do tempo.",
             image: "/slide1.jpg"
         },
         {

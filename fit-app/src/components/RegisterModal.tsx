@@ -55,10 +55,11 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         setPasswordViewState(true);
     }
     return (
-            <div className="absolute w-80 p-4 top-1/3 md:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+        <div className="fixed  top-0 backdrop-blur-lg bg-white/20  h-screen w-full z-50">
+            <div className="relative w-full p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <form onSubmit={tryRegister} className="my-form-modal z-30">
                     <div className="flex justify-between">
-                        <h1 className="font-mono">CADASTRO</h1>
+                        <h1 className="font-sans text-secondary">CADASTRO</h1>
                         <button type="button" onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
                     <label className="label">
@@ -88,7 +89,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                         type="password" className="my-input" />
 
                         <div className="flex flex-col justify-evenly">
-                            <span className="text-xs leading-4 text-primary-focus mt-1">Selecione o tipo de conta.(Treinador pode enviar planilhas.)</span>
+                            <span className="text-xs leading-4 text-secondary-focus mt-1">Selecione o tipo de conta.(Treinador pode enviar planilhas.)</span>
                             <div className="flex">
                                 <label className="label ">
                                     <input type="checkbox" checked={userProfile === "user"} onChange={() => setUserProfile("user")} onClick={() => setUserProfile("user")} />
@@ -102,6 +103,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                             <button type="submit" className="my-btn">Registrar</button>
                     </div>
                 </form>
+                </div>
             </div>
     )
 }

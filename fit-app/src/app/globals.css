@@ -19,7 +19,7 @@
         @apply dropdown-content menu p-2  font-mono font-normal bg-white/90 shadow w-56 
     }
     .my-day-container {
-        @apply rounded-sm w-52 h-auto lg:w-full  shadow-lg m-2 border-[1px] border-primary;
+        @apply rounded-sm  h-auto lg:w-full  shadow-lg m-2 border-[1px] border-primary;
     }
     .my-day-header {
         @apply flex justify-between p-2 bg-base-300 rounded-t-md;
@@ -27,6 +27,14 @@
     h1 {
         @apply text-primary text-2xl
     }
+    .vertical-text {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+      }
+    .horizontal-text {
+        writing-mode: horizontal-tb;
+      }
+
     .my-landing-text {
         @apply inline-block text-white text-3xl row-span-1  md:text-5xl 2xl:text-6xl font-sans font-extrabold;
     }

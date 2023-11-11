@@ -56,24 +56,24 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
     }
     return (
         <div className="fixed  top-0 backdrop-blur-lg bg-white/20  h-screen w-full z-50">
-            <div className="relative w-full p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <form onSubmit={tryRegister} className="my-form-modal z-30">
+            <div className="relative w-full p-4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <form onSubmit={tryRegister} className="my-form-modal flex flex-col gap-2 z-30">
                     <div className="flex justify-between">
                         <h1 className="font-sans text-secondary">CADASTRO</h1>
                         <button type="button" onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
                     <label className="label">
-                        <span className="label-text text-xs">Nome</span>
+                        <span className="label-text  font-sans text-lg">Nome</span>
                     </label>
                     <input name="name" onChange={handleRegisterInput} type="text" className="my-input" autoFocus />
 
                     <label className="label">
-                        <span className="label-text text-xs">Email</span>
+                        <span className="label-text  font-sans text-lg">Email</span>
                     </label>
                     <input name="email" onChange={handleRegisterInput} type="email" className="my-input" />
 
                     <label className="label">
-                        <span className="label-text text-xs">Senha</span>
+                        <span className="label-text  font-sans text-lg">Senha</span>
                     </label>
                     <div className="relative">
                         <input name="password" onChange={handleRegisterInput} type={passwordViewState ? "text" : "password"} className="my-input" />
@@ -83,7 +83,7 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
                     </div>
 
                     <label className="label">
-                        <span className="label-text text-xs">Confirmar Senha</span>
+                        <span className="label-text  font-sans text-lg">Confirmar Senha</span>
                     </label>
                     <input name="password_confirm" onChange={handleRegisterInput}
                         type="password" className="my-input" />

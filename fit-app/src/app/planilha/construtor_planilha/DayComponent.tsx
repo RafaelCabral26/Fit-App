@@ -29,20 +29,21 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
     }
     return (
         <>
-            <Droppable type="droppableExercise" key={day.dayUID} droppableId={`${day.dayUID}`}>
+            <Droppable direction={window.innerWidth > 560 ? "horizontal" : "vertical"}
+                type="droppableExercise" key={day.dayUID} droppableId={`${day.dayUID}`}>
                 {(provided, snapshot) => {
                     return (
-                        <div className={`my-day-container ${snapshot.isDraggingOver ? "bg-secondary bg-opacity-70" : "bg-base-200"}`}
+                        <div className={`my-day-container  md:flex  h-auto w-full ${snapshot.isDraggingOver ? "bg-secondary/70 " : "bg-base-200"}`}
                             {...provided.droppableProps} ref={provided.innerRef}>
-                            <div className="grid grid-cols-3 grid-rows-2 p-2 bg-primary text-white rounded-t-sm h-12">
-                                <h2 className="font-mono row-start-2 leading-4">{"Dia " + (index + 1)}</h2>
-                                <div className="w-[20px]  text-white/40 row-start-1  col-start-2 justify-self-center">
+                            <div className="md:h-full flex md:flex-col items-center justify-around gap-4   p-2  bg-neutral text-white rounded-t-sm ">
+                                <h2 className="font-mono row-start-2 leading-none md:vertical-text tracking-tighter   " >{"Dia" + (index + 1)}</h2>
+                                <div className="w-[20px] md:order-first  text-white/40 row-start-1  col-start-2 justify-self-center">
                                     <DragIndicatorSvg></DragIndicatorSvg>
                                 </div>
                                 <button onClick={() => showOptions(!optionsDropdown)} className="relative row-start-2 col-start-3 justify-self-end text-2xl leading-4  ">...
                                     {optionsDropdown &&
-                                        <div ref={clickRef} className="absolute right-0">
-                                            <ul tabIndex={0} className="my-dropdown ">
+                                        <div ref={clickRef} className="absolute right-0 md:right-auto md:bottom-0 md:left-4 ">
+                                            <ul tabIndex={0} className="my-dropdown  ">
                                                 <li className="text-primary" onClick={handleModal}><a>Adicionar</a></li>
                                                 <li onClick={handleDeleteDay} className="text-red-500 hover:text-red-400"><a>Deletar</a></li>
                                             </ul>

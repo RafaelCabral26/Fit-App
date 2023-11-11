@@ -30,7 +30,7 @@ export default function RootLayout({
 }) {
 
     return (
-        <html lang="pt-br" data-theme="mytheme" className={`${Josefin.variable} ${SourceSans.variable} font-mono`}>
+        <html lang="pt-br" data-theme="mytheme" className={`${Josefin.variable} ${SourceSans.variable} font-mono scroll-smooth`}>
             <Head>
                 <meta charSet='utf-8' />
             </Head>

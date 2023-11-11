@@ -136,16 +136,19 @@ const SpreadsheetBuilder: React.FC = () => {
                             <button onClick={() => showSendModal(true)} className="my-btn" type="button">Enviar</button>
                         }
                     </div>
-                    <Droppable direction={window.innerWidth > 560 ? "horizontal" : "vertical"} type="droppableDay" droppableId="droppableContainer">
+                    <Droppable 
+                       // direction={window.innerWidth > 560 ? "horizontal" : "vertical"}
+                        direction="vertical"
+                        type="droppableDay" droppableId="droppableContainer">
                         {(provided, snapshot) => {
                             return (
-                                <div ref={provided.innerRef} {...provided.droppableProps}  className={`flex flex-col md:flex-row w-full justify-center`}>
+                                <div ref={provided.innerRef} {...provided.droppableProps}  className={`flex flex-col w-full h-auto justify-start`}>
                                     {daysArray.map((e: TDays, index: number) => {
                                         return (
                                             <Draggable isDragDisabled={globalState?.isDragDisabledState} key={e.dayUID} draggableId={e.dayUID} index={index}>
                                                 {(provided, snapshot) => {
                                                     return (
-                                                        <div className={`flex justify-center lg:basis-[15%] min-h-[300px]`} 
+                                                        <div className={`flex justify-center w-full h-auto `} 
                                                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                             <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
                                                         </div>)

@@ -36,7 +36,7 @@ export default function MyPage() {
                     </span>
                 </div>
                 <div className="place-self-end justify-self-start md:place-self-start col-start-2  col-span-6  row-start-4 xl:row-start-5 ">
-                    <button className="btn btn-secondary xl:btn-wide rounded-sm">Saiba Mais</button>
+                    <a href="#section3" className="btn btn-secondary xl:btn-wide rounded-sm">Saiba Mais</a>
                 </div>
             </section>
             <Section2></Section2>
@@ -100,7 +100,7 @@ const Section2 = () => {
 const Section3 = () => {
 
     return (
-        <section className="w-full bg-white p-4 text-black">
+        <section id="section3" className="w-full bg-white p-4 text-black">
             <div className="container  m-auto lg:flex my-4 ">
                 <div className="max-w-xl xl:max-w-2xl py-14 md:p-14 ">
                     <p className="text-lg text-secondary font-semibold font-mono uppercase">Fit & App</p>

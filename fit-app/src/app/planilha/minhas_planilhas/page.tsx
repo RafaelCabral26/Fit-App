@@ -1,7 +1,7 @@
 "use client"
 import { GlobalContext } from "@/services/GlobalContext"
 import myHTTP from "@/services/axiosconfig"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect,  useState } from "react"
 import { TDays, TExercise } from "../construtor_planilha/Spreadsheet_Types"
 import TrashSvg from "@/svgs/trashsvg"
 import Link from "next/link"
@@ -59,7 +59,9 @@ const MinhasPlanilhas = () => {
         <>
             <div className="flex justify-center items-center gap-4 my-5">
                 <select className="my-input">
-                    <option hidden>Planilhas...</option>
+                    <option hidden>
+                       {!globalState?.userType ? "Faça login para salvar planilhas" : "Planilhas..."
+}                     </option>
                     {allSpreadsheets?.map((ele: TParsedSpreadsheets, index: number) => {
                         return <option onClick={() => handleSelectSpreadsheet(index)} key={index} value={index}>Planilha - {formatDate(ele.updatedAt)}</option>
                     })};

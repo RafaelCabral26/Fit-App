@@ -18,9 +18,6 @@
     .my-dropdown {
         @apply dropdown-content menu p-2  font-mono font-normal bg-white/90 shadow w-56 
     }
-    .my-day-container {
-        @apply rounded-sm  h-auto lg:w-full  shadow-lg m-2 border-[1px] border-primary;
-    }
     .my-day-header {
         @apply flex justify-between p-2 bg-base-300 rounded-t-md;
     }

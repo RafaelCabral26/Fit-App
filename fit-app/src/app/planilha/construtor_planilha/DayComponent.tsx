@@ -29,15 +29,15 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
     }
     return (
         <>
-            <Droppable direction={window.innerWidth > 560 ? "horizontal" : "vertical"}
+            <Droppable direction={window.innerWidth > 640 ? "horizontal" : "vertical"}
                 type="droppableExercise" key={day.dayUID} droppableId={`${day.dayUID}`}>
                 {(provided, snapshot) => {
                     return (
-                        <div className={`my-day-container  md:flex  h-auto w-full ${snapshot.isDraggingOver ? "bg-secondary/70 " : "bg-base-200"}`}
+                        <div className={`sm:flex my-2 rounded-sm shadow-md gap-2 min-w-[320px]  h-auto  ${snapshot.isDraggingOver ? "bg-secondary/70 " : "bg-base-200"}`}
                             {...provided.droppableProps} ref={provided.innerRef}>
-                            <div className="md:h-full flex md:flex-col items-center justify-around gap-4   p-2  bg-neutral text-white rounded-t-sm ">
-                                <h2 className="font-mono row-start-2 leading-none md:vertical-text tracking-tighter   " >{"Dia" + (index + 1)}</h2>
-                                <div className="w-[20px] md:order-first  text-white/40 row-start-1  col-start-2 justify-self-center">
+                            <div className="sm:h-full flex sm:flex-col items-center justify-around gap-4   p-2  bg-neutral text-white rounded-t-sm ">
+                                <h2 className="font-mono row-start-2 leading-none sm:vertical-text tracking-tighter   " >{"Dia" + (index + 1)}</h2>
+                                <div className="w-[20px] sm:order-first  text-white/40 row-start-1  col-start-2 justify-self-center">
                                     <DragIndicatorSvg></DragIndicatorSvg>
                                 </div>
                                 <button onClick={() => showOptions(!optionsDropdown)} className="relative row-start-2 col-start-3 justify-self-end text-2xl leading-4  ">...
@@ -51,10 +51,12 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
                                     }
                                 </button>
                             </div>
+                        <div className="flex flex-col sm:flex-row">
                             {day.exercises.map((e: TExercise, index: number) => {
                                 return <ExerciseComponent daysArray={daysArray} setNewDayArray={setNewDayArray} dayIndex={dayIndex} key={e.uId} item={e} index={index}></ExerciseComponent>
                             })}
                             {provided.placeholder}
+                            </div>
                         </div>
                     )
                 }}

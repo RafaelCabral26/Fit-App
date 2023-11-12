@@ -106,15 +106,15 @@ const SpreadsheetBuilder: React.FC = () => {
 
     return (
         <DragDropContext onDragEnd={handleDnd} >
-            <div className="flex h-screen w-screen">
-                <button onClick={() => { globalState?.isDragDisabledSwitch(!globalState.isDragDisabledState) }} type="button" className={`${window.innerWidth < 560 ? "fixed" : "hidden"} bottom-[10%] right-5 bg-primary p-2 rounded-full flex justify-center items-center`}>
+            <div className="flex h-screen w-auto bg-white ">
+                <button onClick={() => { globalState?.isDragDisabledSwitch(!globalState.isDragDisabledState) }} type="button" className={`${window.innerWidth < 640 ? "fixed" : "hidden"} bottom-[10%] right-5 bg-primary p-2 rounded-full flex justify-center items-center`}>
                     {globalState?.isDragDisabledState ?
                         <ClosedLockSvg></ClosedLockSvg>
                         :
                         <OpenedLockSvg></OpenedLockSvg>
                     }
                 </button>
-                <div className="flex flex-col w-full h-auto items-center gap-4 m-4 ">
+                <div className="flex flex-col w-full h-auto items-center gap-4 m-4  ">
                     <div className="flex gap-4 justify-center rounded-xl">
                         <button onClick={addNewDay} type="button" className="my-btn">+</button>
                         {
@@ -137,18 +137,17 @@ const SpreadsheetBuilder: React.FC = () => {
                         }
                     </div>
                     <Droppable 
-                       // direction={window.innerWidth > 560 ? "horizontal" : "vertical"}
                         direction="vertical"
                         type="droppableDay" droppableId="droppableContainer">
                         {(provided, snapshot) => {
                             return (
-                                <div ref={provided.innerRef} {...provided.droppableProps}  className={`flex flex-col w-full h-auto justify-start`}>
+                                <div ref={provided.innerRef} {...provided.droppableProps}  className={`flex flex-col w-full overflow-x-auto  h-auto sm:items-start `}>
                                     {daysArray.map((e: TDays, index: number) => {
                                         return (
                                             <Draggable isDragDisabled={globalState?.isDragDisabledState} key={e.dayUID} draggableId={e.dayUID} index={index}>
                                                 {(provided, snapshot) => {
                                                     return (
-                                                        <div className={`flex justify-center w-full h-auto `} 
+                                                        <div className={`flex justify-center w-auto h-auto `} 
                                                             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                             <DayComponent setNewDayArray={setNewDayArray} daysArray={daysArray} day={e} index={index} />
                                                         </div>)

@@ -1,10 +1,11 @@
 import { Draggable, DraggableProvided, } from "@hello-pangea/dnd"
 import TrashSvg from "@/svgs/trashsvg"
 import EditPencilSvg from "@/svgs/editpencil"
-import { SetStateAction, useContext, useState } from "react"
+import { SetStateAction, useContext, useRef, useState } from "react"
 import { TDays, TExercise } from "./Spreadsheet_Types"
 import { ValidateAddExercise } from "./Spreadsheet_Utilities"
 import { GlobalContext } from "@/services/GlobalContext"
+import { useOnClickOutside } from "@/services/ClickOutsideHook"
 
 const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }: { item: TExercise, index: number, daysArray: TDays[], dayIndex: number, setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
 
@@ -51,10 +52,10 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
                             </span>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <button type="button" onClick={() => { handleEditModal(true) }} className="">
+                            <button type="button" onClick={() => { handleEditModal(true) }} className="w-5">
                                 <EditPencilSvg />
                             </button>
-                            <button type="button" onClick={() => { showDeleteModal(true) }}>
+                            <button type="button" className="w-5" onClick={() => { showDeleteModal(true) }}>
                                 <TrashSvg color="#D40431" />
                             </button>
                         </div>
@@ -79,7 +80,7 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
         quantity: item.quantity,
         muscle_group: item.muscle_group,
         subgroup: "",
-        obs:item.obs,
+        obs: item.obs,
         uId: item.uId
     })
 
@@ -124,7 +125,7 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
                 <label className="label-text">
                     <span>Observações</span>
                 </label>
-                <textarea onChange={handleNewExerciseInput}  name="obs"  defaultValue={newExercise.obs} className="my-input resize-none h-20 w-fit  border-primary rounded-xl " maxLength={100} />
+                <textarea onChange={handleNewExerciseInput} name="obs" defaultValue={newExercise.obs} className="my-input resize-none h-20 w-fit  border-primary rounded-xl " maxLength={100} />
 
             </div>
             <div>
@@ -137,13 +138,17 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
 }
 const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteModal }: { provided: DraggableProvided, itemName: string, handleDeleteExercise: () => void, showDeleteModal: React.Dispatch<SetStateAction<boolean>> }) => {
 
+    const clickRef = useRef(null);
+    useOnClickOutside(clickRef, () => {
+        showDeleteModal(false);
+    });
+
     return (
         <div data-rfd-drag-handle-context-id={provided.dragHandleProps?.["data-rfd-drag-handle-context-id"]}
             autoFocus
             onBlur={() => { showDeleteModal(false) }}
-            className="bg-white border-2 border-stone-300 rounded-md cursor-pointer
-            fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-            <div className="flex flex-col justify-between gap-2 p-4  cursor-auto">
+            ref={clickRef}
+            className="bg-white flex flex-col items-center text-lg justify-between gap-2 p-10 cursor-auto border-2  rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
                 <div>
                     <h2>
                         Deseja deletar
@@ -151,16 +156,16 @@ const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteMod
                     <span className="font-bold">{itemName}?</span>
                 </div>
                 <div className="flex gap-2 ">
-                    <button onClick={handleDeleteExercise} className="btn btn-sm rounded-md btn-warning">
+                    <button onClick={handleDeleteExercise} className="btn btn-md rounded-sm btn-secondary ">
                         deletar
                     </button>
-                    <button onClick={() => { showDeleteModal(false) }} className="btn btn-sm rounded-md btn-info">
+                    <button onClick={() => { showDeleteModal(false) }} className="btn btn-md rounded-sm text-white btn-warning">
                         cancelar
                     </button>
                 </div>
             </div>
-        </div>
     )
-}
+};
+
 export default ExerciseComponent
 

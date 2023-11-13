@@ -153,7 +153,7 @@ const Section4 = () => {
         if (newIndex < 0) {
             newIndex = 0;
         } else if (newIndex >= carouselItems.length) {
-            newIndex = carouselItems.length - 1;
+            newIndex = 0;
         }
         setActiveIndex(newIndex);
     };
@@ -192,7 +192,7 @@ const Section4 = () => {
                     >
                         {carouselItems.map((item: any, index: any) => {
                             return (
-                                <div className="flex w-screen ">
+                                <div key={item.title} className="flex w-screen ">
                                     <div id="carousel-item" className="flex flex-col items-center w-screen sm:w-full m-auto pb-10  ">
 
                                         <div className=" items-center border-white border-[0.1px] border-opacity-30 ">

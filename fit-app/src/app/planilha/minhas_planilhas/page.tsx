@@ -54,13 +54,21 @@ const MinhasPlanilhas = () => {
                 globalState?.setToast({type:"warning", message:err.response.data.msg});
             });
     };
+     
+    const useLayoutEffect(() => {
+      first
+
+      return () => {
+        second
+      };
+    }, [third])
 
     return (
         <>
             <div className="flex justify-center items-center gap-4 my-5">
-                <select className="my-input">
+                <select className="input input-secondary focus:ring-0 focus:outline-none focus:border-secondary rounded-sm  px-14 ">
                     <option hidden>
-                       {!globalState?.userType ? "Faça login para salvar planilhas" : "Planilhas..."
+                       {!globalState?.userType ? "Faça login para ver planilhas" : "Planilhas..."
 }                     </option>
                     {allSpreadsheets?.map((ele: TParsedSpreadsheets, index: number) => {
                         return <option onClick={() => handleSelectSpreadsheet(index)} key={index} value={index}>Planilha - {formatDate(ele.updatedAt)}</option>
@@ -69,7 +77,7 @@ const MinhasPlanilhas = () => {
                 {
                     selectedSpreadsheet &&
                     <>
-                        <button onClick={() => showConfirmDeleteModal(true)} className="my-btn">
+                        <button onClick={() => showConfirmDeleteModal(true)} className="my-btn w-14">
                             <TrashSvg color="#ffffff"></TrashSvg>
                         </button>
                         <Link href={`/planilha/construtor_planilha/?${createQueryString("spreadsheet_id", selectedSpreadsheet?.spreadsheet_id)}&${createQueryString("previous_url", "planilha/minhas_planilhas")}`} className="my-btn">

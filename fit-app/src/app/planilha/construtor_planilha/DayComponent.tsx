@@ -45,9 +45,9 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
                                 <button onClick={() => showOptions(!optionsDropdown)} className="relative row-start-2 col-start-3 justify-self-end text-2xl leading-4  ">...
                                     {optionsDropdown &&
                                         <div ref={clickRef} className="absolute right-0 md:right-auto md:bottom-0 md:left-4 ">
-                                            <ul tabIndex={0} className="my-dropdown  ">
-                                                <li className="text-primary" onClick={handleModal}><a>Adicionar</a></li>
-                                                <li onClick={() => showDeleteDayModal(true)} className="text-red-500 hover:text-red-400"><a>Deletar</a></li>
+                                            <ul tabIndex={0} className="my-dropdown list-disc ">
+                                                <li className="text-primary text-start px-4 py-2 my-list-item " onClick={handleModal}>Adicionar</li>
+                                                <li onClick={() => showDeleteDayModal(true)} className="text-red-700  text-start px-4 py-2 my-list-item ">Deletar</li>
                                             </ul>
                                         </div>
                                     }

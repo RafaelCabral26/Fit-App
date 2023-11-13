@@ -13,7 +13,7 @@
         @apply bg-white w-[95%] max-w-lg p-4 sm:p-8 rounded-sm  drop-shadow-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  gap-2
     }
     .my-dropdown {
-        @apply dropdown-content menu p-2  font-mono font-normal bg-white/90 shadow w-56 
+        @apply dropdown-content menu p-2  font-mono font-normal bg-white shadow w-56 
     }
     .my-day-header {
         @apply flex justify-between p-2 bg-base-300 rounded-t-md;

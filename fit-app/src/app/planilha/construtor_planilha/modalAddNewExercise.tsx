@@ -112,7 +112,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                         <option key={"pernas"} onClick={() => filterSelectedMuscleGroup("Pernas")}>Pernas</option>
                         <option key={"ombros"} onClick={() => filterSelectedMuscleGroup("Ombros")}>Ombros</option>
                     </select>
-                    <select className="my-input select-primary rounded-sm">
+                    <select className="my-input select-secondary rounded-sm">
                         <option key="subgroup" >Subgrupo</option>
                         {
                             optionsSubGroups?.map((subgroup: TSubgroups) => {
@@ -123,19 +123,17 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                         }
                     </select>
                 </div>
-                <label className="label">
-                    <span className="label-text-alt">Exercício</span>
+                <label className={`${customExerciseInput ? "label-input" : "hidden"} relative`} >
+                    <input  name="exercise_name" className="my-input peer " onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
+                    <span className="span-input">Exercício</span>
+                    <span onClick={() => { showCustomExerciseInput(false) }} className="absolute h-full right-0  text-sm cursor-pointer !rounded-none">
+                        Listar
+                    </span>
                 </label>
-                <div className="form-control">
-                    <label className={`${customExerciseInput ? "input-group" : "hidden"} relative `}>
-                        <input name="exercise_name" className="my-input" onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
-                        <span onClick={() => { showCustomExerciseInput(false) }} className="absolute h-full right-0 top-10 text-sm cursor-pointer !rounded-none">
-                            Listar
-                        </span>
-                    </label>
-                </div>
+                <label htmlFor="exercise_name" className={`${customExerciseInput ? "hidden" : "label-input"} relative `}>
+                </label>
 
-                <select defaultValue={"name exercise"} className={`${customExerciseInput ? "hidden" : "my-input"} w-full`}>
+                <select defaultValue={"name exercise"} className={`${customExerciseInput ? "hidden" : "select select-secondary bg-white rounded-sm focus:outline-none "} w-full`}>
                     <option key="name exercise" hidden>Nome do Exercício</option>
                     {
                         exerciseOptions?.map((ele: TDbExerciseSample) => {

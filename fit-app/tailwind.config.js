@@ -32,7 +32,7 @@ module.exports = {
                     "base-100": "#f3f4f6",
                     "info": "#2d2d9e",
                     "success": "#187746",
-                    "warning": "#db960a",
+                    "warning": "#F50501",
                     "error": "#ed5a8b",
                 }
             }

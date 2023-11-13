@@ -65,7 +65,7 @@ export const Navbar = () => {
                         </ul>
                     </div>
                     <div className="dropdown dropdown-end w-6">
-                        <label tabIndex={0} className={`cursor-pointer w-32 ${myUrl !== "/" ? "text-white" : "text-secondary"}`}><ProfileSvg /></label>
+                        <label tabIndex={0} className={`cursor-pointer w-32 ${myUrl !== "/" ? "text-secondary" : "text-white"} hover:text-secondary`}><ProfileSvg /></label>
                         <ul tabIndex={0} className="my-dropdown">
                             {globalState?.userType === null &&
                                 <ul>

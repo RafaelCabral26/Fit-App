@@ -97,14 +97,14 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
         }
     }
     return (
-        <div className="fixed top-0 h-full w-screen z-10">
-            <form className="my-form-modal  cursor-none z-10 flex flex-col gap-2">
+        <div className="fixed top-0 right-0 h-full w-screen backdrop-blur-md z-10">
+            <form className="my-form-modal   z-10 flex flex-col gap-2">
                 <div className="flex justify-end">
                     <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
                 </div>
-                <span className="text-primary-focus">Filtros</span>
-                <div>
-                    <select className="select select-xs select-primary rounded-sm">
+                <span className="text-secondary">Filtros</span>
+                <div className="flex justify-around gap-2">
+                    <select className="my-input rounded-sm">
                         <option key={"musculo"} onClick={() => filterSelectedMuscleGroup(null)}>Músculo</option>
                         <option key={"bracos"} onClick={() => filterSelectedMuscleGroup("Braços")}>Braços</option>
                         <option key={"costas"} onClick={() => filterSelectedMuscleGroup("Costas")}>Costas</option>
@@ -112,7 +112,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                         <option key={"pernas"} onClick={() => filterSelectedMuscleGroup("Pernas")}>Pernas</option>
                         <option key={"ombros"} onClick={() => filterSelectedMuscleGroup("Ombros")}>Ombros</option>
                     </select>
-                    <select className="select select-xs select-primary rounded-sm">
+                    <select className="my-input select-primary rounded-sm">
                         <option key="subgroup" >Subgrupo</option>
                         {
                             optionsSubGroups?.map((subgroup: TSubgroups) => {

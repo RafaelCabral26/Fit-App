@@ -7,7 +7,7 @@ export const ProfileSvg = () => {
     return (
         <>
             <svg
-                className={`flex   ${myUrl !== "/" ? "text-secondary" : "text-white" } hover:text-secondary`}
+                className={`flex fill-current`}
                 viewBox="0 0 20 20">
                 <g className="">
                     <g fill="currentColor" fillRule="evenodd" stroke="none" strokeWidth="2">

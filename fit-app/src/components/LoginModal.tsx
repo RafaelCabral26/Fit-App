@@ -44,9 +44,9 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
     return (
         <div className="fixed  top-0 backdrop-blur-lg bg-white/20  h-screen w-full z-50">
             <div className="relative w-full p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <form onSubmit={tryLogin} className="my-form-modal flex flex-col">
+                <form onSubmit={tryLogin} className="my-form-modal flex flex-col gap-4">
                     <div className="absolute flex items-center justify-center left-0 top-0 bg-secondary w-full h-14 ">
-                        <div className="w-12 h-12 p-2 border-2 rounded-sm">
+                        <div className="w-12 h-12 text-white p-2 border-2 rounded-sm">
                             <ProfileSvg></ProfileSvg>
 
                         </div>
@@ -55,19 +55,20 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
                         <h1 className="font-sans text-secondary">LOGIN</h1>
                         <button type="button" onClick={() => { showLoginModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
                     </div>
-                    <label className="label">
-                        <span className="label-text font-sans text-lg">Email</span>
+                    <label className="label-input " htmlFor="email">
+
+                        <input name="email" onChange={handleLoginInput} type="text" className="my-input peer  " placeholder="Email" autoFocus />
+
+                        <span id="email" className="span-input">Email</span>
                     </label>
-                    <input name="email" onChange={handleLoginInput} type="text" className="my-input" autoFocus />
-                    <label className="label relative">
-                        <span className="label-text font-sans text-lg">Senha</span>
-                    </label>
-                    <div className="relative">
-                        <input type={passwordViewState ? "text" : "password"} name="password" onChange={handleLoginInput} className="my-input" />
+
+                    <label htmlFor="password" className="label-input relative">
+                        <input id="password" placeholder="Senha" type={passwordViewState ? "text" : "password"} name="password" onChange={handleLoginInput} className="my-input peer" />
+                        <span id="password" className="span-input">Senha</span>
                         <button type="button" onClick={handlePasswordView} className="absolute right-2 top-[50%] -translate-y-[50%] ">
                             {passwordViewState ? <ShowPassSvg></ShowPassSvg> : <HidePassSvg></HidePassSvg>}
                         </button>
-                    </div>
+                    </label>
 
                     <button onClick={tryLogin} onKeyDown={e => { if (e.key === "Enter") tryLogin }} className="my-btn w-full" type="submit">Entrar</button>
                 </form>

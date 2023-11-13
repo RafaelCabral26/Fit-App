@@ -125,7 +125,7 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
                 <label className="label-text">
                     <span>Observações</span>
                 </label>
-                <textarea onChange={handleNewExerciseInput} name="obs" defaultValue={newExercise.obs} className="my-input resize-none h-20 w-fit  border-primary rounded-xl " maxLength={100} />
+                <textarea onChange={handleNewExerciseInput} name="obs" defaultValue={newExercise.obs} className="my-input resize-none h-20 w-full  border-secondary rounded-sm " maxLength={100} />
 
             </div>
             <div>

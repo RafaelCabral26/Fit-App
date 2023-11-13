@@ -15,10 +15,12 @@ module.exports = {
             },
         },
     },
-     variants: {
-    fill: ['hover', 'focus'], 
-  },
-    plugins: [require("daisyui")],
+    variants: {
+        fill: ['hover', 'focus'],
+    },
+    plugins: [
+        require("daisyui"),
+        require('@tailwindcss/forms')],
     daisyui: {
         themes: ["corporate", "retro", "dark", "emerald",
             {

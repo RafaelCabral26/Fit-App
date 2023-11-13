@@ -102,30 +102,36 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
     }
 
     return (
-        <form className="my-form-modal">
-            <div className="flex justify-end">
-                <button type="button" onClick={() => { handleEditModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
+        <form className="my-form-modal max-w-sm flex flex-col gap-4 ">
+            <div className="h-14 p-4 mt-[-33px] mx-[-32px] flex justify-between items-center bg-secondary text-white ">
+                <div className="flex justify-center items-center font-sans  self-center  uppercase">
+                    <div className="w-10 ">
+                        <EditPencilSvg></EditPencilSvg>
+                    </div>
+                        Alterar 
+                </div>
+                <button type="button" onClick={() => { handleEditModal(false) }} className="self-start text-3xl font-bold leading-3 ">X</button>
             </div>
-            <label className="label">
-                <span className="label-text">Exercício</span>
+            <label htmlFor="exercise_name" className="label-input">
+                <input  onChange={handleNewExerciseInput} autoFocus name="exercise_name" className="my-input peer " placeholder={`Exercício - ${item.exercise_name}` } type="text" value={newExercise.exercise_name} />
+                <span className="span-input">Exercício Anterior - {item.exercise_name}</span>
             </label>
-            <input onChange={handleNewExerciseInput} autoFocus name="exercise_name" className="my-input" type="text" value={newExercise.exercise_name} />
 
-            <label className="label">
-                <span className="label-text">Séries</span>
+            <label htmlFor="sets" className="label-input">
+                <input onChange={handleNewExerciseInput} name="sets" type="number" className="my-input peer " value={newExercise.sets} placeholder={`Séries - ${item.sets}`} />
+                <span className="span-input">Séries - {item.sets}</span>
             </label>
-            <input onChange={handleNewExerciseInput} name="sets" type="number" className="my-input" value={newExercise.sets} />
 
-            <label className="label">
-                <span className="label-text">Repetições</span>
+            <label htmlFor="quantity" className="label-input">
+                <input onChange={handleNewExerciseInput} name="quantity" type="number" className="my-input peer " value={newExercise.quantity} placeholder={`Repetições ${item.quantity}`} />
+                <span className="span-input">Repetições - {item.quantity}</span>
             </label>
-            <input onChange={handleNewExerciseInput} name="quantity" type="number" className="my-input" value={newExercise.quantity} />
 
-            <div className="form-control gap-2">
-                <label className="label-text">
-                    <span>Observações</span>
+            <div  className="form-control gap-2">
+                <label htmlFor="obs" className="label-input">
+                <textarea placeholder="Observações" onChange={handleNewExerciseInput} name="obs" defaultValue={newExercise.obs} className="my-input peer " maxLength={100} />
+                    <span className="span-input">Observações</span>
                 </label>
-                <textarea onChange={handleNewExerciseInput} name="obs" defaultValue={newExercise.obs} className="my-input resize-none h-20 w-full  border-secondary rounded-sm " maxLength={100} />
 
             </div>
             <div>

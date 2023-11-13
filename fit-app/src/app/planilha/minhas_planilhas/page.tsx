@@ -1,7 +1,7 @@
 "use client"
 import { GlobalContext } from "@/services/GlobalContext"
 import myHTTP from "@/services/axiosconfig"
-import { useContext, useEffect,  useState } from "react"
+import { useContext, useEffect,  useLayoutEffect,  useState } from "react"
 import { TDays, TExercise } from "../construtor_planilha/Spreadsheet_Types"
 import TrashSvg from "@/svgs/trashsvg"
 import Link from "next/link"
@@ -54,19 +54,15 @@ const MinhasPlanilhas = () => {
                 globalState?.setToast({type:"warning", message:err.response.data.msg});
             });
     };
-     
-    const useLayoutEffect(() => {
-      first
+ useLayoutEffect(() => {
+    
 
-      return () => {
-        second
-      };
-    }, [third])
+    })     
 
     return (
         <>
             <div className="flex justify-center items-center gap-4 my-5">
-                <select className="input input-secondary focus:ring-0 focus:outline-none focus:border-secondary rounded-sm  px-14 ">
+                <select className="my-select px-14">
                     <option hidden>
                        {!globalState?.userType ? "Faça login para ver planilhas" : "Planilhas..."
 }                     </option>

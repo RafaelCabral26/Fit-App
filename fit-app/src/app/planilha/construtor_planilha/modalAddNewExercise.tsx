@@ -98,13 +98,13 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
     }
     return (
         <div className="fixed top-0 right-0 h-full w-screen backdrop-blur-md z-10">
-            <form className="my-form-modal   z-10 flex flex-col gap-2">
+            <form className="my-form-modal   z-10 flex flex-col gap-4">
                 <div className="flex justify-end">
                     <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
                 </div>
                 <span className="text-secondary">Filtros</span>
-                <div className="flex justify-around gap-2">
-                    <select className="my-input rounded-sm">
+                <div className="flex self-start  gap-2">
+                    <select className="my-select pe-14 ">
                         <option key={"musculo"} onClick={() => filterSelectedMuscleGroup(null)}>Músculo</option>
                         <option key={"bracos"} onClick={() => filterSelectedMuscleGroup("Braços")}>Braços</option>
                         <option key={"costas"} onClick={() => filterSelectedMuscleGroup("Costas")}>Costas</option>
@@ -112,7 +112,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                         <option key={"pernas"} onClick={() => filterSelectedMuscleGroup("Pernas")}>Pernas</option>
                         <option key={"ombros"} onClick={() => filterSelectedMuscleGroup("Ombros")}>Ombros</option>
                     </select>
-                    <select className="my-input select-secondary rounded-sm">
+                    <select className="my-select pe-14 ">
                         <option key="subgroup" >Subgrupo</option>
                         {
                             optionsSubGroups?.map((subgroup: TSubgroups) => {
@@ -126,14 +126,12 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                 <label className={`${customExerciseInput ? "label-input" : "hidden"} relative`} >
                     <input  name="exercise_name" className="my-input peer " onChange={handleNewExerciseInput} type="text" placeholder="Nome do Exercício" />
                     <span className="span-input">Exercício</span>
-                    <span onClick={() => { showCustomExerciseInput(false) }} className="absolute h-full right-0  text-sm cursor-pointer !rounded-none">
+                    <span onClick={() => { showCustomExerciseInput(false) }} className="absolute right-0 top-0 w-[15%] flex justify-center items-center  text-center font-mono text-white h-full bg-secondary text-lg cursor-pointer !rounded-none">
                         Listar
                     </span>
                 </label>
-                <label htmlFor="exercise_name" className={`${customExerciseInput ? "hidden" : "label-input"} relative `}>
-                </label>
 
-                <select defaultValue={"name exercise"} className={`${customExerciseInput ? "hidden" : "select select-secondary bg-white rounded-sm focus:outline-none "} w-full`}>
+                <select defaultValue={"name exercise"} className={`${customExerciseInput ? "hidden" : "my-select"} w-full`}>
                     <option key="name exercise" hidden>Nome do Exercício</option>
                     {
                         exerciseOptions?.map((ele: TDbExerciseSample) => {
@@ -145,20 +143,20 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
                     <option key="outro" onClick={() => { showCustomExerciseInput(true); setSelectedMuscleName(null) }}>Outro</option>
                 </select>
 
-                <label className="label">
-                    <span className="label-text-alt">Séries</span>
+                <label htmlFor="sets" className="label-input">
+                    <input placeholder="Séries" id="sets" name="sets" type="text" pattern="[0-9]" inputMode="numeric" maxLength={3} onKeyDown={(e) => filterNumberInput(e)} onChange={handleNewExerciseInput} className="my-input peer " />
+                    <span className="span-input">Séries</span>
                 </label>
-                <input name="sets" type="text" pattern="[0-9]" inputMode="numeric" maxLength={3} onKeyDown={(e) => filterNumberInput(e)} onChange={handleNewExerciseInput} className="my-input" />
 
-                <label className="label">
-                    <span className="label-text-alt">Repetições</span>
+                <label htmlFor="quantity" className="label-input">
+                    <input name="quantity" placeholder="Repetições" type="text" pattern="[0-9]" inputMode="numeric" maxLength={3} onKeyDown={(e) => filterNumberInput(e)}  onChange={handleNewExerciseInput} className="my-input peer " />
+                    <span className="span-input">Repetições</span>
                 </label>
-                <input name="quantity" type="text" pattern="[0-9]" inputMode="numeric" maxLength={3} onKeyDown={(e) => filterNumberInput(e)}  onChange={handleNewExerciseInput} className="my-input" />
+                <label htmlFor="obs" className="label-input">
+                    <textarea placeholder="Observações" onChange={handleNewExerciseInput} name="obs" className="my-input peer " maxLength={100} />
+                    <span className="span-input">Observações</span>
+                </label>
                 <div className="form-control gap-2">
-                    <label className="label-text">
-                        <span>Observações</span>
-                    </label>
-                    <textarea onChange={handleNewExerciseInput} name="obs" className="my-input resize-none h-20 w-full rounded-sm p-2 " maxLength={100} />
 
                 </div>
                 <div>

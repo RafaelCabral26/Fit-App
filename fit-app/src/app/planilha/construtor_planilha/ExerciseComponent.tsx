@@ -30,25 +30,23 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
         <Draggable isDragDisabled={globalState?.isDragDisabledState} draggableId={item.uId} key={item.uId} index={index}>
             {(provided, snapshot) => {
                 return (
-                    <div className={`flex  justify-between p-2 m-2 shadow-sm bg-base-100 border-2 border-base-300 ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
+                    <div className={`flex  justify-between p-2 m-2 shadow-sm bg-base-100 border-[1px] border-primary ${snapshot.isDragging ? "opacity-50" : "opacity-100"}`}
                         ref={provided.innerRef}  {...provided.draggableProps} {...provided.dragHandleProps}>
-                        <div className="flex flex-col w-32 ">
-                            <span className="overflow-clip hover:overflow-visible">
-                                {item.exercise_name}
+                        <div className="flex text-sm  flex-col w-32 ">
+                            <span className="font-sans text-base overflow-clip hover:overflow-visible">
+                                <span>{item.exercise_name}</span>
                             </span>
-                            <span className="flex gap-2">
-                                <span>Séries</span>
-                                {item.sets}
+                            <span className="flex gap-2 items-center ">
+                                <span className="font-sans ">Séries</span>
+                                <span className="text-base  ">{item.sets}</span>
                             </span>
-                            <span className="flex gap-2">
-                                <span>Repetições</span>
-                                {item.quantity}
+                            <span className="flex gap-2 items-center">
+                                <span className="font-sans">Repetições</span>
+                               <span className="text-base">{item.quantity}</span> 
                             </span>
                             <span className="flex flex-col break-words ">
-                                <span>Obs</span>
-                                <span className="text-xs">
-                                    {item.obs}
-                                </span>
+                                <span className="font-sans ">Obs</span>
+                                <span className="text-xs">{item.obs}</span>
                             </span>
                         </div>
                         <div className="flex flex-col gap-2 ">

@@ -6,6 +6,7 @@ import { TDays, TExercise } from "./Spreadsheet_Types";
 import { GlobalContext } from "@/services/GlobalContext";
 import { useOnClickOutside } from "@/services/ClickOutsideHook";
 import DragIndicatorSvg from "@/svgs/dragIndicator";
+import TrashSvg from "@/svgs/trashsvg";
 
 const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number, day: TDays, daysArray: TDays[], setNewDayArray: React.Dispatch<SetStateAction<TDays[]>> }) => {
     const globalState = useContext(GlobalContext);
@@ -54,16 +55,21 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
                                     {
                                         deleteDayModal &&
                                         (
-                                            <div className="bg-white text-neutral flex flex-col items-center text-lg justify-between gap-4 p-10 cursor-auto border-2  rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+                                            <div className="bg-white w-60 pb-4 text-neutral flex flex-col items-center text-lg justify-between gap-4  cursor-auto border-2  rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+                                                    <div className="bg-secondary rounded-sm w-full flex justify-center items-center h-14">
+                                                        <div className="w-8 border-2 border-white rounded-sm">
+                                                            <TrashSvg color="#ffffff"></TrashSvg>
+                                                        </div>
+                                                    </div>
                                                 <div className="flex flex-col">
                                                     <span>Deseja deletar</span>
                                                     <span className="font-bold uppercase">{"Dia " + (index + 1)+ "?"}</span>
                                                 </div>
                                                 <div className="flex gap-2 ">
-                                                    <button onClick={handleDeleteDay} className="btn btn-md rounded-sm btn-secondary ">
+                                                    <button onClick={handleDeleteDay} className="btn btn-md rounded-sm btn-warning hover:bg-red-500 ">
                                                         deletar
                                                     </button>
-                                                    <button onClick={() => { showDeleteDayModal(false) }} className="btn btn-md rounded-sm text-white btn-warning">
+                                                    <button onClick={() => { showDeleteDayModal(false) }} className="btn btn-md rounded-sm text-white btn-secondary">
                                                         cancelar
                                                     </button>
                                                 </div>

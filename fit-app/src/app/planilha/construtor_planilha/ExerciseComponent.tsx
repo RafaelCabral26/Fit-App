@@ -51,7 +51,7 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
                                 </span>
                             </span>
                         </div>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 ">
                             <button type="button" onClick={() => { handleEditModal(true) }} className="w-5">
                                 <EditPencilSvg />
                             </button>
@@ -102,18 +102,18 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
     }
 
     return (
-        <form className="my-form-modal max-w-sm flex flex-col gap-4 ">
-            <div className="h-14 p-4 mt-[-33px] mx-[-32px] flex justify-between items-center bg-secondary text-white ">
+        <form className="my-form-modal max-w-sm flex flex-col gap-4  ">
+            <div className="h-14 p-4 mt-[-33px] mx-[-32px] flex justify-between items-center bg-secondary text-white mb-4 ">
                 <div className="flex justify-center items-center font-sans  self-center  uppercase">
                     <div className="w-10 ">
                         <EditPencilSvg></EditPencilSvg>
                     </div>
-                        Alterar 
+                    Alterar
                 </div>
                 <button type="button" onClick={() => { handleEditModal(false) }} className="self-start text-3xl font-bold leading-3 ">X</button>
             </div>
             <label htmlFor="exercise_name" className="label-input">
-                <input  onChange={handleNewExerciseInput} autoFocus name="exercise_name" className="my-input peer " placeholder={`Exercício - ${item.exercise_name}` } type="text" value={newExercise.exercise_name} />
+                <input onChange={handleNewExerciseInput} autoFocus name="exercise_name" className="my-input peer " placeholder={`Exercício - ${item.exercise_name}`} type="text" value={newExercise.exercise_name} />
                 <span className="span-input">Exercício Anterior - {item.exercise_name}</span>
             </label>
 
@@ -127,9 +127,9 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
                 <span className="span-input">Repetições - {item.quantity}</span>
             </label>
 
-            <div  className="form-control gap-2">
+            <div className="form-control gap-2">
                 <label htmlFor="obs" className="label-input">
-                <textarea placeholder="Observações" onChange={handleNewExerciseInput} name="obs" defaultValue={newExercise.obs} className="my-input peer " maxLength={100} />
+                    <textarea placeholder="Observações" onChange={handleNewExerciseInput} name="obs" defaultValue={newExercise.obs} className="my-input peer " maxLength={100} />
                     <span className="span-input">Observações</span>
                 </label>
 
@@ -154,22 +154,27 @@ const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteMod
             autoFocus
             onBlur={() => { showDeleteModal(false) }}
             ref={clickRef}
-            className="bg-white flex flex-col items-center text-lg justify-between gap-2 p-10 cursor-auto border-2  rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-                <div>
-                    <h2>
-                        Deseja deletar
-                    </h2>
-                    <span className="font-bold">{itemName}?</span>
-                </div>
-                <div className="flex gap-2 ">
-                    <button onClick={handleDeleteExercise} className="btn btn-md rounded-sm btn-secondary ">
-                        deletar
-                    </button>
-                    <button onClick={() => { showDeleteModal(false) }} className="btn btn-md rounded-sm text-white btn-warning">
-                        cancelar
-                    </button>
+            className="bg-white w-60 pb-4 text-neutral flex flex-col items-center text-lg justify-between gap-4  cursor-auto border-2  rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+            <div className="bg-secondary rounded-sm w-full flex justify-center items-center h-14">
+                <div className="w-8 border-2 border-white rounded-sm">
+                    <TrashSvg color="#ffffff"></TrashSvg>
                 </div>
             </div>
+            <div>
+                <h2>
+                    Deseja deletar
+                </h2>
+                <span className="font-bold">{itemName}?</span>
+            </div>
+            <div className="flex gap-2 ">
+                <button onClick={handleDeleteExercise} className="btn btn-md rounded-sm btn-secondary ">
+                    deletar
+                </button>
+                <button onClick={() => { showDeleteModal(false) }} className="btn btn-md rounded-sm text-white btn-warning">
+                    cancelar
+                </button>
+            </div>
+        </div>
     )
 };
 

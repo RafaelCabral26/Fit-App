@@ -76,8 +76,8 @@ const handleRemoveClientModal = (clientEmail:string) => {
                                             <td><button onClick={() => {handleSelectedClient(ele.email)}} className="my-btn m-0">
                                                 <EditSpreadsheetSvg></EditSpreadsheetSvg>
                                             </button></td>
-                                            <td><button onClick={() => {handleRemoveClientModal(ele.email)}} type="button" className="my-btn m-0">
-                                                <TrashSvg color="#ffffff"></TrashSvg>
+                                            <td><button onClick={() => {handleRemoveClientModal(ele.email)}} type="button" className="my-btn w-[50px]  ">
+                                                    <TrashSvg color="#ffffff"></TrashSvg>
                                             </button></td>
                                         </tr>
                                     )

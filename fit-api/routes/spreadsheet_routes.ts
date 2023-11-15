@@ -40,7 +40,7 @@ router.patch("/new_spreadsheet",
 router.get("/list_user_spreadsheets",
     tryCatch(async (req: Request, res: Response) => {
         if (!req.cookies.authcookie) {
-            throw new AppError(403, "Faça login para ver planilhas.");
+            throw new AppError(405, "Faça login para ver planilhas.");
         }
         const secret = process.env.SECRET as Secret;
         const user = jwt.verify(req.cookies.authcookie, secret) as myJwt;

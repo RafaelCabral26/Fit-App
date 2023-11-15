@@ -55,7 +55,7 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
                             <button type="button" onClick={() => { handleEditModal(true) }} className="w-5">
                                 <EditPencilSvg />
                             </button>
-                            <button type="button" className="w-5" onClick={() => { showDeleteModal(true) }}>
+                            <button type="button" className="w-5" onClick={() => { showDeleteModal(true);globalState?.isDragDisabledSwitch(true) }}>
                                 <TrashSvg color="#D40431" />
                             </button>
                         </div>
@@ -143,19 +143,20 @@ const EditExerciseForm = ({ handleEditModal, item, index, daysArray, dayIndex, s
     )
 }
 const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteModal }: { provided: DraggableProvided, itemName: string, handleDeleteExercise: () => void, showDeleteModal: React.Dispatch<SetStateAction<boolean>> }) => {
-
+    const globalState = useContext(GlobalContext);
     const clickRef = useRef(null);
     useOnClickOutside(clickRef, () => {
         showDeleteModal(false);
+        globalState?.isDragDisabledSwitch(false) 
     });
 
     return (
         <div data-rfd-drag-handle-context-id={provided.dragHandleProps?.["data-rfd-drag-handle-context-id"]}
             autoFocus
-            onBlur={() => { showDeleteModal(false) }}
+            onBlur={() => { showDeleteModal(false); globalState?.isDragDisabledSwitch(false)}}
             ref={clickRef}
-            className="bg-white w-60 pb-4 text-neutral flex flex-col items-center text-lg justify-between gap-4  cursor-auto border-2  rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-            <div className="bg-secondary rounded-sm w-full flex justify-center items-center h-14">
+            className="bg-white w-60 pb-4 text-neutral flex flex-col items-center text-lg justify-between gap-4 shadow-md  -2  rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+            <div className="bg-secondary rounded-sm w-full flex justify-center items-center h-10">
                 <div className="w-8 border-2 border-white rounded-sm">
                     <TrashSvg color="#ffffff"></TrashSvg>
                 </div>
@@ -167,10 +168,10 @@ const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteMod
                 <span className="font-bold">{itemName}?</span>
             </div>
             <div className="flex gap-2 ">
-                <button onClick={handleDeleteExercise} className="btn btn-md rounded-sm btn-secondary ">
+                <button onClick={handleDeleteExercise} className="my-btn-red ">
                     deletar
                 </button>
-                <button onClick={() => { showDeleteModal(false) }} className="btn btn-md rounded-sm text-white btn-warning">
+                <button onClick={() => { showDeleteModal(false); globalState?.isDragDisabledSwitch(false)}} className="my-btn">
                     cancelar
                 </button>
             </div>

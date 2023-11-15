@@ -44,18 +44,17 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
     return (
         <div className="fixed  top-0 backdrop-blur-lg bg-white/20  h-screen w-full z-50">
             <div className="relative w-full p-4 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <form onSubmit={tryLogin} className="my-form-modal flex flex-col gap-4">
-                    <div className="absolute flex items-center justify-center left-0 top-0 bg-secondary w-full h-14 ">
-                        <div className="w-12 h-12 text-white p-2 border-2 rounded-sm">
-                            <ProfileSvg></ProfileSvg>
-
+                <form onSubmit={tryLogin} className="my-form-modal flex flex-col gap-4  ">
+                    <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4  ">
+                        <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
+                            <div className="w-10 text-white p-2  rounded-sm">
+                                <ProfileSvg></ProfileSvg>
+                            </div>
+                            LOGIN
                         </div>
+                        <button type="button" onClick={() => { showLoginModal(false) }} className="self-start text-3xl font-bold leading-3 text-white ">X</button>
                     </div>
-                    <div className="flex justify-between mt-14">
-                        <h1 className="font-sans text-secondary">LOGIN</h1>
-                        <button type="button" onClick={() => { showLoginModal(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
-                    </div>
-                    <label className="label-input " htmlFor="email">
+                    <label className="label-input mt-14" htmlFor="email">
 
                         <input name="email" onChange={handleLoginInput} type="text" className="my-input peer  " placeholder="Email" autoFocus />
 

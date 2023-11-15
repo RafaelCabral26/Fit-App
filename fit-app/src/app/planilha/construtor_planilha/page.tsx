@@ -107,7 +107,7 @@ const SpreadsheetBuilder: React.FC = () => {
 
     return (
         <DragDropContext onDragEnd={handleDnd} >
-            <div className="flex h-screen w-auto bg-white ">
+            <div className="flex h-screen w-auto bg-white text-neutral ">
                 <button onClick={() => { globalState?.isDragDisabledSwitch(!globalState.isDragDisabledState) }} type="button" className={`${window.innerWidth < 640 ? "fixed" : "hidden"} bottom-[10%] right-5 bg-primary p-2 rounded-full flex justify-center items-center`}>
                     {globalState?.isDragDisabledState ?
                         <ClosedLockSvg></ClosedLockSvg>

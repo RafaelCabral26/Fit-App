@@ -57,8 +57,8 @@ const MinhasPlanilhas = () => {
     };
 
     return (
-        <div className="flex flex-col w-full h-auto items-center gap-4 m-4  ">
-            <div className="flex justify-center items-center gap-4 my-5">
+        <div className="flex flex-col w-full h-auto items-center gap-4 sm:m-4  ">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 sm:mt-0  ">
                 <select className="my-select px-14">
                     <option hidden>
                         {!globalState?.userType ? "Faça login para ver planilhas" : "Planilhas..."
@@ -78,19 +78,19 @@ const MinhasPlanilhas = () => {
                     </>
                 }
             </div>
-            <div className=" flex flex-col w-full sm:items-start m-auto  border-2  ">
+            <div className=" flex flex-col w-full sm:items-start m-auto  ">
                 {
                     selectedSpreadsheet?.spreadsheet_days.map((ele: TDays, index: number) => {
                         return (
                             <div className="flex justify-center w-auto h-auto  ">
 
-                                <div key={crypto.randomUUID()} className="sm:flex my-4 border-2 border-secondary bg-base-200 rounded-sm shadow-md  min-w-[320px]  h-auto  ">
-                                    <div className="sm:h-auto flex sm:flex-col  items-center justify-center gap-4 w-[20px] h-[156px]  p-4 py-8  bg-neutral text-white rounded-t-sm ">
-                                        <span className="font-mono row-start-2 leading-none sm:vertical-text tracking-tighter  ">{("Dia " + String(index + 1))}</span>
+                                <div key={crypto.randomUUID()} className="sm:flex my-2  bg-base-200 rounded-sm shadow-md w-full mx-4  sm:min-w-[320px]  h-auto  ">
+                                    <div className="sm:h-auto flex sm:flex-col  items-center justify-center gap-4 w-auto sm:w-[20px]   p-4 sm:py-8  bg-neutral text-white rounded-t-sm ">
+                                        <span className="font-mono  leading-none sm:vertical-text tracking-tighter  ">{("Dia " + String(index + 1))}</span>
                                     </div>
                                     {ele.exercises.map((item: TExercise) => {
                                         return (
-                                            <div key={crypto.randomUUID()} className={"flex flex-col leading-none text-sm min-w-[200px] font-serif  p-2 m-2 shadow-sm  bg-base-100 border-[1px] border-primary "}>
+                                            <div key={crypto.randomUUID()} className={"flex flex-col gap-1 leading-none text-sm min-w-[200px] font-serif  p-2 m-2 shadow-sm  bg-base-100 border-[1px] border-primary "}>
                                                 <span className="font-sans text-base overflow-clip  hover:overflow-visible">
                                                     <span>{item.exercise_name}</span>
                                                 </span>
@@ -102,7 +102,7 @@ const MinhasPlanilhas = () => {
                                                     <span className="font-sans">Repetições</span>
                                                     <span className="text-base">{item.quantity}</span>
                                                 </span>
-                                                <span className="flex flex-col break-words ">
+                                                <span className="flex gap-1 flex-col break-words ">
                                                     <span className="font-sans ">Obs</span>
                                                     <span className="text-xs">{item.obs}</span>
                                                 </span>

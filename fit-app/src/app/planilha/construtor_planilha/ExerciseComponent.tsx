@@ -147,6 +147,10 @@ const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteMod
         showDeleteModal(false);
         globalState?.isDragDisabledSwitch(false) 
     });
+    const handleDelete = () => {
+        handleDeleteExercise();
+        globalState?.isDragDisabledSwitch(false);
+    }
 
     return (
         <div data-rfd-drag-handle-context-id={provided.dragHandleProps?.["data-rfd-drag-handle-context-id"]}
@@ -166,7 +170,7 @@ const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteMod
                 <span className="font-bold">{itemName}?</span>
             </div>
             <div className="flex gap-2 ">
-                <button onClick={handleDeleteExercise} className="my-btn-red ">
+                <button onClick={handleDelete} className="my-btn-red ">
                     deletar
                 </button>
                 <button onClick={() => { showDeleteModal(false); globalState?.isDragDisabledSwitch(false)}} className="my-btn">

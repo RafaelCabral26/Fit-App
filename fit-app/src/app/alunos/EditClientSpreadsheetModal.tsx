@@ -34,8 +34,8 @@ const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selecte
 
     return (
         <div className="fixed top-20 h-screen w-screen z-10">
-            <form className="my-form-modal">
-                <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4  ">
+            <form className="my-form-modal flex flex-col gap-2">
+                <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4   ">
                     <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
                         <div className="w-10 text-white p-2  rounded-sm">
                             <EditSpreadsheetSvg></EditSpreadsheetSvg>

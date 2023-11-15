@@ -15,7 +15,8 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
     const [newExerciseModal, showNewExerciseModal] = useState(false);
     const clickRef = useRef(null);
     useOnClickOutside(clickRef, () => {
-        showOptions(false)
+        showOptions(false);
+        showDeleteDayModal(false);
     })
     const dayIndex = index
     const handleDeleteDay = (e: React.SyntheticEvent) => {
@@ -55,7 +56,7 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
                                     {
                                         deleteDayModal &&
                                         (
-                                            <div className="bg-white w-60 pb-4 text-neutral flex flex-col items-center text-lg justify-between gap-4  cursor-auto border-2  rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+                                            <div ref={clickRef} className="bg-white w-60 pb-4 text-neutral flex flex-col items-center text-lg justify-between gap-4  cursor-auto border-2  rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
                                                     <div className="bg-secondary rounded-sm w-full flex justify-center items-center h-14">
                                                         <div className="w-8 border-2 border-white rounded-sm">
                                                             <TrashSvg color="#ffffff"></TrashSvg>
@@ -66,10 +67,10 @@ const DayComponent = ({ index, day, daysArray, setNewDayArray }: { index: number
                                                     <span className="font-bold uppercase">{"Dia " + (index + 1)+ "?"}</span>
                                                 </div>
                                                 <div className="flex gap-2 ">
-                                                    <button onClick={handleDeleteDay} className="btn btn-md rounded-sm btn-warning hover:bg-red-500 ">
+                                                    <button onClick={handleDeleteDay} className="my-btn-red">
                                                         deletar
                                                     </button>
-                                                    <button onClick={() => { showDeleteDayModal(false) }} className="btn btn-md rounded-sm text-white btn-secondary">
+                                                    <button onClick={() => { showDeleteDayModal(false) }} className="my-btn ">
                                                         cancelar
                                                     </button>
                                                 </div>

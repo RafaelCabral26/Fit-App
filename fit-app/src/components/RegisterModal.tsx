@@ -3,6 +3,7 @@ import { HidePassSvg, ShowPassSvg } from "@/svgs/show-hide-eyes";
 import myHTTP from "@/services/axiosconfig";
 import { SetStateAction, useContext, useEffect, useState } from "react"
 import { ValidateRegisterInput } from "./ValidationUserInput";
+import { ProfileSvg } from "@/svgs/profilecircle";
 export type TRegisterInput = {
     name: string,
     email: string,
@@ -58,11 +59,16 @@ const RegisterModal = ({ showRegisterModal }: { showRegisterModal: React.Dispatc
         <div className="fixed  top-0 backdrop-blur-lg bg-white/20  h-screen w-full z-50">
             <div className="relative w-full p-4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <form onSubmit={tryRegister} className="my-form-modal flex flex-col gap-4 z-30">
-                    <div className="flex justify-between">
-                        <h1 className="font-sans text-secondary">CADASTRO</h1>
-                        <button type="button" onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3 ">X</button>
+                    <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4  ">
+                        <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
+                            <div className="w-10 text-white p-2  rounded-sm">
+                                <ProfileSvg></ProfileSvg>
+                            </div>
+                            CADASTRO
+                        </div>
+                        <button type="button" onClick={() => { showRegisterModal(false); globalState?.isDragDisabledSwitch(false) }} className="self-start text-3xl font-bold leading-3 text-white ">X</button>
                     </div>
-                    <label htmlFor="name" className="label-input">
+                    <label htmlFor="name" className="label-input mt-14">
                     <input name="name"  placeholder="Nome" onChange={handleRegisterInput} type="text" className=" my-input peer " autoFocus />
                         <span className="span-input">Nome</span>
                     </label>

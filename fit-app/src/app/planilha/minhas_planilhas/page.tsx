@@ -35,6 +35,7 @@ const MinhasPlanilhas = () => {
                 setAllSpreadSheets(placeholderDaysArray);
             })
             .catch(err => {
+               if (err.response.status === 405) return 
                 globalState?.setToast({type:"warning", message:err.response.data.msg});
             });
     }, []);
@@ -54,10 +55,6 @@ const MinhasPlanilhas = () => {
                 globalState?.setToast({type:"warning", message:err.response.data.msg});
             });
     };
- useLayoutEffect(() => {
-    
-
-    })     
 
     return (
         <>

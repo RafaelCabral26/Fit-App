@@ -98,6 +98,7 @@ const SpreadsheetBuilder: React.FC = () => {
         myHTTP.patch("/update_spreadsheet", { spreadsheet_id: searchParams.get("spreadsheet_id"), spreadsheet_days: daysArray })
             .then(res => {
                 globalState?.setToast({ type: "success", message: res.data.msg });
+                router.push("/alunos");
             })
             .catch(err => {
                 globalState?.setToast({ type: "warning", message: err.response.data.msg });

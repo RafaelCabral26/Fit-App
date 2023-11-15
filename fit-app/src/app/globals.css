@@ -4,11 +4,12 @@
 
 @layer components {
     .my-btn {
-        @apply bg-secondary hover:bg-secondary-focus text-base-100 px-4 py-2 shadow-md my-2
+        @apply bg-secondary hover:bg-secondary-focus text-white rounded-sm px-4 py-2 shadow-md my-2 uppercase text-sm font-sans
     }
     .my-btn-red {
-        @apply bg-red-500 text-base-100 px-4 py-2 shadow-md rounded-lg my-2
+        @apply bg-red-600 rounded-sm  hover:bg-red-500 px-4 py-2 shadow-md my-2 text-white uppercase text-sm font-sans
     }
+
     .my-form-modal {
         @apply bg-white w-[95%] max-w-lg p-4 sm:p-8 rounded-sm  drop-shadow-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  gap-2
     }
@@ -28,7 +29,9 @@
     .horizontal-text {
         writing-mode: horizontal-tb;
       }
-
+    .my-close-btn {
+        @apply self-start text-3xl font-bold leading-3 text-white 
+    }
     .my-select {
     @apply  border-secondary focus:ring-0 focus:outline-none focus:border-secondary rounded-sm  px-4 
     }

@@ -25,7 +25,7 @@ const ProfilePage = () => {
     }, []);
     return (
         <div className=" container m-auto my-10">
-            <div className="flex flex-col md:flex-row  justify-center w-[90%] md:w-[40%] gap-10 m-auto border-2 border-primary rounded-xl">
+            <div className="flex flex-col md:flex-row  justify-center w-[90%] md:w-[40%] gap-10 m-auto  rounded-sm ">
                 <div className="card-body">
                     <span className="card-title">Nome</span>
                     <hr />
@@ -43,8 +43,8 @@ const ProfilePage = () => {
                     </div>
                 </div>
                 <div className="card-body">
-                    <span className="card-title">Medidas e Dados</span>
-                    <div className="basis-10/12 flex justify-center items-center border-2 border-slate-400">
+                    <span className="card-title ">Medidas e Dados</span>
+                    <div className="basis-10/12 min-h-[200px] flex justify-center items-center border-2 border-slate-400">
                        <span className="text-slate-500">Em breve...</span> 
                     </div>
 

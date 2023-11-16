@@ -6,6 +6,7 @@ import { validateSpreadsheet } from "./Spreadsheet_Utilities";
 import { GlobalContext } from "@/services/GlobalContext";
 import { TDays } from "./Spreadsheet_Types";
 import { useRouter } from "next/navigation";
+import SendLetterSvg from "@/svgs/sendLetter";
 
 export type TUser = {
     user_id?: string,
@@ -51,12 +52,16 @@ const SendSpreadsheetModal = ({showSendModal, daysArray, setNewDayArray}:{daysAr
     return (
         <div className="fixed top-0  h-screen w-screen z-10">
             <form onSubmit={handleSendSpreadsheet} className="my-form-modal flex flex-col gap-2">
-                <div className="flex justify-between">
-                    <h1>Enviar...</h1>
-                    <button onClick={() => {showSendModal(false); setSelectedClient(null)}} type="button" className="text-2xl self-end">X</button>
-
-                </div>
-                <select className="my-input">
+                    <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4  ">
+                        <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
+                            <div className="w-10 text-white p-2  rounded-sm">
+                            <SendLetterSvg></SendLetterSvg>
+                            </div>
+                            Enviar
+                        </div>
+                        <button type="button" onClick={() => { showSendModal(false) }} className="self-start text-3xl font-bold leading-3 text-white ">X</button>
+                    </div>
+                <select className="my-select mt-14">
                     <option className="" hidden>Cliente....</option>
                     {
                             clientList?.map((ele:TUser) => {

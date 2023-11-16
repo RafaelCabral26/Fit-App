@@ -90,7 +90,7 @@ const MinhasPlanilhas = () => {
                                     </div>
                                     {ele.exercises.map((item: TExercise) => {
                                         return (
-                                            <div key={crypto.randomUUID()} className={"flex flex-col gap-1 leading-none text-sm min-w-[200px] font-serif  p-2 m-2 shadow-sm  bg-base-100 border-[1px] border-primary "}>
+                                            <div key={crypto.randomUUID()} className={"flex flex-col gap-1 leading-none text-sm min-w-[160px] font-serif  p-2 m-2 shadow-sm  bg-base-100 border-[1px] border-primary "}>
                                                 <span className="font-sans text-base overflow-clip  hover:overflow-visible">
                                                     <span>{item.exercise_name}</span>
                                                 </span>
@@ -117,11 +117,18 @@ const MinhasPlanilhas = () => {
             </div>
             {
                 confirmDeleteModal &&
-                <div className="my-form-modal flex flex-col p-5 gap-4 bg-base-200 border-2 border-base-300">
-                    <span>Deseja deletar planilha?</span>
+                <div className="my-form-modal flex flex-col w-auto   items-center p-5 gap-4 ">
+                    <div className="absolute  flex items-center justify-center left-0 top-0 bg-secondary w-full h-14 p-4  ">
+                        <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
+                            <div className="w-10 text-white p-1 border-2 border-white  rounded-sm">
+                                <TrashSvg color="#ffffff"></TrashSvg>
+                            </div>
+                        </div>
+                    </div>
+                    <span className=" mt-14">Deseja deletar planilha?</span>
                     <div className="flex gap-4">
-                        <button onClick={deleteSpreadsheet} className="my-btn">Deletar</button>
-                        <button onClick={() => showConfirmDeleteModal(false)} className="my-btn-red">Cancelar</button>
+                        <button onClick={deleteSpreadsheet} className="my-btn-red">Deletar</button>
+                        <button onClick={() => showConfirmDeleteModal(false)} className="my-btn ">Cancelar</button>
                     </div>
                 </div>
             }

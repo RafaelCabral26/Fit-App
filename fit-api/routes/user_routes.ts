@@ -32,9 +32,9 @@ tryCatch(async (req:Request,res:Response) => {
         if (!userInput.email || !userInput.password) {
         throw new AppError(402,"Preencha todos os campos.");
         };
-        let dbUser = await User.findOne({ where: { email: userInput.email } });
+        let dbUser = await User.findOne({ where: { email: userInput.email, active: 1 } });
         if (!dbUser) {
-            dbUser = await Trainer.findOne({ where: { email: userInput.email } });
+            dbUser = await Trainer.findOne({ where: { email: userInput.email, active: 1 } });
             if (!dbUser) throw new AppError(403,"Usuário não encontrado");
         }
         await auth.comparePasswords(userInput.password, dbUser.password);
@@ -110,6 +110,7 @@ tryCatch(async (req:Request,res:Response) => {
         res.cookie('authcookie', tokenReplacer, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true });
         return res.status(200).json({ msg: "Dados atualizados." });
 }));
+
 
 
 export { router }

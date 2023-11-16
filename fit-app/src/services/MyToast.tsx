@@ -29,7 +29,7 @@ export const MyToast = () => {
     }, [globalState]);
 
     return (
-        <div className={`fixed flex w-72 justify-center items-center  transition duration-700 ease-in-out ${toastClass} right-4 top-[15vh] w-[25%] h-16 z-50 rounded-lg  `}>
+        <div className={`fixed flex w-72 justify-center items-center  transition duration-700 ease-in-out ${toastClass} right-4 top-[15vh] sm:w-[25%] h-16 z-50 rounded-lg  `}>
             <span className="text-md text-white font-sans">
                 {globalState?.toast.message}
             </span>

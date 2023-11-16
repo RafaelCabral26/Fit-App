@@ -37,7 +37,7 @@ export const Navbar = () => {
             })
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         myHTTP.post("/check_user")
             .then(res => {
                 if (res.data.logged) {

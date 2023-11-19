@@ -2,6 +2,7 @@ import { SetStateAction, useContext, useEffect, useState } from "react"
 import { TDays, TDbExerciseObjSample, TDbExerciseSample, TExercise, TMuscleGroups, TSubgroups } from "./Spreadsheet_Types"
 import { ValidateAddExercise } from "./Spreadsheet_Utilities"
 import { GlobalContext } from "@/services/GlobalContext";
+import EditSpreadsheetSvg from "@/svgs/editSpreadsheet";
 
 const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { showNewExerciseModal: React.Dispatch<SetStateAction<boolean>>, dayObject: TExercise[], daysArray: TDays[] }) => {
     const globalState = useContext(GlobalContext);
@@ -99,10 +100,16 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
     return (
         <div className="fixed top-0 right-0 h-full w-screen backdrop-blur-md z-10">
             <form className="my-form-modal   z-10 flex flex-col gap-4">
-                <div className="flex justify-end">
-                    <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="text-2xl font-extrabold leading-3">X</button>
+                <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4   ">
+                    <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
+                        <div className="w-10 text-white p-2  rounded-sm">
+                            <EditSpreadsheetSvg></EditSpreadsheetSvg>
+                        </div>
+                        Adicionar Exercício
+                    </div>
+                    <button onClick={() => { showNewExerciseModal(false); globalState?.isDragDisabledSwitch(false) }} className="my-close-btn">X</button>
                 </div>
-                <span className="text-secondary">Filtros</span>
+                <span className="text-secondary mt-14">Filtros</span>
                 <div className="flex self-start  gap-2">
                     <select className="my-select pe-14 ">
                         <option key={"musculo"} onClick={() => filterSelectedMuscleGroup(null)}>Músculo</option>

@@ -21,7 +21,6 @@ const SpreadsheetBuilder: React.FC = () => {
     const [daysArray, setNewDayArray] = useState<TDays[]>([]);
     const [sendModal, showSendModal] = useState<boolean>(false);
     const [previousUrl, setPreviousUrl] = useState<string>("");
-
     useEffect(() => {
         const listOfExercises = localStorage.getItem("Exercises_list");
         const cachedSpreadsheet = localStorage.getItem("Ongoing_Spreadsheet");
@@ -108,7 +107,7 @@ const SpreadsheetBuilder: React.FC = () => {
     return (
         <DragDropContext onDragEnd={handleDnd} >
             <div className="flex h-screen w-auto bg-white text-neutral ">
-                <button onClick={() => { globalState?.isDragDisabledSwitch(!globalState.isDragDisabledState) }} type="button" className={`${window.innerWidth < 640 ? "fixed" : "hidden"} bottom-[10%] right-5 bg-secondary p-2 rounded-full flex justify-center items-center`}>
+                <button onClick={() => { globalState?.isDragDisabledSwitch(!globalState.isDragDisabledState) }} type="button" className={`fixed  sm:hidden bottom-[10%] right-5 bg-secondary p-2 rounded-full flex justify-center items-center`}>
                     {globalState?.isDragDisabledState ?
                         <ClosedLockSvg></ClosedLockSvg>
                         :

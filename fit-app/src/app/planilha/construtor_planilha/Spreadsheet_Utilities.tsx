@@ -71,7 +71,13 @@ export const formatExercisesStorage = (responseExerciseList: TExercise[]) => {
     localStorage.setItem("Exercises_list", JSON.stringify(ObjectifiedExerciseList))
 }
 
-const reorder = (list: TDays[], startIndex: number, endIndex: number) => {
+const reorder = (list: TDays[] , startIndex: number, endIndex: number) => { 
+    const result = list;
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result
+}
+const reorderExercises = (list: TExercise[] , startIndex: number, endIndex: number) => { 
     const result = list;
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -89,9 +95,9 @@ export const triggerDnd = (result: DropResult, daysArray: TDays[], setNewDayArra
     const destinationId = destination.droppableId;
     if (type === "droppableExercise") {
         if (sourceId === destinationId) {
-            const tempExercises = daysArray.find((e: TDays) => e.dayUID === sourceId)?.exercises;
+            const tempExercises = daysArray.find((e: TDays) => e.dayUID === sourceId)?.exercises as TExercise[];
             if (tempExercises) {
-                const newExerciseOrder = reorder(tempExercises, source.index, destination.index);
+                const newExerciseOrder = reorderExercises(tempExercises, source.index, destination.index);
                 const newDayOrder = daysArray.map((e: TDays) =>
                     e.dayUID !== sourceId
                         ? e

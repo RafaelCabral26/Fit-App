@@ -7,8 +7,6 @@ import TrashSvg from "@/svgs/trashsvg"
 import Link from "next/link"
 import createQueryString from "@/services/createQueryString"
 import { formatDate } from "../construtor_planilha/Spreadsheet_Utilities"
-import LoadingComponent from "@/svgs/LoadingComponent"
-import Image from "next/image"
 type TParsedSpreadsheets = {
     spreadsheet_id: string,
     spreadsheet_days: [],
@@ -25,18 +23,8 @@ const MinhasPlanilhas = () => {
     const [allSpreadsheets, setAllSpreadSheets] = useState<TParsedSpreadsheets[]>();
     const [selectedSpreadsheet, setSelectedSpreadSheet] = useState<TParsedSpreadsheets>();
     const [confirmDeleteModal, showConfirmDeleteModal] = useState<boolean>(false);
-    function stateFunction() {
-        let text:string = "Opa";
-            if(!globalState?.userType){
-                 text = "Faça login..."
-            } else if (globalState.userType) {
-                 text = "Planilhas..."
+    const [userState, setUserState] = useState<string>("...");
 
-            }
-        return text
-    }
-    const [userState, changeUserState] = useState<string>(stateFunction);
-    
 
     useEffect(() => {
         myHTTP.get("/list_user_spreadsheets")
@@ -54,6 +42,12 @@ const MinhasPlanilhas = () => {
                 globalState?.setToast({ type: "warning", message: err.response.data.msg });
             });
     }, []);
+    useEffect(() => {
+        if (!globalState?.userType) {
+        return setUserState("Faça Login...") ;
+        }
+       setUserState("Planilhas...") ;
+    }, [globalState?.userType])
 
     const handleSelectSpreadsheet = (index: number) => {
         if (allSpreadsheets !== undefined) setSelectedSpreadSheet(allSpreadsheets[index]);
@@ -73,13 +67,15 @@ const MinhasPlanilhas = () => {
 
     return (
         <div className="flex flex-col w-full h-auto items-center gap-4 sm:m-4  ">
+            <button className="my-btn" onClick={() => console.log(globalState?.userType)}>Teste</button>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 sm:mt-0  ">
                 <select className="my-select px-14">
                     <option hidden>
-                            {userState}
+                        {userState}
                     </option>
                     {allSpreadsheets?.map((ele: TParsedSpreadsheets, index: number) => {
-                        return <option onClick={() => handleSelectSpreadsheet(index)} key={index} value={index}>Planilha - {formatDate(ele.updatedAt)}</option>
+                        return <option onClick={() => handleSelectSpreadsheet(index)} key={index} value={index}>Planilha - {formatDate(ele.updatedAt)}
+                        </option>
                     })};
                 </select>
                 {
@@ -99,7 +95,7 @@ const MinhasPlanilhas = () => {
                         return (
                             <div key={crypto.randomUUID()} className="flex justify-center w-auto h-auto  ">
 
-                                <div  className="sm:flex my-2  bg-base-200 rounded-sm shadow-md w-full mx-4  sm:min-w-[320px]  h-auto  ">
+                                <div className="sm:flex my-2  bg-base-200 rounded-sm shadow-md w-full mx-4  sm:min-w-[320px]  h-auto  ">
                                     <div className="sm:h-auto flex sm:flex-col  items-center justify-center gap-4 w-auto sm:w-[20px]   p-4 sm:py-8  bg-neutral text-white rounded-t-sm ">
                                         <span className="font-mono  leading-none sm:vertical-text tracking-tighter  ">{("Dia " + String(index + 1))}</span>
                                     </div>

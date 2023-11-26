@@ -1,5 +1,5 @@
 import { Sequelize,DataTypes } from "sequelize";
-const sequelize = require("./index.ts")
+const sequelize = require("./createSequelize")
 import { TExerciseSample } from "./exercise_sample.model";
 export class MyDate extends DataTypes.NOW {
     toSql(): string {

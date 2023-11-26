@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-const sequelize = require("./index.ts")
+const sequelize = require("./createSequelize")
 
 const Exercise = sequelize.define("exercises", {
     exercise_name: {

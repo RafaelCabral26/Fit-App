@@ -2,7 +2,7 @@ import { Error } from "sequelize";
 import errorHandler from "./middleware/errorHandler";
 import { allRoutes } from "./routes/routes";
 require("dotenv").config()
-const sequelize = require("./models/index.ts");
+const sequelize = require("./models/createSequelize");
 const express = require("express");
 const cors = require('cors');
 const cookieParser = require("cookie-parser")

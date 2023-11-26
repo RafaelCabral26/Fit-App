@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-const sequelize = require("./index.ts")
+const sequelize = require("./createSequelize")
 export type TExerciseSample = {
     id?: string,
     exercise_name: string,

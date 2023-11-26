@@ -1,6 +1,5 @@
 import { Sequelize, DataTypes } from "sequelize"
-const sequelize = require("./index.ts")
-
+const sequelize = require("./createSequelize")
 
 const User = sequelize.define("user", {
     user_id: {
@@ -15,7 +14,7 @@ const User = sequelize.define("user", {
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowull: false,
         unique: {
             args:true,
             msg: "Email já está em uso."

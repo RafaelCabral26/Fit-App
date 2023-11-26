@@ -1,24 +1,23 @@
-import { DataTypes } from "sequelize";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const sequelize_1 = require("sequelize");
 const sequelize = require("./createSequelize");
-
 const Trainer = sequelize.define("trainer", {
-
     trainer_id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
         primaryKey: true,
-        unique:true
+        unique: true
     },
     name: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
     email: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         unique: {
-            args:true,
+            args: true,
             msg: "Email já está em uso."
         },
         validate: {
@@ -28,22 +27,22 @@ const Trainer = sequelize.define("trainer", {
         },
     },
     password: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
     trainer_clients: {
-    type:DataTypes.JSON
+        type: sequelize_1.DataTypes.JSON
     },
     active: {
-        type: DataTypes.BOOLEAN,
+        type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: true
     },
     createdAt: {
-        type:DataTypes.DATE
+        type: sequelize_1.DataTypes.DATE
     },
     updatedAt: {
-        type:DataTypes.DATE
+        type: sequelize_1.DataTypes.DATE
     },
-}) 
+});
 Trainer.sync();
-export default Trainer;
+exports.default = Trainer;

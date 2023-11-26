@@ -5,9 +5,9 @@ services:
     restart: unless-stopped 
     env_file: ./.env
     environment:
-      MYSQL_USER: user
-      MYSQL_USER_PASSWORD: ${MYSQL_DB_PASSWORD}
-      MYSQL_RANDOM_ROOT_PASSWORD: opa 
+      MYSQL_USER: fituser
+      MYSQL_PASSWORD: ${MYSQL_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
       MYSQL_DATABASE: fitdb
     ports:
       - "3307:3306"    

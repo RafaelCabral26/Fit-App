@@ -7,6 +7,8 @@ const router = Router();
 router.get("/list_exercises",
 tryCatch(async (req:Request,res:Response) => {
         const exerciseList = await ExerciseSample.findAll();
+        console.log("exerciseList",exerciseList);
+        
         return res.status(200).json({exercises:exerciseList});
 })
 );

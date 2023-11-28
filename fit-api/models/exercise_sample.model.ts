@@ -50,7 +50,7 @@ const ExerciseSample = sequelize.define("exercises_sample", {
         timestamps: false,
         charset: 'utf8',
         collate: 'utf8_unicode_ci'
-    }
+    },
 )
 ExerciseSample.sync()
 export default ExerciseSample

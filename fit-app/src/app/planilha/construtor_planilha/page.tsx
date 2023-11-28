@@ -27,6 +27,8 @@ const SpreadsheetBuilder: React.FC = () => {
         if (listOfExercises === null) {
             myHTTP.get("/list_exercises")
                 .then(res => {
+                    console.log("teste",res.data.exercises);
+                    
                     formatExercisesStorage(res.data.exercises);
                 })
                 .catch(err => {

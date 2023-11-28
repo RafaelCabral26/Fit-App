@@ -1,7 +1,8 @@
+import dotenv from "dotenv"
+dotenv.config();
 import { Error } from "sequelize";
 import errorHandler from "./middleware/errorHandler";
 import { allRoutes } from "./routes/routes";
-require("dotenv").config()
 const sequelize = require("./models/createSequelize");
 const express = require("express");
 const cors = require('cors');
@@ -9,7 +10,7 @@ const cookieParser = require("cookie-parser")
 const app = express();
 
 const corsOptions = {
-    origin: "http://localhost:3000",
+    origin:process.env.CORS_ORIGIN,
     credentials: true,
 }
 app.use(cors(corsOptions));

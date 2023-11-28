@@ -21,7 +21,7 @@ sequelize.authenticate()
     .catch((err: Error) => console.log(err))
 app.use(allRoutes);
 app.use(errorHandler);
-const PORT = process.env.NODE_DOCKER_PORT || 8080;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 

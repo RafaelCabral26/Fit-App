@@ -8,6 +8,5 @@ const config: AxiosRequestConfig = {
         "Access-Control-Allow-Origin": "http://localhost:8080/",
     }
 }
-        console.log("BASE URLL",process.env.BASE_URL);
 const myHTTP = axios.create(config);
 export default myHTTP;

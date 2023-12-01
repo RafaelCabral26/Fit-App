@@ -223,16 +223,16 @@ const Section4 = () => {
         </section>
     )
 }
- const Footer = () => {
+const Footer = () => {
     return (
-    <section id="footer" className="flex flex-col items-center justify-center w-full bg-secondary text-white font-sans  ">
+        <section id="footer" className="flex flex-col items-center justify-center w-full bg-secondary text-white font-sans  ">
             <div className="flex text-lg justify-center items-center">
                 Entre em Contato:
                 <Link href="https://wa.me/5521988357489">
-                    <WhatsAppSvg/>
+                    <WhatsAppSvg />
                 </Link>
             </div>
-                <span>© 2023 - Fit & App  | Website by Rafael Cabral</span>
+            <span>© 2023 - Fit & App  | Website by Rafael Cabral</span>
         </section>
     )
 }

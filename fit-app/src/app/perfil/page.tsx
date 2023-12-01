@@ -5,7 +5,6 @@ import { useContext, useEffect, useState } from "react";
 import EditProfileModal from "./EditProfileModal";
 import { GlobalContext } from "@/services/GlobalContext";
 import { useRouter } from "next/navigation";
-import LoadingComponent from "@/svgs/LoadingComponent";
 
 const ProfilePage = () => {
     const globalState = useContext(GlobalContext);
@@ -30,18 +29,17 @@ const ProfilePage = () => {
                 <div className="card-body">
                     <span className="card-title">Nome</span>
                     <hr />
-                    {userData?.name ?
+                    {userData?.name &&
                         <span>{userData?.name}</span>
-                        : <div className="w-10 h-10"><LoadingComponent></LoadingComponent></div>                    }
+                    }
                     <span className="card-title">Email</span>
                     <hr />
-                    {userData?.name ? 
+                    {userData?.name &&
                         <span>{userData?.email}</span>
-                        : <div className="w-10 h-10"><LoadingComponent></LoadingComponent></div>                    }
-                    <span className="card-title">Email</span>
-                    
+                    }
                     <div className="flex  gap-2">
-                        <button onClick={() => showModalEditProfile(true)} type="button" className="my-btn w-full " >Editar</button>
+                        <button onClick={() => showModalEditProfile(true)} type="button" className="my-btn">Editar</button>
+                        <button className="my-btn-red">Deletar</button>
                     </div>
                 </div>
                 <div className="card-body">
@@ -56,7 +54,6 @@ const ProfilePage = () => {
                 modalEditProfile &&
                     <EditProfileModal showModalEditProfile={showModalEditProfile} userData={userData}></EditProfileModal>
             }
-            
         </div>
     )
 }

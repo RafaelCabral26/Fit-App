@@ -5,9 +5,13 @@ services:
     restart: unless-stopped 
     env_file: ./.env
     environment:
+<<<<<<< HEAD
       MYSQL_USER: fituser
       MYSQL_PASSWORD: ${MYSQL_DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
+=======
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DB_PASSWORD} 
+>>>>>>> parent of 2b58767 (Merge branch 'main' of https://github.com/RafaelCabral26/Fit-App)
       MYSQL_DATABASE: fitdb
     ports:
       - "3307:3306"    

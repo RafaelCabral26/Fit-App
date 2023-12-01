@@ -14,6 +14,13 @@ export const Navbar = () => {
     const [loginModal, showLoginModal] = useState<boolean>(false);
     const [registerModal, showRegisterModal] = useState<boolean>(false);
     const myUrl = usePathname();
+    const [navFontColor, setNavFontColor] = useState<string>("bg-gray-200/20");
+
+    useLayoutEffect(() => {
+        myUrl !== "/" ?
+            setNavFontColor("text-primary") :
+            setNavFontColor("text-white");
+    }, [myUrl]);
 
     const handleLogout = () => {
         myHTTP.get("/logout")

@@ -8,9 +8,10 @@ const express = require("express");
 const cors = require('cors');
 const cookieParser = require("cookie-parser")
 const app = express();
+console.log("TESTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",process.env.CORS_ORIGIN);
 
 const corsOptions = {
-    origin:process.env.CORS_ORIGIN,
+    origin:"http://localhost:3000",
     credentials: true,
 }
 app.use(cors(corsOptions));

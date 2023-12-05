@@ -2,13 +2,16 @@ FROM node:18.17-alpine
 
 WORKDIR /fit-app
 
-COPY package.json .
+RUN npm install --global pm2
+
+COPY /package*.json ./
 
 RUN npm install
 
 COPY . .
 
+RUN npm run build
+
 EXPOSE 3000
 
-CMD ["npm", "run", "build"]
-CMD ["npm", "start"]
+CMD ["pm2-runtime", "npm", "--", "start"]

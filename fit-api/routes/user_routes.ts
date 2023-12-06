@@ -39,7 +39,6 @@ tryCatch(async (req:Request,res:Response) => {
         }
         await auth.comparePasswords(userInput.password, dbUser.password);
         const userOrTrainer = dbUser.user_id ? { name: dbUser.name, email: dbUser.email, user_id: dbUser.user_id } : { name: dbUser.name, email: dbUser.email, trainer_id: dbUser.trainer_id };
-        console.log(userOrTrainer, "userOrTrainer");
         
         const token = await auth.createToken(userOrTrainer);
         res.cookie('authcookie', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true });

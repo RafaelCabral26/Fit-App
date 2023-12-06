@@ -20,6 +20,5 @@ const router = (0, express_1.Router)();
 exports.router = router;
 router.get("/list_exercises", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const exerciseList = yield exercise_sample_model_1.default.findAll();
-    console.log("exerciseList", exerciseList);
     return res.status(200).json({ exercises: exerciseList });
 })));

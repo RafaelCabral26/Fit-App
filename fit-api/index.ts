@@ -1,6 +1,5 @@
 import dotenv from "dotenv"
 dotenv.config();
-import { Error } from "sequelize";
 import errorHandler from "./middleware/errorHandler";
 import { allRoutes } from "./routes/routes";
 const sequelize = require("./models/createSequelize");
@@ -9,8 +8,15 @@ const cors = require('cors');
 const cookieParser = require("cookie-parser")
 const app = express();
 
+const multipleOrigins = ["http://191.252.210.147/", "http://cabral.vps-kinghost.net/"];
 const corsOptions = {
-    origin:"http://191.252.210.147",
+    origin: function(origin:string, callback:any) {
+        if (multipleOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error("Erro na origem"),false);
+        }
+    },
     credentials: true,
 }
 app.use(cors(corsOptions));

@@ -37,7 +37,6 @@ router.post("/register", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0
     }
     return res.status(200).json({ msg: "Usuário Cadastrado!" });
 })));
-
 router.post("/login", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userInput = req.body;
     if (!userInput.email || !userInput.password) {
@@ -56,7 +55,6 @@ router.post("/login", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, v
     res.cookie('authcookie', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true });
     return res.status(200).json({ msg: "Usuário Logado!" });
 })));
-
 router.post("/check_user", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const secret = process.env.SECRET;
     const token = req.cookies.authcookie;
@@ -78,7 +76,6 @@ router.get("/logout", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         return res.status(400).json({ msg: "Erro ao tentar sair", error: err });
     }
 }));
-
 router.get("/user_profile", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const secret = process.env.SECRET;
     const token = req.cookies.authcookie;
@@ -87,7 +84,6 @@ router.get("/user_profile", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(voi
     const user = jsonwebtoken_1.default.verify(token, secret);
     return res.status(200).json({ email: user.email, name: user.name });
 })));
-
 router.patch("/edit_user", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const secret = process.env.SECRET;
     const token = req.cookies.authcookie;

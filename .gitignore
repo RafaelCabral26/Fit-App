@@ -7,7 +7,9 @@ node_modules/
 .pnp.js
 Session.vim
 helper.txt
-
+/certbot/*
+/certbot
+/conf
 # testing
 /coverage
 

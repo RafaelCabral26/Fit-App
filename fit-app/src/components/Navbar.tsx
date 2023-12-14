@@ -47,7 +47,7 @@ export const Navbar = () => {
                 globalState?.setUserType(null);
             })
             .catch(err => {
-                if (err.response) globalState?.setToast({ type: "warning", message: err.response.data.msg });
+                if (err.response) return globalState?.setToast({ type: "warning", message: err.response.data.msg });
             })
     }, [handleLogout]);
 

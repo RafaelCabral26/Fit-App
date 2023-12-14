@@ -51,7 +51,6 @@ router.post("/login", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, v
     }
     yield auth_1.default.comparePasswords(userInput.password, dbUser.password);
     const userOrTrainer = dbUser.user_id ? { name: dbUser.name, email: dbUser.email, user_id: dbUser.user_id } : { name: dbUser.name, email: dbUser.email, trainer_id: dbUser.trainer_id };
-    console.log(userOrTrainer, "userOrTrainer");
     const token = yield auth_1.default.createToken(userOrTrainer);
     res.cookie('authcookie', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: "none", secure: true });
     return res.status(200).json({ msg: "Usuário Logado!" });

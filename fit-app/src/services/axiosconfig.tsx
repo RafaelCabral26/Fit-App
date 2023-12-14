@@ -1,11 +1,11 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 const config: AxiosRequestConfig = {
-    baseURL: "https://fit-api-fduu.onrender.com:10000/",
+    baseURL: "https://fitandapp.site/api/",
     withCredentials: true,
     headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "Access-Control-Allow-Origin": "http://localhost:8080/",
+        "Access-Control-Allow-Origin": "https://fitandapp.site",
     }
 }
 const myHTTP = axios.create(config);

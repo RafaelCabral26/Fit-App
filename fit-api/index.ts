@@ -8,15 +8,8 @@ const cors = require('cors');
 const cookieParser = require("cookie-parser")
 const app = express();
 
-const multipleOrigins = ["http://191.252.210.147/", "http://cabral.vps-kinghost.net/"];
 const corsOptions = {
-    origin: function(origin:string, callback:any) {
-        if (multipleOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error("Erro na origem"),false);
-        }
-    },
+    origin: ["https://191.252.210.147", "https://cabral.vps-kinghost.net","https://fitandapp.site", "https://www.fitandapp.site"],
     credentials: true,
 }
 app.use(cors(corsOptions));
@@ -25,7 +18,7 @@ app.use(cookieParser());
 sequelize.authenticate()
     .then(() => console.log("Connected to DB"))
     .catch((err: Error) => console.log(err))
-app.use(allRoutes);
+app.use("/api", allRoutes);
 app.use(errorHandler);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

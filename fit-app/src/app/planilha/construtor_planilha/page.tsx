@@ -76,7 +76,7 @@ const SpreadsheetBuilder: React.FC = () => {
         const spreadsheetInvalid = validateSpreadsheet(daysArray, globalState);
         if (spreadsheetInvalid) return globalState?.setToast(spreadsheetInvalid);
 
-        myHTTP.post("/new_spreadsheet", daysArray)
+        myHTTP.patch("/new_spreadsheet", daysArray)
             .then(res => {
                 if (res.status === 202) {
                     return globalState?.setToast({ type: "warning", message: res.data.msg });

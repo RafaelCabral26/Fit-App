@@ -85,10 +85,10 @@ const MinhasPlanilhas = () => {
                 {
                     selectedSpreadsheet &&
                     <>
-                        <button onClick={() => showConfirmDeleteModal(true)} className="my-btn w-14">
+                        <button onClick={() => showConfirmDeleteModal(true)} className="my-btn w-14 ">
                             <TrashSvg color="#ffffff"></TrashSvg>
                         </button>
-                        <Link href={`/planilha/construtor_planilha/?${createQueryString("spreadsheet_id", selectedSpreadsheet?.spreadsheet_id)}&${createQueryString("previous_url", "planilha/minhas_planilhas")}`} className="my-btn">
+                        <Link href={`/planilha/construtor_planilha/?${createQueryString("spreadsheet_id", selectedSpreadsheet?.spreadsheet_id)}&${createQueryString("previous_url", "planilha/minhas_planilhas")}`} className="my-btn p-[10px]">
                             Editar</Link>
                     </>
                 }

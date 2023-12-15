@@ -11,7 +11,8 @@ const router = Router();
 
 router.patch("/new_spreadsheet",
     tryCatch(async (req: Request, res: Response) => {
-
+        console.log("BATEU NA ROTA");
+        
         if (!req.cookies.authcookie) {
             throw new AppError(403, "Faça login para salvar planilha.");
         }

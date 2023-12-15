@@ -1,0 +1,93 @@
+version: "3.8"
+services:
+  mysqldb:
+    image: mysql:8.0
+    restart: unless-stopped 
+    env_file: ./.env
+    environment:
+      MYSQL_USER: fituser
+      MYSQL_PASSWORD: ${MYSQL_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
+      MYSQL_DATABASE: fitdb
+    ports:
+      - "3307:3306"    
+    healthcheck:
+       test: ["CMD", "curl", "-f", "http://localhost:3306"]
+       interval: 30s
+       timeout: 10s
+       retries: 7
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/data_dump.sql
+    networks:
+        - backend
+
+  backendc:
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    build: ./fit-api
+    restart: on-failure 
+    env_file: ./.env
+    ports:
+      - ${API_LOCAL_PORT}:${API_DOCKER_PORT}
+    environment:
+      DB_HOST: mysqldb
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DB_NAME: ${MYSQL_DB_NAME}
+      DB_PORT: ${MYSQL_PORT}
+      DB_USER: ${MYSQL_DB_USER}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      SECRET: ${SECRET}
+    networks:
+        - backend
+        - frontend
+        - nginx_net
+    volumes:
+      - ./fit-api:/fit-api
+      - /fit-api/node_modules
+  frontend:
+    container_name: react_c
+    depends_on:
+      - backendc 
+    build: 
+      context: ./fit-app
+      args: 
+        - REACT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
+        - NEXT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
+    volumes:
+      - ./fit-app:/fit-app
+      - /fit-app/node_modules
+    networks:
+      - nginx_net
+    ports:
+      - "3000:3000"
+  nginx:
+    restart: always
+    build:
+        context: ./nginx
+    ports:
+        - "80:80"
+        - "443:443"
+    depends_on:
+        - frontend 
+        - backendc
+    volumes:
+        - ./nginx/conf/:/etc/nginx/conf.d/
+        - ./certbot/www:/var/www/certbot/:ro
+        - ./certbot/conf/:/etc/nginx/ssl/:ro
+    networks:
+        - nginx_net
+  certbot:
+        image: certbot/certbot
+        container_name: certbot
+        volumes: 
+           - ./certbot/conf:/etc/letsencrypt:rw
+           - ./certbot/www:/var/www/certbot:rw
+volumes:
+  db:
+networks:
+  backend:
+  frontend:
+  nginx_net:
+    driver: bridge

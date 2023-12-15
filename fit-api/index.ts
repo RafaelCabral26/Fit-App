@@ -7,9 +7,10 @@ const express = require("express");
 const cors = require('cors');
 const cookieParser = require("cookie-parser")
 const app = express();
+console.log("NODE ENVVVV", process.env.NODE_ENV);
 
 const corsOptions = {
-    origin: ["https://191.252.210.147", "https://cabral.vps-kinghost.net","https://fitandapp.site", "https://www.fitandapp.site"],
+    origin: process.env.NODE_ENV == "development" ? "http://localhost:3000" :["https://191.252.210.147", "https://cabral.vps-kinghost.net","https://fitandapp.site", "https://www.fitandapp.site"],
     credentials: true,
 }
 app.use(cors(corsOptions));
@@ -22,7 +23,7 @@ app.use("/api", allRoutes);
 app.use(errorHandler);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+    console.log(`Server listening on port ${PORT}!`);
 
 })
 

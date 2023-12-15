@@ -10,8 +10,9 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+#RUN npm run build
 
 EXPOSE 3000
 
-CMD ["pm2-runtime", "npm", "--", "start"]
+#CMD ["pm2-runtime", "npm", "--", "start"]
+CMD ["npm", "run", "dev"]

@@ -16,6 +16,7 @@ export const Navbar = () => {
     const myUrl = usePathname();
     const [navFontColor, setNavFontColor] = useState<string>("bg-gray-200/20");
 
+    
     useLayoutEffect(() => {
         myUrl !== "/" ?
             setNavFontColor("text-primary") :

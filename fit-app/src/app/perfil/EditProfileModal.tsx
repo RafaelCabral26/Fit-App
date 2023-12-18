@@ -37,6 +37,7 @@ const EditProfileModal = ({ userData, showModalEditProfile }: {
                 }, 3000)
             })
             .catch(err => {
+                console.log(err);
                 globalState?.setToast({ type: "warning", message: err.response.data.msg })
             })
 

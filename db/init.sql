@@ -161,7 +161,13 @@ VALUES
     ),
     (
 		 uuid_v4(),
-         "Remada Barra",
+         "Remada Barra Pronada",
+         "Costas",
+         "Superior"
+    ),
+    (
+		 uuid_v4(),
+         "Remada Barra Supinada",
          "Costas",
          "Dorsal"
     ),
@@ -173,9 +179,21 @@ VALUES
     ),
     (
 		 uuid_v4(),
+         "Remada Halter Aberta",
+         "Costas",
+         "Superior"
+    ),
+    (
+		 uuid_v4(),
          "Remada Máquina",
          "Costas",
          "Dorsal"
+    ),
+    (
+		 uuid_v4(),
+         "Remada Máquina Pronada",
+         "Costas",
+         "Superior"
     ),
     (
 		 uuid_v4(),
@@ -187,7 +205,7 @@ VALUES
 		 uuid_v4(),
          "Puxada Pronada",
          "Costas",
-         "Dorsal"
+         "Superior"
     ),
     (
 		 uuid_v4(),
@@ -345,5 +363,234 @@ VALUES
         "Braços",
         "Tríceps"
     ),
-    (uuid_v4(),"Paralela","Braços","Tríceps");
-    
+    (
+    uuid_v4(),
+    "Paralela",
+    "Braços",
+    "Tríceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Direta",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Alternada",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Martelo Alternada",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Martelo",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Direta c/ Rotação",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Inclinada",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Inclinada Alternada",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Direta Barra W",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Direta Barra",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Concentrada",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Arnold",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Scott",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Scott Barra W",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Scott Alternada",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Scott Martelo",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca Scott Martelo Alternada",
+    "Braços",
+    "Bíceps"
+    ),
+    (
+    uuid_v4(),
+    "Rosca de Punho",
+    "Braços",
+    "Antebraço"
+    ),
+    (
+    uuid_v4(),
+    "Rosca de Punho Invertida",
+    "Braços",
+    "Antebraço"
+    ),
+    (
+    uuid_v4(),
+    "Leg Press",
+    "Pernas",
+    "Quadríceps"
+    ),
+    (
+    uuid_v4(),
+    "Agachamento Livre",
+    "Pernas",
+    "Quadríceps"
+    ),
+    (
+    uuid_v4(),
+    "Agachamento Sumô",
+    "Pernas",
+    "Glúteos"
+    ),
+    (
+    uuid_v4(),
+    "Agachamento Smith",
+    "Pernas",
+    "Quadríceps"
+    ),
+    (
+    uuid_v4(),
+    "Agachamento Livre Frontal",
+    "Pernas",
+    "Quadríceps"
+    ),
+    (
+    uuid_v4(),
+    "Hack Squat",
+    "Pernas",
+    "Quadríceps"
+    ),
+    (
+    uuid_v4(),
+    "Agachamento Afundo",
+    "Pernas",
+    "Glúteos"
+    ),
+    (
+    uuid_v4(),
+    "Agachamento Búlgaro",
+    "Pernas",
+    "Glúteos"
+    ),
+    (
+    uuid_v4(),
+    "Agachamento Goblet",
+    "Pernas",
+    "Quadríceps"
+    ),
+    (
+    uuid_v4(),
+    "Cadeira Extensora",
+    "Pernas",
+    "Quadríceps"
+    ),
+    (
+    uuid_v4(),
+    "Cadeira Flexora",
+    "Pernas",
+    "Posterior"
+    ),
+    (
+    uuid_v4(),
+    "Mesa Flexora",
+    "Pernas",
+    "Posterior"
+    ),
+    (
+    uuid_v4(),
+    "Abdução de Quadril",
+    "Pernas",
+    "Glúteos"
+    ),
+    (
+    uuid_v4(),
+    "Adução de Quadril",
+    "Pernas",
+    NULL
+    ),
+    (
+    uuid_v4(),
+    "Panturrilha em Pé",
+    "Pernas",
+    "Panturrilha"
+    ),
+    (
+    uuid_v4(),
+    "Panturrilha Sentado",
+    "Pernas",
+    "Panturrilha"
+    ),
+    (
+    uuid_v4(),
+    "Stiff",
+    "Pernas",
+    "Posterior"
+    ),
+    (
+    uuid_v4(),
+    "Levantamento Terra Sumô",
+    "Pernas",
+    "Glúteos"
+    ),
+    (
+    uuid_v4(),
+    "Levantamento Terra ",
+    "Pernas",
+    "Posterior"
+    );
+
+
+

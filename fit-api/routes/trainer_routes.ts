@@ -1,4 +1,3 @@
-"use client"
 import { Request, Response, Router } from "express"
 import jwt, {  Secret } from "jsonwebtoken";
 import User  from "../models/user.model";
@@ -7,6 +6,7 @@ import Spreadsheet from "../models/spreadsheet.model";
 import { tryCatch } from "../services/tryCatch";
 import { AppError } from "../services/AppError";
 import { TClients, TTrainer, myJwt } from "./types_routes";
+import auth from "../services/auth";
 const router = Router();
 
 router.patch("/add_client",

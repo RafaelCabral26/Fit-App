@@ -46,7 +46,7 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
         } else if (muscleType === "Peitoral") {
             setOptionsSubGroups(["Superior", "Medial", "Inferior"]);
         } else if (muscleType === "Pernas") {
-            setOptionsSubGroups(["Posterior", "Gluteos", "Quadriceps", "Panturrilha"]);
+            setOptionsSubGroups(["Posterior", "Glúteos", "Quadríceps", "Panturrilha"]);
         } else if (muscleType === "Ombros") {
             setOptionsSubGroups(["Anterior", "Posterior", "Lateral"]);
         } else if (muscleType === null) {

@@ -3,7 +3,6 @@ import { AppError } from "../services/AppError";
 import { Error, Sequelize, SequelizeScopeError, ValidationError } from "sequelize";
 
 const errorHandler = (error:Error, req:Request, res:Response, next:NextFunction) => {
-    console.log(error);
   if ( error instanceof ValidationError) {
     return res.status(303).send({
       msg: error.errors[0].message,

@@ -1,7 +1,7 @@
 import jwt, {  Secret } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { AppError } from "./AppError";
-import { TTrainer, TUser } from "../routes/types_routes";
+import { TTrainer, TUser, myJwt } from "../routes/types_routes";
 
 const auth = {
     createEncryptedPass: async (oldPassword: string) => {
@@ -25,6 +25,10 @@ const auth = {
         const token = jwt.sign(payload, secret, { expiresIn: "10 days" });
         return token;
     },
-
+    checkDemonstrationProfile:  (user:myJwt) => {
+        if (user.name === "Cliente" || user.name === "Treinador") {
+            throw new AppError(403,"Sem permissão, conta demonstrativa");
+        }
+    }
 }
 export default auth;

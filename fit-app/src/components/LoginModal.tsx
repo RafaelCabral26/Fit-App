@@ -70,6 +70,13 @@ const LoginModal = ({ showLoginModal }: { showLoginModal: React.Dispatch<SetStat
                     </label>
 
                     <button onClick={tryLogin} onKeyDown={e => { if (e.key === "Enter") tryLogin }} className="my-btn w-full" type="submit">Entrar</button>
+
+                        <div className="card">
+                            <span className="text-2xl font-sans">Contas de Demonstração:</span>
+                            <span>treinador@email.com & cliente@email.com</span>
+                            <span>Senhas: 123123123</span>
+                        </div>
+
                 </form>
             </div>
         </div>

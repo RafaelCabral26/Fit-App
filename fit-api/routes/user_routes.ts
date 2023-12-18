@@ -59,14 +59,11 @@ tryCatch(async (req:Request,res:Response) => {
         return res.status(200).json({ logged: false });
 }));
 
-router.get("/logout", async (req, res, next) => {
-    try {
+router.get("/logout",
+tryCatch(async (req:Request,res:Response) => {
         res.clearCookie('authcookie');
         return res.status(200).json({ msg: "Usuário Deslogado" });
-    } catch (err) {
-        return res.status(400).json({ msg: "Erro ao tentar sair", error: err })
-    }
-});
+    }));
 
 router.get("/user_profile",
 tryCatch(async (req:Request,res:Response) => {
@@ -82,8 +79,9 @@ router.patch("/edit_user",
 tryCatch(async (req:Request,res:Response) => {
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
-        if (!token) throw new Error("Usuário deslogado.");
+        if (!token) throw new AppError(403,"Usuário deslogado.");
         const user = jwt.verify(token, secret) as myJwt;
+        auth.checkDemonstrationProfile(user)
         if (user.name === req.body.name) {
             throw new AppError(403,"Nenhum campo alterado");
         };

@@ -66,7 +66,7 @@ export type TLegs = {
     muscle_group?: "Pernas" | "",
     subgroup?: TLegsSub
 }
-export type TLegsSub = "Posterior" | "Gluteos" | "Quadriceps" | "Panturrilha" | ""
+export type TLegsSub = "Posterior" | "Glúteos" | "Quadríceps" | "Panturrilha" | ""
 
 export type TShoulder = {
     muscle_group?: "Ombros" | "",

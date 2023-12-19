@@ -26,7 +26,7 @@ const auth = {
         return token;
     },
     checkDemonstrationProfile:  (user:myJwt) => {
-        if (user.name === "Cliente" || user.name === "Treinador") {
+        if (user.name === "Cliente" || user.name === "Treinador" || user.name === "Cliente2") {
             throw new AppError(403,"Sem permissão, conta demonstrativa");
         }
     }

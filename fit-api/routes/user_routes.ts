@@ -48,7 +48,7 @@ tryCatch(async (req:Request,res:Response) => {
 
 router.post("/check_user",
 tryCatch(async (req:Request,res:Response) => {
-
+        console.log(req.method);
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {
@@ -81,7 +81,6 @@ tryCatch(async (req:Request,res:Response) => {
         const token = req.cookies.authcookie;
         if (!token) throw new AppError(403,"Usuário deslogado.");
         const user = jwt.verify(token, secret) as myJwt;
-        auth.checkDemonstrationProfile(user)
         if (user.name === req.body.name) {
             throw new AppError(403,"Nenhum campo alterado");
         };

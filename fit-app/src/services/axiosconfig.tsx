@@ -5,7 +5,7 @@ const config: AxiosRequestConfig = {
     withCredentials: true,
     headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "Access-Control-Allow-Origin": (currentEnviroment == "development") ? "http://localhost:6868" : "https://fitandapp.site",
+        "Access-Control-Allow-Origin": (currentEnviroment == "production") ? "https://fitandapp.site"  :"http://localhost:6868" ,
     }
 }
 const myHTTP = axios.create(config);

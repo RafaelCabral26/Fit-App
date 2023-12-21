@@ -1,6 +1,6 @@
 "use client"
 import { ProfileSvg } from "@/svgs/profilecircle"
-import { useContext, useEffect, useLayoutEffect, useState } from "react"
+import { useContext, useEffect, useLayoutEffect, useMemo, useState } from "react"
 import LoginModal from "./LoginModal"
 import RegisterModal from "./RegisterModal"
 import myHTTP from "@/services/axiosconfig"
@@ -37,9 +37,7 @@ export const Navbar = () => {
                 if (err.response) globalState?.setToast({ type: "error", message: err.response.data.msg });
             })
     };
-
-    useLayoutEffect(() => {
-
+ const checkUser = useMemo(() => async () => {
         myHTTP.post("/check_user")
             .then(res => {
                 if (res.data.logged) {
@@ -50,7 +48,11 @@ export const Navbar = () => {
             .catch(err => {
                 if (err.response) return globalState?.setToast({ type: "warning", message: err.response.data.msg });
             })
-    }, [handleLogout]);
+    },[handleLogout])
+
+    useEffect(() => {
+        checkUser();
+    }, [checkUser]);
 
     return (
         <>

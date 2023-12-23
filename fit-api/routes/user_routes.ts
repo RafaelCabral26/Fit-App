@@ -48,7 +48,6 @@ tryCatch(async (req:Request,res:Response) => {
 
 router.post("/check_user",
 tryCatch(async (req:Request,res:Response) => {
-        console.log(req.method);
         const secret = process.env.SECRET as Secret;
         const token = req.cookies.authcookie;
         if (token) {

@@ -5,9 +5,11 @@
 
 ### Algumas Funcionalidades 
 
-<ul >
-<li style="list-style: none"> :white_check_mark: Sistema de Drag and Drop(Arrastar e soltar). </li>  
-<li style="list-style: none"> :white_check_mark: Criação de usuário para Praticantes e Treinadores.  </li>  
-  <li style="list-style: none"> :white_check_mark: .  </li>  
-</ul>
+<div>
+  <p style="list-style: none"> :white_check_mark: Sistema de Drag and Drop(Arrastar e soltar). </p>  
+<p style="list-style: none"> :white_check_mark: Criação de usuário para Praticantes e Treinadores.  </p>  
+  <p style="list-style: none"> :white_check_mark: .  </p>  
+</div>
+
+
 

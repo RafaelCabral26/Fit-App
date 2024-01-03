@@ -7,7 +7,7 @@
 
 <div>
   <p> :white_check_mark: Sistema de Drag and Drop(Arrastar e soltar).</p>  
-  <p> :white_check_mark: Criação de usuário para Praticantes e Treinadores.</p>  
+  <p> :white_check_mark: Criação de contas para Praticantes e Treinadores.</p>  
   <p> :white_check_mark: Criar, atualizar e deletar planilhas.</p>  
   <p> :white_check_mark: Enviar e administrar planilha de clientes.</p>
 </div>

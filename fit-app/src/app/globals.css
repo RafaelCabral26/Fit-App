@@ -20,7 +20,7 @@
         @apply flex justify-between p-2 bg-base-300 rounded-t-md;
     }
     h1 {
-        @apply text-primary text-2xl
+        @apply text-neutral text-2xl
     }
     .vertical-text {
         writing-mode: vertical-rl;
@@ -66,3 +66,4 @@
         @apply bg-transparent;
     }
 }
+

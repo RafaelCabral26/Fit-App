@@ -8,6 +8,7 @@ type TCalcSuplementos = {
 }
 export default function CalcSuplementos() {
     const [wheyPurity, setWheyPurity] = useState<number>(0);
+    const [totalProtein, setTotalProtein] = useState<number>(0);
     const [calcInput, setCalcInput] = React.useState<TCalcSuplementos>({
         pesoWhey: 0,
         quantidade_porcao: 0,
@@ -23,11 +24,21 @@ export default function CalcSuplementos() {
         })
     }
     useEffect(() => {
-        const whey = (calcInput.quantidade_proteina / calcInput.quantidade_porcao) * 100;
-        if (whey < 200) {
-            setWheyPurity(Number(whey.toFixed(1)));
+        console.log("wheyrrt");
+        if (calcInput.quantidade_proteina > 0 && calcInput.quantidade_porcao > 0) {
+            const whey = (calcInput.quantidade_proteina / calcInput.quantidade_porcao) * 100;
+            return setWheyPurity(Number(whey.toFixed(1)));
         }
-    }, [handleCalcInput])
+        setWheyPurity(0);
+    }, [calcInput.quantidade_proteina, calcInput.quantidade_porcao])
+
+    useEffect(() => {
+        console.log(wheyPurity);
+        if (wheyPurity > 0) {
+            const total = (calcInput.pesoWhey/100)*wheyPurity;
+            setTotalProtein(total);
+        }
+    },[calcInput.pesoWhey,wheyPurity])
 
     return (
         <div className='container m-auto flex justify-center'>
@@ -43,7 +54,7 @@ export default function CalcSuplementos() {
                     <span className="span-input">Quantidade porção(gramas)</span>
                 </label>
                 <label htmlFor="quantidade_proteina" className="label-input relative">
-                    <input onChange={handleCalcInput} value={calcInput.quantidade_proteina} name="quantidade_proteina" placeholder="Quantidade proteina por porção(gramas)" type="text" className=" my-input peer" />
+                    <input onChange={handleCalcInput}  name="quantidade_proteina" placeholder="Quantidade proteina por porção(gramas)" type="text" className=" my-input peer" />
                     <span className="span-input">Quantidade proteina por porção(gramas)</span>
                 </label>
                 <label htmlFor="valor_produto" className="label-input relative">
@@ -53,6 +64,10 @@ export default function CalcSuplementos() {
                 <div className='text-xl'>
                     <span>Pureza do produto:</span>
                     <span>{!isNaN(wheyPurity) ? wheyPurity + "%" : ""}</span>
+                </div>
+                <div>
+                    <span>Total de Proteina no Whey:</span>
+                    <span>{Math.round(totalProtein)}g</span>
                 </div>
             </form>
         </div>

@@ -9,6 +9,7 @@ type TCalcSuplementos = {
 export default function CalcSuplementos() {
     const [wheyPurity, setWheyPurity] = useState<number>(0);
     const [totalProtein, setTotalProtein] = useState<number>(0);
+    const [wheyPrice, setWheyPrice ] = useState<number>();
     const [calcInput, setCalcInput] = React.useState<TCalcSuplementos>({
         pesoWhey: 0,
         quantidade_porcao: 0,
@@ -24,7 +25,6 @@ export default function CalcSuplementos() {
         })
     }
     useEffect(() => {
-        console.log("wheyrrt");
         if (calcInput.quantidade_proteina > 0 && calcInput.quantidade_porcao > 0) {
             const whey = (calcInput.quantidade_proteina / calcInput.quantidade_porcao) * 100;
             return setWheyPurity(Number(whey.toFixed(1)));
@@ -33,12 +33,15 @@ export default function CalcSuplementos() {
     }, [calcInput.quantidade_proteina, calcInput.quantidade_porcao])
 
     useEffect(() => {
-        console.log(wheyPurity);
         if (wheyPurity > 0) {
             const total = (calcInput.pesoWhey/100)*wheyPurity;
             setTotalProtein(total);
         }
     },[calcInput.pesoWhey,wheyPurity])
+    useEffect(() => {
+        const calcPrice = (calcInput.valor_produto / totalProtein) * 100;
+        setWheyPrice(calcPrice);
+    },[calcInput.valor_produto, totalProtein])
 
     return (
         <div className='container m-auto flex justify-center'>
@@ -68,6 +71,10 @@ export default function CalcSuplementos() {
                 <div>
                     <span>Total de Proteina no Whey:</span>
                     <span>{Math.round(totalProtein)}g</span>
+                </div>
+                <div>
+                    <span>Preço da Proteína por 100g</span>
+                    <span>{wheyPrice ? wheyPrice?.toFixed(2) : ""}</span>
                 </div>
             </form>
         </div>

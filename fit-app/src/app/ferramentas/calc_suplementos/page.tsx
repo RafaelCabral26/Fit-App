@@ -19,7 +19,11 @@ export default function CalcSuplementos() {
 
     const handleCalcInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
-        const value = e.target.value;
+        let value = e.target.value;
+        console.log("VALUE", name);
+        if (name === "valor_produto") {
+           value = value.replace(/,/g, '.');
+        }
         setCalcInput((prev: TCalcSuplementos) => {
             return { ...prev, [name]: value };
         })
@@ -64,17 +68,17 @@ export default function CalcSuplementos() {
                     <input onChange={handleCalcInput} name="valor_produto" placeholder="Valor do Produto(Ex:125,00)" type="text" className=" my-input peer" />
                     <span className="span-input">Valor do Produto(Ex:125,00)</span>
                 </label>
-                <div className='text-xl'>
+                <div className='flex gap-4 text-xl'>
                     <span>Pureza do produto:</span>
-                    <span>{!isNaN(wheyPurity) ? wheyPurity + "%" : ""}</span>
+                    <span className='border-b-2 border-secondary'>{!isNaN(wheyPurity) ? wheyPurity + "%" : ""}</span>
                 </div>
-                <div>
+                <div className='flex gap-4 text-xl'>
                     <span>Total de Proteina no Whey:</span>
-                    <span>{Math.round(totalProtein)}g</span>
+                    <span className='border-b-2 border-secondary'>{Math.round(totalProtein)}g</span>
                 </div>
-                <div>
-                    <span>Preço da Proteína por 100g</span>
-                    <span>{wheyPrice ? wheyPrice?.toFixed(2) : ""}</span>
+                <div className='flex gap-4 text-xl'>
+                    <span>Preço da Proteína por 100g:</span>
+                    <span className='border-b-2 border-secondary'>{wheyPrice ? "R$" + wheyPrice?.toFixed(2) : ""}</span>
                 </div>
             </form>
         </div>

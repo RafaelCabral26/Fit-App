@@ -1,0 +1,50 @@
+
+                <div className="">
+                    <h1>Dobras</h1>
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-4">
+                            <label htmlFor="Tricipital" className="label-input relative">
+                                <input name="Tricipital" placeholder="Tricipital" type="text" className=" my-input peer" />
+                                <span className="span-input">Tricipital</span>
+                            </label>
+                            <label htmlFor="Subescapular" className="label-input relative">
+                                <input name="Subescapular" placeholder="Subescapular" type="text" className=" my-input peer" />
+                                <span className="span-input">Subescapular</span>
+                            </label>
+                            <label htmlFor="Axilar Média" className="label-input relative">
+                                <input name="Axilar Média" placeholder="Axilar Média" type="text" className=" my-input peer" />
+                                <span className="span-input">Axilar Média</span>
+                            </label>
+                            <label htmlFor="Bicipital" className="label-input relative">
+                                <input name="Bicipital" placeholder="Bicipital" type="text" className=" my-input peer" />
+                                <span className="span-input">Bicipital</span>
+                            </label>
+                            <label htmlFor="Torácica" className="label-input relative">
+                                <input name="Torácica" placeholder="Torácica" type="text" className=" my-input peer" />
+                                <span className="span-input">Torácica</span>
+                            </label>
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <label htmlFor="Supra-Ilíaca" className="label-input relative">
+                                <input name="Supra-Ilíaca" placeholder="Supra-Ilíaca" type="text" className=" my-input peer" />
+                                <span className="span-input">Supra-Ilíaca</span>
+                            </label>
+                            <label htmlFor="Supra-Espinhal" className="label-input relative">
+                                <input name="Supra-Espinhal" placeholder="Supra-Espinhal" type="text" className=" my-input peer" />
+                                <span className="span-input">Supra-Espinhal</span>
+                            </label>
+                            <label htmlFor="Abdominal" className="label-input relative">
+                                <input name="Abdominal" placeholder="Abdominal" type="text" className=" my-input peer" />
+                                <span className="span-input">Abdominal</span>
+                            </label>
+                            <label htmlFor="Coxa" className="label-input relative">
+                                <input name="Coxa" placeholder="Coxa" type="text" className=" my-input peer" />
+                                <span className="span-input">Coxa</span>
+                            </label>
+                            <label htmlFor="Panturrilha Medial" className="label-input relative">
+                                <input name="Panturrilha Medial" placeholder="Panturrilha Medial" type="text" className=" my-input peer" />
+                                <span className="span-input">Panturrilha Medial</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>

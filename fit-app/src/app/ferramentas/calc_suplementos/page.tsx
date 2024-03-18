@@ -54,7 +54,7 @@ export default function CalcSuplementos() {
                 <span>Realize o cálculo de custo-benefício do seu Whey Protein.</span>
                 <label htmlFor="pesoWhey" className="label-input relative">
                     <input onChange={handleCalcInput} name="pesoWhey" placeholder="Peso Total do Whey(gramas)" type="text" className=" my-input peer" />
-                    <span className="span-input">Peso Total do Whey(gramas)</span>
+                    <span className="span-input">Peso Total do Whey(gramas) </span>
                 </label>
                 <label htmlFor="quantidade_porcao" className="label-input relative">
                     <input onChange={handleCalcInput} name="quantidade_porcao" placeholder="Quantidade porção(gramas)" type="text" className=" my-input peer" />

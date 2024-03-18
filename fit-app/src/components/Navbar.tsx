@@ -65,7 +65,6 @@ export const Navbar = () => {
                         <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono text-sm lg:text-lg m-1 cursor-pointer hover:text-secondary my-list-item`}>FERRAMENTAS</label>
                         <ul tabIndex={0} className="my-dropdown">
                             <li className=""><a className="my-list-item" href="/ferramentas/calc_suplementos/">Calculadora Suplementos</a></li>
-                            <li className=""><a className="my-list-item" href="/ferramentas/composicao_corporal">Composição Corporal</a></li>
                         </ul>
                     </div>
                     <div className="dropdown dropdown-end">

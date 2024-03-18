@@ -7,7 +7,7 @@ const SmallDumbbellSvg = () => {
 
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                fill="#2d2d9e"
+                fill="#020100"
                 version="1.1"
                 viewBox="0 0 512.001 512.001"
                 xmlSpace="preserve"

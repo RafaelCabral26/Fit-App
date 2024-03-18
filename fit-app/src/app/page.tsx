@@ -15,7 +15,7 @@ import { SetStateAction, useState } from "react"
 export default function MyPage() {
 
     return (
-        <div className="w-full bg-neutral ">
+        <div className="w-full  ">
             <div className='absolute top-0 right-0 z-0 scale-x-[-1]  w-full h-screen bg-no-repeat bg-cover bg-center bg-[url("../../public/teste-6.JPG")]' >
             </div>
             <section className="relative   h-[calc(100vh-3rem)] grid  xl:gap-y-12 2xl:gap-y-20 text-white w-full  grid-cols-12 grid-rows-6 ">
@@ -48,7 +48,7 @@ export default function MyPage() {
 }
 const Section2 = () => {
     return (
-        <section className="container my-20  md:h-[50vh] bg-neutral flex  flex-col md:flex-row  m-auto ">
+        <section className="container my-20  md:h-[50vh]  flex  flex-col md:flex-row  m-auto ">
 
             <div className="flex self-center   flex-col md:flex-row  items-baseline gap-10 md:gap-0 ">
                 <div className="flex flex-col gap-2 ">
@@ -57,12 +57,12 @@ const Section2 = () => {
                             <DumbbellSvg></DumbbellSvg>
                         </div>
                         <div className="self-center flex flex-col items-start basis-[45%]">
-                            <span className="text-lg text-white font-bold font-sans">TREINAMENTO <br />PERSONALIZADO</span>
+                            <span className="text-lg text-neutral-500 font-bold font-sans">TREINAMENTO <br />PERSONALIZADO</span>
                             <span className="text-md text-secondary font-semibold font-mono uppercase">Acelere seu progresso e de seus clientes.</span>
                         </div>
                     </div>
-                    <div className="w-[90%] my-4 m-auto h-1 border-b-2 border-neutral-300/50 "></div>
-                    <span className="text-center text-neutral-300 m-4 font-serif ">Nosso software de criação de planilhas de treinos para academia representam uma ferramenta valiosa para  treinadores e atletas, tornando o treinamento mais eficiente e personalizado. </span>
+                    <div className="w-[90%] my-4 m-auto h-1 border-b-2 border-neutral-500/50 "></div>
+                    <span className="text-center text-neutral-500 m-4 font-serif ">Nosso software de criação de planilhas de treinos para academia representam uma ferramenta valiosa para  treinadores e atletas, tornando o treinamento mais eficiente e personalizado. </span>
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -71,12 +71,12 @@ const Section2 = () => {
                             <BoardSvg></BoardSvg>
                         </div>
                         <div className="self-center flex flex-col items-start basis-[45%]">
-                            <span className="text-lg text-white font-bold font-sans"> VARIEDADE DE EXERCÍCIOS</span>
+                            <span className="text-lg text-neutral-500 font-bold font-sans"> VARIEDADE DE EXERCÍCIOS</span>
                             <span className="text-md text-secondary font-semibold font-mono uppercase">CONSULTE OU CRIE<br /> SEUS EXERCÍCIOS</span>
                         </div>
                     </div>
-                    <div className="w-[90%] my-4 m-auto h-1 border-b-2 border-neutral-300/50 "></div>
-                    <span className="text-center  text-neutral-300 m-4 font-serif ">A variedade é a chave para manter o interesse e a motivação durante o treinamento.  Disponibilizamos uma ampla gama de exercícios, permitindo que os clientes explorem diferentes modalidades e técnicas.</span>
+                    <div className="w-[90%] my-4 m-auto h-1 border-b-2 border-neutral-500/50 "></div>
+                    <span className="text-center  text-neutral-500 m-4 font-serif ">A variedade é a chave para manter o interesse e a motivação durante o treinamento.  Disponibilizamos uma ampla gama de exercícios, permitindo que os clientes explorem diferentes modalidades e técnicas.</span>
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -85,12 +85,12 @@ const Section2 = () => {
                             <TapeSvg></TapeSvg>
                         </div>
                         <div className="self-center flex flex-col items-start basis-[45%]">
-                            <span className="text-lg text-white  font-bold font-sans">MONITORE A <br /> SUA EVOLUÇÃO</span>
+                            <span className="text-lg text-neutral-500  font-bold font-sans">MONITORE A <br /> SUA EVOLUÇÃO</span>
                             <span className="text-md text-secondary font-semibold font-mono uppercase">ACOMPANHE A EVOLUÇÃO DE CARGAS E MEDIDAS</span>
                         </div>
                     </div>
-                    <div className="w-[90%] md:my-4 m-auto h-1 border-b-2 border-neutral-300/50 "></div>
-                    <span className="text-center  text-neutral-300 m-4 font-serif ">A possibilidade de registrar e acompanhar o progresso  é uma ferramenta valiosa. Isso permite que atletas e treinadores avaliem o desempenho, identifiquem áreas de melhoria e ajustem os planos de treino de acordo.</span>
+                    <div className="w-[90%] md:my-4 m-auto h-1 border-b-2 border-neutral-500/50 "></div>
+                    <span className="text-center  text-neutral-500 m-4 font-serif ">A possibilidade de registrar e acompanhar o progresso  é uma ferramenta valiosa. Isso permite que atletas e treinadores avaliem o desempenho, identifiquem áreas de melhoria e ajustem os planos de treino de acordo.</span>
                 </div>
             </div>
         </section>
@@ -100,17 +100,17 @@ const Section2 = () => {
 const Section3 = () => {
 
     return (
-        <section id="section3" className="w-full bg-white p-4 text-black">
+        <section id="section3" className="w-full bg-primary p-4 ">
             <div className="container  m-auto lg:flex my-4 ">
                 <div className="max-w-xl xl:max-w-2xl py-14 md:p-14 ">
                     <p className="text-lg text-secondary font-semibold font-mono uppercase">Fit & App</p>
-                    <p className="text-2xl text-neutral font-semibold font-mono uppercase my-4">POR QUE ESCOLHER TREINAR COM O FIT&APP?</p>
+                    <p className="text-2xl text-neutral-200 font-semibold font-mono uppercase my-4">POR QUE ESCOLHER TREINAR COM O FIT&APP?</p>
                     <div id="divisor" className="flex gap-2 ">
                         <div className="h-1 w-10 border-b-2 border-secondary"></div>
                         <div className="h-1 w-4 border-b-2 border-secondary/70"></div>
                     </div>
-                    <p className="uppercase my-4 text-lg text-neutral font-semibold">Aplicativo de criação de planilhas de treino pode ser uma ferramenta valiosa para ajudá-lo a atingir seus objetivos.</p>
-                    <p className="font-serif font-thin text-neutral-600">Você está pronto para levar seus treinos na academia a um novo patamar? Se você busca maximizar seus resultados, manter-se motivado e aproveitar ao máximo o seu tempo na academia, um aplicativo de planilha de treino é a ferramenta que você precisa.</p>
+                    <p className="uppercase my-4 text-lg text-neutral-400 font-semibold">Aplicativo de criação de planilhas de treino pode ser uma ferramenta valiosa para ajudá-lo a atingir seus objetivos.</p>
+                    <p className="font-serif font-thin text-neutral-300">Você está pronto para levar seus treinos na academia a um novo patamar? Se você busca maximizar seus resultados, manter-se motivado e aproveitar ao máximo o seu tempo na academia, um aplicativo de planilha de treino é a ferramenta que você precisa.</p>
                     <div className="flex flex-col gap-3 my-4">
                         <CheckSvg spanText="Crie rapidamente planilhas de treino personalizadas." />
                         <CheckSvg spanText="Projetado para ser intuitivo e fácil de usar." />
@@ -163,7 +163,7 @@ const Section4 = () => {
             <div className="container m-auto my-20  ">
                 <div className="w-full p-4 xl:pl-14 2xl:pl-24 m-auto ">
                     <p className="text-lg text-secondary font-semibold font-mono uppercase">construtor de planilhas de treino</p>
-                    <p className="text-2xl text-white font-semibold font-mono uppercase my-4">unindo tecnologia e saúde</p>
+                    <p className="text-2xl text-neutral-500 font-semibold font-mono uppercase my-4">unindo tecnologia e saúde</p>
                     <div id="divisor" className="flex gap-2 ">
                         <div className="h-1 w-10 border-b-2 border-secondary"></div>
                         <div className="h-1 w-4 border-b-2 border-secondary/70"></div>
@@ -195,21 +195,21 @@ const Section4 = () => {
                                 <div key={item.title} className="flex w-screen ">
                                     <div id="carousel-item" className="flex flex-col items-center w-screen sm:w-full m-auto pb-10  ">
 
-                                        <div className=" items-center border-white border-[0.1px] border-opacity-30 ">
+                                        <div className=" items-center border-secondary border-[0.1px] border-opacity-30 ">
 
                                             <div id="image-container" className="relative w-[320px] sm:w-[210px] lg:w-[320px] h-[213.5px] sm:h-[187px] lg:h-[213.5px]  ">
                                                 <Image src={`${item.image}`} width={0} height={0} sizes="100vw" className="w-full h-auto" alt="foto halteres"></Image>
                                             </div>
                                             <div className="relative h-1 flex justify-center ">
-                                                <div className="absolute bg-secondary text-white   w-10 h-10 self-center">
+                                                <div className="absolute bg-secondary text-neutral-700   w-10 h-10 self-center">
                                                     <SmallDumbbellSvg></SmallDumbbellSvg>
                                                 </div>
                                             </div>
                                             <div className="relative flex flex-col gap-3 text-center items-center my-10">
                                                 <div className="w-16 relative self-center text-opacity-100">
                                                 </div>
-                                                <span className="text-white text-center font-serif text-lg  2xl:text-xl uppercase">{item.title}</span>
-                                                <p className="w-60 sm:w-36 lg:w-60 whitespace-normal text-neutral-300 m-4 font-serif ">{item.text}</p>
+                                                <span className="text-neutral-600 text-center font-serif text-lg  2xl:text-xl uppercase">{item.title}</span>
+                                                <p className="w-60 sm:w-36 lg:w-60 whitespace-normal text-neutral-500 m-4 font-serif ">{item.text}</p>
                                             </div>
 
                                         </div>
@@ -225,7 +225,7 @@ const Section4 = () => {
 }
 const Footer = () => {
     return (
-        <section id="footer" className="flex flex-col items-center justify-center w-full bg-secondary text-white font-sans  ">
+        <section id="footer" className="flex flex-col items-center justify-center w-full bg-primary text-white font-sans  ">
             <div className="flex text-lg justify-center items-center">
                 Entre em Contato:
                 <Link href="https://wa.me/5521988357489">

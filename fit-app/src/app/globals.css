@@ -52,6 +52,7 @@
     }
     .my-list-item {
         text-decoration:none;
+        border-radius:0px;
         background-image: linear-gradient(#e24f00, #e24f00);
         background-size: 0% 0.1em;
         background-position-y: 100%;

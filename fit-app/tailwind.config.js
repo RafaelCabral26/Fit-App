@@ -25,7 +25,7 @@ module.exports = {
         themes: ["corporate", "retro", "dark", "emerald",
             {
                 mytheme: {
-                    "primary": "#1face1",
+                    "primary": "#020100",
                     "secondary": "#e24f00",
                     "accent": "#163896",
                     "neutral": "#0C090D",

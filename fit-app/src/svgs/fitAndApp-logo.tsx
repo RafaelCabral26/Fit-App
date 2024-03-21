@@ -7,7 +7,7 @@ function FitAndAppLogo() {
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
             viewBox="0 0 258 51.398"
-            className="w-56  "
+            className="w-46 md:w-56  "
             preserveAspectRatio="xMaxYMid meet"
         >
             <g transform="translate(-28.604 -17.118)">

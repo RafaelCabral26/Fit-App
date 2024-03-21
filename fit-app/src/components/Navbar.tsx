@@ -56,19 +56,19 @@ export const Navbar = () => {
 
     return (
         <>
-            <div className={`navbar relative z-30 justify-center md:justify-between px-[15vw] 2xl:px-[18vw] p-4 ${myUrl !== "/" ? "bg-neutral" : "bg-gray-200/20"}  `}>
+            <div className={`navbar relative z-30 justify-start md:justify-between md:px-[9vw] 2xl:px-[18vw]  ${myUrl !== "/" ? "bg-neutral" : "bg-gray-200/20"}  `}>
                 <a href="/" className='w-48 md:w-56'>
                     <FitAndAppLogo></FitAndAppLogo>
                 </a>
-                <div className='flex items-center font-bold gap-4'>
+                <div className='flex items-center font-bold gap-2 md:gap-4'>
                     <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono text-sm lg:text-lg m-1 cursor-pointer hover:text-secondary my-list-item`}>FERRAMENTAS</label>
+                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono text-xs lg:text-lg m-1 cursor-pointer hover:text-secondary my-list-item`}>FERRAMENTAS</label>
                         <ul tabIndex={0} className="my-dropdown">
                             <li className=""><a className="my-list-item" href="/ferramentas/calc_suplementos/">Calculadora Suplementos</a></li>
                         </ul>
                     </div>
                     <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono text-sm lg:text-lg m-1 cursor-pointer hover:text-secondary my-list-item`}>PLANILHA</label>
+                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono text-xs lg:text-lg m-1 cursor-pointer hover:text-secondary my-list-item`}>PLANILHA</label>
                         <ul tabIndex={0} className="my-dropdown">
                             <li className=""><a className="my-list-item" href="/planilha/construtor_planilha">Criar Planilha</a></li>
                             <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>

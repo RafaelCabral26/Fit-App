@@ -27,7 +27,7 @@ const AddClientModal = ({ showAddClientModal, triggerRequest, setTriggerRequest 
                 <form className="my-form-modal">
                     <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4  ">
                         <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
-                            <div className="w-10 text-white p-2  rounded-sm">
+                            <div className="w-10 text-white p-2   ">
                                 <ProfileSvg></ProfileSvg>
                             </div>
                             Adicionar Cliente

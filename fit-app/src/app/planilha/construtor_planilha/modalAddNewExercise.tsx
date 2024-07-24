@@ -98,11 +98,11 @@ const AddExerciseFormModal = ({ showNewExerciseModal, dayObject, daysArray }: { 
         }
     }
     return (
-        <div className="fixed top-0 right-0 h-full w-screen backdrop-blur-md z-10">
+        <div className="fixed top-0 right-0 h-full w-screen backdrop-blur-md z-50">
             <form className="my-form-modal   z-10 flex flex-col gap-4">
-                <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4   ">
+                <div className="absolute  flex items-center rounded-t-md justify-between left-0 top-0 bg-secondary w-full h-14 p-4   ">
                     <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
-                        <div className="w-10 text-white p-2  rounded-sm">
+                        <div className="w-10 text-white p-2  rounded-md">
                             <EditSpreadsheetSvg></EditSpreadsheetSvg>
                         </div>
                         Adicionar Exercício

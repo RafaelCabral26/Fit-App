@@ -4,17 +4,17 @@
 
 @layer components {
     .my-btn {
-        @apply bg-secondary hover:bg-secondary-focus text-white rounded-sm px-4 py-2 shadow-md my-2 uppercase text-sm font-sans
+        @apply btn btn-secondary btn-sm rounded-md border-none  shadow-md my-2 uppercase text-sm font-sans
     }
     .my-btn-red {
-        @apply bg-red-600 rounded-sm  hover:bg-red-500 px-4 py-2 shadow-md my-2 text-white uppercase text-sm font-sans
+        @apply btn btn-warning btn-sm  rounded-md  hover:bg-red-500 px-4 py-2 shadow-md my-2 text-white uppercase text-sm font-sans
     }
 
     .my-form-modal {
-        @apply bg-white w-[95%] max-w-lg p-4 sm:p-8 rounded-sm  drop-shadow-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  gap-2
+        @apply bg-white w-[95%] max-w-lg p-4 sm:p-8 rounded-md  drop-shadow-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  gap-2
     }
     .my-dropdown {
-        @apply dropdown-content menu p-2  font-mono font-normal bg-white shadow w-56 
+        @apply flex w-[90vw] dropdown-content menu p-2  font-mono font-normal text-lg bg-white shadow-lg py-4 gap-4  
     }
     .my-day-header {
         @apply flex justify-between p-2 bg-base-300 rounded-t-md;
@@ -33,7 +33,7 @@
         @apply self-start text-3xl font-bold leading-3 text-white 
     }
     .my-select {
-    @apply  border-secondary focus:ring-0 focus:outline-none focus:border-secondary rounded-sm  px-4 
+    @apply  border-secondary focus:ring-0 focus:outline-none focus:border-secondary rounded-md  px-4 
     }
 
     .my-input {
@@ -43,12 +43,12 @@
     }
 
     .label-input {
-        @apply relative block rounded-sm border border-secondary shadow-sm 
+        @apply relative block rounded-md border border-secondary shadow-sm 
     }
 
 
     .my-landing-text {
-        @apply inline-block text-white text-3xl row-span-1  md:text-5xl 2xl:text-6xl font-sans font-extrabold;
+        @apply inline-block text-primary text-3xl row-span-1 md:text-5xl xl:text-6xl font-sans font-extrabold;
     }
     .my-list-item {
         text-decoration:none;
@@ -57,13 +57,16 @@
         background-position-y: 100%;
         background-position-x: 0%;
         background-repeat: no-repeat;
+        background-color:none;
         transition: background-size 0.2s ease-in-out;
+        border-radius: 0px;
+        color:#737373; 
+        font-size:1.2rem;
     }
     .my-list-item:hover,
     .my-list-item:focus,
     .my-list-item:active {
         background-size: 100% 0.1em;
-        @apply bg-transparent;
+        background-color: none !important;
     }
 }
-

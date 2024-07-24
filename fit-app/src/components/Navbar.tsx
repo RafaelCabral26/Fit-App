@@ -7,103 +7,104 @@ import myHTTP from "@/services/axiosconfig"
 import { GlobalContext } from "@/services/GlobalContext"
 import { usePathname, useRouter } from "next/navigation"
 import FitAndAppLogo from "@/svgs/fitAndApp-logo"
+import CaretDown from "@/svgs/caretDown"
+import NavbarMobile from "./NavbarMobile"
 
 export const Navbar = () => {
-    const globalState = useContext(GlobalContext);
-    const router = useRouter();
-    const [loginModal, showLoginModal] = useState<boolean>(false);
-    const [registerModal, showRegisterModal] = useState<boolean>(false);
-    const myUrl = usePathname();
-    const [navFontColor, setNavFontColor] = useState<string>("bg-gray-200/20");
+  const globalState = useContext(GlobalContext);
+  const router = useRouter();
+  const [loginModal, showLoginModal] = useState<boolean>(false);
+  const [registerModal, showRegisterModal] = useState<boolean>(false);
+  const myUrl = usePathname();
 
-    
-    useLayoutEffect(() => {
-        myUrl !== "/" ?
-            setNavFontColor("text-primary") :
-            setNavFontColor("text-white");
-    }, [myUrl]);
+  const handleLogout = () => {
+    myHTTP.get("/logout")
+      .then(res => {
+        globalState?.setToast({ type: "success", message: res.data.msg });
+        globalState?.setUserType(null);
+      })
+      .then(() => {
+        showLoginModal(false);
+        router.replace("/");
+      })
+      .catch(err => {
+        if (err.response) globalState?.setToast({ type: "error", message: err.response.data.msg });
+      })
+  };
 
-    const handleLogout = () => {
-        myHTTP.get("/logout")
-            .then(res => {
-                globalState?.setToast({ type: "success", message: res.data.msg });
-                globalState?.setUserType(null);
-            })
-            .then(() => {
-                showLoginModal(false);
-                router.replace("/");
-            })
-            .catch(err => {
-                if (err.response) globalState?.setToast({ type: "error", message: err.response.data.msg });
-            })
-    };
- const checkUser = useMemo(() => async () => {
-        myHTTP.post("/check_user")
-            .then(res => {
-                if (res.data.logged) {
-                    return globalState?.setUserType(res.data.profile);
-                }
-                globalState?.setUserType(null);
-            })
-            .catch(err => {
-                if (err.response) return globalState?.setToast({ type: "warning", message: err.response.data.msg });
-            })
-    },[handleLogout])
+  const checkUser = useMemo(() => async () => {
+    myHTTP.post("/check_user")
+      .then(res => {
+        if (res.data.logged) {
+          return globalState?.setUserType(res.data.profile);
+        }
+        globalState?.setUserType(null);
+      })
+      .catch(err => {
+        if (err.response) return globalState?.setToast({ type: "warning", message: err.response.data.msg });
+      })
+  }, [handleLogout])
 
-    useEffect(() => {
-        checkUser();
-    }, [checkUser]);
+  useEffect(() => {
+    checkUser();
+  }, [checkUser]);
 
-    return (
-        <>
-            <div className={`navbar relative z-30 justify-center md:justify-between px-[15vw] 2xl:px-[18vw] p-4 ${myUrl !== "/" ? "bg-neutral" : "bg-gray-200/20"}  `}>
-                <a href="/" className='w-48 md:w-56'>
-                    <FitAndAppLogo></FitAndAppLogo>
-                </a>
-                <div className='flex items-center font-bold gap-4'>
-                    <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono text-sm lg:text-lg m-1 cursor-pointer hover:text-secondary my-list-item`}>FERRAMENTAS</label>
-                        <ul tabIndex={0} className="my-dropdown">
-                            <li className=""><a className="my-list-item" href="/ferramentas/calc_suplementos/">Calculadora Suplementos</a></li>
-                            <li className=""><a className="my-list-item" href="/ferramentas/composicao_corporal">Composição Corporal</a></li>
-                        </ul>
-                    </div>
-                    <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-white"} font-normal font-mono text-sm lg:text-lg m-1 cursor-pointer hover:text-secondary my-list-item`}>PLANILHA</label>
-                        <ul tabIndex={0} className="my-dropdown">
-                            <li className=""><a className="my-list-item" href="/planilha/construtor_planilha">Criar Planilha</a></li>
-                            <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>
-                        </ul>
-                    </div>
-                    <div className="dropdown dropdown-end w-6">
-                        <label tabIndex={0} className={`cursor-pointer w-32 ${myUrl !== "/" ? "text-secondary" : "text-white"} hover:text-secondary`}><ProfileSvg /></label>
-                        <ul tabIndex={0} className="my-dropdown">
-                            {globalState?.userType === null &&
-                                <ul>
-                                    <li><button className="my-list-item " onClick={() => { showLoginModal(true) }}>Login</button></li>
-                                    <li><button className="my-list-item" onClick={() => showRegisterModal(true)} >Cadastrar</button></li>
-                                </ul>
-                            }
-                            {globalState?.userType === "user" &&
-                                (<>
-                                    <li><a href="/perfil" className="my-list-item" >Perfil</a></li>
-                                    <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
-                                </>)
-                            }
-                            {globalState?.userType === "trainer" &&
-                                (<>
-                                    <li><a href="/perfil" className="my-list-item" >Perfil</a></li>
-                                    <li><a href={"/alunos"} className="my-list-item" >Alunos</a></li>
-                                    <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
-                                </>)
-                            }
-                        </ul>
-                    </div>
-                </div>
+  return (
+    <>
+      <div className={`navbar justify-between gap-4 relative z-30   px-4 md:px-[8vw] p-0  bg-white/90 shadow-sm `}>
+        <div className="flex ">
+          <a href="/" className=" w-44 lg:w-64">
+            <FitAndAppLogo></FitAndAppLogo>
+          </a>
+        </div>
+        <div className='hidden sm:flex basis-full justify-between md:gap-4 text-xs md:text-sm lg:text-lg'>
+          <div>
+            <div className="dropdown dropdown-end dropdown-hover">
+              <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-neutral-500"}  m-1 cursor-pointer hover:text-secondary my-list-item flex items-center`}>Ferramentas
+                <CaretDown />
+              </label>
+              <ul tabIndex={0} className="my-dropdown">
+                <li className=""><a className="my-list-item" href="/ferramentas/calc_suplementos/">Calculadora Suplementos</a></li>
+                <li className=""><a className="my-list-item" href="/ferramentas/composicao_corporal">Composição Corporal</a></li>
+              </ul>
             </div>
-            {loginModal && <LoginModal showLoginModal={showLoginModal}></LoginModal>
+            <div className="dropdown dropdown-end dropdown-hover">
+              <label tabIndex={0} className={`flex items-center  m-1 cursor-pointer hover:text-secondary my-list-item  `}>Planilhas <CaretDown /></label>
+              <ul tabIndex={0} className="my-dropdown">
+                <li className=""><a className="my-list-item  " href="/planilha/construtor_planilha">Criar Planilha</a></li>
+                <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>
+              </ul>
+            </div>
+          </div>
+          <ul className="flex items-center gap-4">
+            {globalState?.userType === null &&
+              <div className="flex gap-4">
+                <button className="my-btn  " onClick={() => { showLoginModal(true) }}>Login</button>
+                <button className="my-btn bg-primary" onClick={() => showRegisterModal(true)} >Cadastrar</button>
+              </div>
             }
-            {registerModal && <RegisterModal showRegisterModal={showRegisterModal}></RegisterModal>}
-        </>
-    )
+            {globalState?.userType === "user" &&
+              (<>
+                <li><a href="/perfil" className="my-list-item" >Perfil</a></li>
+                <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
+              </>)
+            }
+            {globalState?.userType === "trainer" &&
+              (<>
+                <li><a href="/perfil" className="my-btn" >Perfil</a></li>
+                <li><a href={"/alunos"} className="my-btn" >Alunos</a></li>
+                <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
+              </>)
+            }
+          </ul>
+        </div>
+        <div className="sm:hidden">
+          <NavbarMobile showRegisterModal={showRegisterModal} showLoginModal={showLoginModal} handleLogout={handleLogout}></NavbarMobile>
+        </div>
+      </div>
+      {loginModal && <LoginModal showLoginModal={showLoginModal}></LoginModal>
+      }
+      {registerModal && <RegisterModal showRegisterModal={showRegisterModal}></RegisterModal>}
+    </>
+  )
 }

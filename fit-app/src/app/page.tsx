@@ -15,7 +15,7 @@ import { SetStateAction, useState } from "react"
 export default function MyPage() {
 
   return (
-    <div className="w-full bg-white ">
+    <div className="w-full ">
       <div className='absolute top-0 right-0 z-0 scale-x-[-1]  w-full h-screen bg-no-repeat bg-cover bg-center bg-[url("../../public/photo1-woman.jpg")]' >
       </div>
       <section className="relative h-[calc(100vh-3rem)] grid xl:gap-y-12 2xl:gap-y-20  w-full  grid-cols-12 grid-rows-6 ">
@@ -48,9 +48,9 @@ export default function MyPage() {
 }
 const Section2 = () => {
   return (
-    <section className="container relative my-20  md:h-[50vh] flex flex-col md:flex-row  m-auto ">
-      <div className="flex self-center flex-col md:flex-row items-baseline gap-10 md:gap-36 ">
-        <div className="flex flex-col gap-2 ">
+    <section className="container  my-20   flex flex-col md:flex-row  m-auto ">
+      <div className="flex self-center flex-col lg:flex-row items-baseline md:gap-36 ">
+        <div className="flex flex-col gap-2 max-w-sm ">
           <div className="flex w-full justify-around h-40">
             <div className="w-[64px] self-center text-secondary mx-4 relative">
               <DumbbellSvg></DumbbellSvg>
@@ -99,7 +99,7 @@ const Section2 = () => {
 const Section3 = () => {
 
   return (
-    <section id="section3" className="w-full bg-white p-4 text-black">
+    <section id="section3" className="w-full  p-4 text-black">
       <div className="container  m-auto lg:flex my-4 ">
         <div className="max-w-xl xl:max-w-2xl py-14 md:p-14 ">
           <p className="text-lg text-secondary font-semibold font-mono uppercase">Fit & App</p>
@@ -191,7 +191,7 @@ const Section4 = () => {
               return (
                 <div key={item.title} className="flex w-screen ">
                   <div id="carousel-item" className="flex flex-col items-center w-screen sm:w-full m-auto pb-10  ">
-                    <div className="card shadow-md w-full lg:w-96  items-center border-white border-[0.1px] border-opacity-30 ">
+                    <div className="card rounded-md shadow-md w-full lg:w-96  items-center border-white border-[0.1px] border-opacity-30 ">
                       <figure id="image-container" className="w-full h-auto">
                         <Image src={`${item.image}`} width={0} height={0} sizes="100vw" className="w-full h-auto" alt="foto halteres"></Image>
                       </figure>

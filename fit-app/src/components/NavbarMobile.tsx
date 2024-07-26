@@ -19,8 +19,8 @@ const NavbarMobile = ({ showLoginModal, showRegisterModal, handleLogout }: {
         <div tabIndex={0} role="button" className="w-10">
           <Burguer />
         </div>
-        <ul tabIndex={0} className="my-dropdown">
-          <details className="ease-out [&_svg]:open:-rotate-90" >
+        <ul tabIndex={0} className="my-dropdown w-[90vw]">
+          <details className="ease-out open:-rotate-90" >
             <summary className='fill-secondary flex items-center ' >
               <div className="w-12 h-12">
                 <CaretDown />
@@ -42,7 +42,7 @@ const NavbarMobile = ({ showLoginModal, showRegisterModal, handleLogout }: {
               </li>
             </ul>
           </details>
-          <details className="ease-out [&_svg]:open:-rotate-90" >
+          <details className="ease-out open:-rotate-90" >
             <summary className='flex items-center ' >
               <div className="w-12 h-12">
                 <CaretDown />

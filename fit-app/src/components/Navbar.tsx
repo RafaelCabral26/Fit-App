@@ -85,8 +85,8 @@ export const Navbar = () => {
             }
             {globalState?.userType === "user" &&
               (<>
-                <li><a href="/perfil" className="my-list-item" >Perfil</a></li>
-                <li><button className="my-list-item" onClick={handleLogout}>Sair</button></li>
+                <li><a href="/perfil" className="my-btn" >Perfil</a></li>
+                <li><button className="btn btn-secondary btn-outline btn-sm " onClick={handleLogout}>Sair</button></li>
               </>)
             }
             {globalState?.userType === "trainer" &&

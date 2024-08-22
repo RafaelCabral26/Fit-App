@@ -13,6 +13,9 @@ module.exports = {
                 sans: ["var(--font-josefin)"],
                 mono: ["var(--font-sourcesans)"],
             },
+      gridTemplateRows : {
+        '24': 'repeat(24, minmax(0, 1fr))',
+      }
         },
     },
     variants: {
@@ -25,9 +28,9 @@ module.exports = {
         themes: ["corporate", "retro", "dark", "emerald",
             {
                 mytheme: {
-                    "primary": "#020100",
-                    "secondary": "#e24f00",
-                    "accent": "#163896",
+                    "primary": "#2C363F",
+                    "secondary": "#ff752f",
+                    "accent": "#737373",
                     "neutral": "#0C090D",
                     "base-100": "#f3f4f6",
                     "info": "#2d2d9e",

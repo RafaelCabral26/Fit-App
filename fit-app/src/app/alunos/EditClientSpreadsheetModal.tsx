@@ -35,7 +35,7 @@ const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selecte
     return (
         <div className="fixed top-20 h-screen w-screen z-10">
             <form className="my-form-modal flex flex-col gap-2">
-                <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4   ">
+                <div className="absolute  flex items-center justify-between left-0 top-0 bg-secondary rounded-t-md w-full h-14 p-4   ">
                     <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
                         <div className="w-10 text-white p-2  rounded-sm">
                             <EditSpreadsheetSvg></EditSpreadsheetSvg>
@@ -55,9 +55,9 @@ const EditClientSpreadsheetModal = ({ selectedClient, showEditModal }: { selecte
                         )
                     })}
                 </select>
-                <div className="flex justify-evenly gap-2">
-                    <button onClick={redirectToEditSpreadsheet} type="button" className="my-btn w-full">Editar</button>
-                    <button onClick={() => handleDeleteClientSpreadsheet(selectedSpreadsheet)} type="button" className="my-btn-red w-full">Deletar</button>
+                <div className="flex justify-end gap-2">
+                    <button onClick={redirectToEditSpreadsheet} type="button" className="my-btn ">Editar</button>
+                    <button onClick={() => handleDeleteClientSpreadsheet(selectedSpreadsheet)} type="button" className="my-btn-red ">Deletar</button>
                 </div>
             </form>
         </div>

@@ -11,7 +11,7 @@ function CheckSvg({spanText}:{spanText:string}) {
                 className="grow-0 shrink-0 basis-6"
             >
                 <path
-                    stroke="#e24f00"
+                    stroke="#ff752f"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"

@@ -1,24 +1,29 @@
-@layer components {
 
+
+@layer components {
+    html {
+    @apply bg-white
+  }
     .my-btn {
-        @apply btn btn-secondary btn-sm rounded-md border-none  shadow-md my-2 uppercase text-sm font-sans
+        @apply  btn btn-outline btn-secondary hover:bg-secondary hover:border-secondary rounded-md  shadow-md my-2 uppercase text-secondary text-sm font-sans;
     }
     .my-btn-red {
-        @apply btn btn-warning btn-sm  rounded-md  hover:bg-red-500 px-4 py-2 shadow-md my-2 text-white uppercase text-sm font-sans
+        @apply btn btn-outline btn-warning hover:bg-warning hover:border-warning   rounded-md   px-4 py-2 shadow-md my-2  uppercase text-warning text-sm font-sans;
     }
 
     .my-form-modal {
-        @apply bg-white w-[95%] max-w-lg p-4 sm:p-8 rounded-md  drop-shadow-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  gap-2
+        @apply bg-white w-[95%] max-w-lg p-4 sm:p-8 rounded-md  drop-shadow-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  gap-2;
     }
+    .my-form {
+    @apply flex flex-col gap-4; 
+  }
     .my-dropdown {
-        @apply flex  dropdown-content menu p-2  font-mono font-normal text-lg bg-white shadow gap-2  
+        @apply flex dropdown-content menu w-64 font-mono font-normal text-lg bg-white  shadow ;
     }
     .my-day-header {
         @apply flex justify-between p-2 bg-base-300 rounded-t-md;
     }
-    h1 {
-        @apply text-neutral text-2xl
-    }
+
     .vertical-text {
         writing-mode: vertical-rl;
         text-orientation: upright;
@@ -27,34 +32,40 @@
         writing-mode: horizontal-tb;
       }
     .my-close-btn {
-        @apply self-start text-3xl font-bold leading-3 text-white 
+        @apply self-start text-3xl font-bold leading-3 text-white;
     }
     .my-select {
-    @apply  border-secondary focus:ring-0 focus:outline-none focus:border-secondary rounded-md  px-4 
+    @apply  border-secondary focus:ring-0 focus:outline-none focus:border-secondary rounded-md px-4;
     }
 
     .my-input {
-        @apply  w-full  border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]    }
+        @apply  w-full min-w-56  min-h-12   border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none;
+    }
+    .my-checkbox {
+        @apply checkbox-secondary checked:checkbox-secondary focus:ring-transparent rounded-sm; 
+    }
+
     .span-input {
         @apply  absolute pointer-events-none start-2.5 top-0 -translate-y-1/2 bg-white p-0.5  text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-xs
     }
 
     .label-input {
-        @apply relative block rounded-md border border-secondary shadow-sm 
+        @apply relative block rounded-md border border-secondary shadow-sm text-neutral-600; 
     }
+    .label-text {
+        @apply text-neutral-600;
+  }
 
 
     .my-landing-text {
-        @apply inline-block text-primary text-3xl row-span-1 md:text-5xl xl:text-6xl font-sans font-extrabold;
+        @apply inline-block text-primary text-2xl sm:text-4xl  row-span-1  font-sans font-extrabold;
     }
     .my-list-item {
         text-decoration:none;
-        background-image: linear-gradient(#e24f00, #e24f00);
-        background-size: 0% 0.1em;
+        background-image: linear-gradient(#ff752f, #ff752f);
+        background-size: 0% 0.2em;
         background-position-y: 100%;
-        background-position-x: 0%;
         background-repeat: no-repeat;
-        background-color:none;
         transition: background-size 0.2s ease-in-out;
         border-radius: 0px;
         color:#737373; 
@@ -66,4 +77,9 @@
         background-size: 100% 0.1em;
         background-color: none !important;
     }
+  h1 {
+    @apply my-landing-text;
+  }
+
 }
+

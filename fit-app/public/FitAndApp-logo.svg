@@ -47,21 +47,21 @@
          transform="translate(-3.5072507,-8.3898772)"
          style="fill:#71c5a5;fill-opacity:1;stroke:#71c5a5;stroke-opacity:1">
         <rect
-           style="fill:#e24f00;fill-opacity:1;stroke:#e24f00;stroke-width:1.49922;stroke-linejoin:bevel;stroke-opacity:1"
+           style="fill:#ff752f;fill-opacity:1;stroke:#ff752f;stroke-width:1.49922;stroke-linejoin:bevel;stroke-opacity:1"
            id="rect4"
            width="4.2130585"
            height="50.116806"
            x="129.13588"
            y="16.215374" />
         <rect
-           style="fill:#e24f00;fill-opacity:1;stroke:#e24f00;stroke-width:1.34732;stroke-linejoin:bevel;stroke-opacity:1"
+           style="fill:#ff752f;fill-opacity:1;stroke:#ff752f;stroke-width:1.34732;stroke-linejoin:bevel;stroke-opacity:1"
            id="rect6"
            width="4.349082"
            height="39.210083"
            x="135.29683"
            y="21.668736" />
         <rect
-           style="fill:#e24f00;fill-opacity:1;stroke:#e24f00;stroke-width:1.17206;stroke-linejoin:bevel;stroke-opacity:1"
+           style="fill:#ff752f;fill-opacity:1;stroke:#ff752f;stroke-width:1.17206;stroke-linejoin:bevel;stroke-opacity:1"
            id="rect7"
            width="4.5264039"
            height="28.509996"
@@ -112,7 +112,7 @@
          y="49.255955"><tspan
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30.8375px;font-family:'PT Sans';-inkscape-font-specification:'PT Sans';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#999999;fill-opacity:1;stroke:#999999;stroke-width:1.09026;stroke-dasharray:none;stroke-opacity:1"
            id="tspan15">Fit&amp;</tspan><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30.8375px;font-family:'PT Sans';-inkscape-font-specification:'PT Sans';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e24f00;fill-opacity:1;stroke:#e24f00;stroke-width:1.09026;stroke-opacity:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30.8375px;font-family:'PT Sans';-inkscape-font-specification:'PT Sans';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ff752f;fill-opacity:1;stroke:#ff752f;stroke-width:1.09026;stroke-opacity:1"
            id="tspan16">App</tspan></tspan></text>
     <path
        style="opacity:0.98;fill:#71c5a5;fill-opacity:1;stroke:#999999;stroke-width:3.77953;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"

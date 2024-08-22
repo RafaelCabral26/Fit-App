@@ -19,8 +19,8 @@ const NavbarMobile = ({ showLoginModal, showRegisterModal, handleLogout }: {
         <div tabIndex={0} role="button" className="w-10">
           <Burguer />
         </div>
-        <ul tabIndex={0} className="my-dropdown w-[90vw]">
-          <details className="ease-out open:-rotate-90" >
+        <ul tabIndex={0} className="my-dropdown w-[90vw] sm:w-[33vw]">
+          <details className="ease-out [&_svg]:open:-rotate-90" >
             <summary className='fill-secondary flex items-center ' >
               <div className="w-12 h-12">
                 <CaretDown />
@@ -42,7 +42,7 @@ const NavbarMobile = ({ showLoginModal, showRegisterModal, handleLogout }: {
               </li>
             </ul>
           </details>
-          <details className="ease-out open:-rotate-90" >
+          <details className="ease-out [&_svg]:open:-rotate-90" >
             <summary className='flex items-center ' >
               <div className="w-12 h-12">
                 <CaretDown />
@@ -53,13 +53,13 @@ const NavbarMobile = ({ showLoginModal, showRegisterModal, handleLogout }: {
               <li >
                 <a href="/ferramentas/calc_suplementos/">
                   <div className="divider m-0 divider-horizontal"></div>
-                  Criar Planilha
+                  Calculadora Suplementos
                 </a>
               </li>
               <li >
                 <a href="/ferramentas/composicao_corporal">
                   <div className="divider m-0 divider-horizontal"></div>
-                  Planilhas
+                  Composição Corporal
                 </a>
               </li>
             </ul>

@@ -24,7 +24,7 @@ const ProfilePage = () => {
 
     }, []);
     return (
-        <div className=" container m-auto my-10">
+        <div className=" container min-h-lvh m-auto my-10">
             <div className="flex flex-col md:flex-row  justify-center w-[90%] md:w-[40%] gap-10 m-auto  rounded-sm ">
                 <div className="card-body">
                     <span className="card-title">Nome</span>

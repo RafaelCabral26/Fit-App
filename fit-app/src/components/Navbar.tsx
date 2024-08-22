@@ -5,7 +5,7 @@ import LoginModal from "./LoginModal"
 import RegisterModal from "./RegisterModal"
 import myHTTP from "@/services/axiosconfig"
 import { GlobalContext } from "@/services/GlobalContext"
-import { usePathname, useRouter } from "next/navigation"
+import { redirect, usePathname, useRouter } from "next/navigation"
 import FitAndAppLogo from "@/svgs/fitAndApp-logo"
 import CaretDown from "@/svgs/caretDown"
 import NavbarMobile from "./NavbarMobile"
@@ -49,30 +49,43 @@ export const Navbar = () => {
     checkUser();
   }, [checkUser]);
 
+  const handleMySpreadsheetsRedirect = () => {
+    if (globalState?.userType === null) {
+      showLoginModal(true);
+      return globalState.setToast({ type: "warning", message: "Faça login para acessar planilhas." })
+    }
+    redirect("/planilha/minhas_planilhas");
+  }
+
+
   return (
     <>
-      <div className={`navbar justify-between gap-4 relative z-30   px-4 md:px-[8vw] p-0  bg-white/90 shadow-sm `}>
+      <div className={`navbar justify-between gap-4 relative z-30 px-4 lg:px-[8vw] p-0 bg-white/90 shadow-sm mb-14 `}>
         <div className="flex ">
           <a href="/" className=" w-44 lg:w-64">
             <FitAndAppLogo></FitAndAppLogo>
           </a>
         </div>
-        <div className='hidden sm:flex basis-full justify-between md:gap-4 text-xs md:text-sm lg:text-lg'>
+        <div className='hidden  md:flex basis-full justify-between md:gap-4 text-xs md:text-sm lg:text-lg'>
           <div>
             <div className="dropdown dropdown-end dropdown-hover">
-              <label tabIndex={0} className={`${myUrl !== "/" ? "text-secondary" : "text-neutral-500"}  m-1 cursor-pointer hover:text-secondary my-list-item flex items-center`}>Ferramentas
+              <label tabIndex={0} className={` m-1 cursor-pointer hover:text-secondary my-list-item flex items-center`}>Ferramentas
                 <CaretDown />
               </label>
-              <ul tabIndex={0} className="my-dropdown">
-                <li className=""><a className="my-list-item" href="/ferramentas/calc_suplementos/">Calculadora Suplementos</a></li>
-                <li className=""><a className="my-list-item" href="/ferramentas/composicao_corporal">Composição Corporal</a></li>
+              <ul tabIndex={0} className="my-dropdown peer-hover:bg-none">
+                <li className="">
+                  <a className="my-list-item" href="/ferramentas/calc_suplementos/">Calculadora Suplementos</a>
+                </li>
+                <li className="">
+                  <a className="my-list-item " href="/ferramentas/composicao_corporal">Composição Corporal</a>
+                </li>
               </ul>
             </div>
-            <div className="dropdown dropdown-end dropdown-hover">
+            <div className="dropdown dropdown-end dropdown-hover ">
               <label tabIndex={0} className={`flex items-center  m-1 cursor-pointer hover:text-secondary my-list-item  `}>Planilhas <CaretDown /></label>
               <ul tabIndex={0} className="my-dropdown">
-                <li className=""><a className="my-list-item  " href="/planilha/construtor_planilha">Criar Planilha</a></li>
-                <li className=""><a className="my-list-item" href="/planilha/minhas_planilhas">Minhas Planilhas</a></li>
+                <li className=""><a className="my-list-item" href="/planilha/construtor_planilha">Criar Planilha</a></li>
+                <li onClick={handleMySpreadsheetsRedirect} className=""><a className="my-list-item" >Minhas Planilhas</a></li>
               </ul>
             </div>
           </div>
@@ -80,7 +93,7 @@ export const Navbar = () => {
             {globalState?.userType === null &&
               <div className="flex gap-4">
                 <button className="my-btn  " onClick={() => { showLoginModal(true) }}>Login</button>
-                <button className="my-btn bg-primary" onClick={() => showRegisterModal(true)} >Cadastrar</button>
+                <button className="btn btn-outline btn-primary my-2 font-sans " onClick={() => showRegisterModal(true)} >CADASTRAR</button>
               </div>
             }
             {globalState?.userType === "user" &&
@@ -98,7 +111,7 @@ export const Navbar = () => {
             }
           </ul>
         </div>
-        <div className="sm:hidden">
+        <div className="md:hidden">
           <NavbarMobile showRegisterModal={showRegisterModal} showLoginModal={showLoginModal} handleLogout={handleLogout}></NavbarMobile>
         </div>
       </div>

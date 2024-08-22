@@ -189,8 +189,8 @@ const Section4 = () => {
                       <figure id="image-container" className="w-full h-auto">
                         <Image src={`${item.image}`} width={0} height={0} sizes="100vw" className="w-full h-auto" alt="foto halteres"></Image>
                       </figure>
-                      <div className="card-body max-w-fit relative">
-                        <div className="absolute bg-secondary text-white -top-[2vh] w-10 h-10 self-center">
+                      <div className="card-body max-w-fit pt-0 relative">
+                        <div className=" w-10  self-center">
                           <SmallDumbbellSvg></SmallDumbbellSvg>
                         </div>
                         <h2 className="card-title ">{item.title}</h2>

@@ -1,8 +1,7 @@
 "use client"
 
-import { MutableRefObject, useEffect, useRef } from "react";
-import { TMetrics, TMetricsRef } from "./metricTypes";
 import InputMetric from "./InputMetric";
+import { TMetrics } from "../metricTypes";
 
 
 const TresPontos = ({ metricInput, handleMetricInput, gender, }: { metricInput: TMetrics, handleMetricInput: (e: React.ChangeEvent<HTMLInputElement>) => void, gender: "male" | "female"  }) => {

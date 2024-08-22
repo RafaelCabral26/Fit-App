@@ -80,7 +80,7 @@ const MinhasPlanilhas = () => {
           selectedSpreadsheet &&
           <>
             <button onClick={() => showConfirmDeleteModal(true)} className="my-btn w-14 ">
-              <TrashSvg color="#ffffff"></TrashSvg>
+              <TrashSvg color="stroke-secondary"></TrashSvg>
             </button>
             <Link href={`/planilha/construtor_planilha/?${createQueryString("spreadsheet_id", selectedSpreadsheet?.spreadsheet_id)}&${createQueryString("previous_url", "planilha/minhas_planilhas")}`} className="my-btn p-[10px]">
               Editar</Link>
@@ -130,7 +130,7 @@ const MinhasPlanilhas = () => {
           <div className="absolute  flex items-center justify-center left-0 top-0 bg-secondary w-full h-14 p-4  ">
             <div className="flex justify-center items-center font-sans  self-center  uppercase gap-1 text-white ">
               <div className="w-10 text-white p-1 border-2 border-white  rounded-sm">
-                <TrashSvg color="#ffffff"></TrashSvg>
+                <TrashSvg color="stroke-secondary"></TrashSvg>
               </div>
             </div>
           </div>

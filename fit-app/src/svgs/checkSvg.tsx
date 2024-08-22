@@ -18,7 +18,7 @@ function CheckSvg({spanText}:{spanText:string}) {
                     d="M4 12.611L8.923 17.5 20 6.5"
                 ></path>
             </svg>
-            <p className="font-serif font-thin text-neutral-300">{spanText}</p>
+            <p className="font-serif font-thin text-neutral-600">{spanText}</p>
         </div>
     );
 }

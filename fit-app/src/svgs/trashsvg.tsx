@@ -1,4 +1,4 @@
-const TrashSvg = ({ color }: { color: "stroke-warning" | "stroke-secondary" }) => {
+const TrashSvg = () => {
   return (
     <>
       <svg className={` stroke-current fill-none  w-full h-auto `} viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">

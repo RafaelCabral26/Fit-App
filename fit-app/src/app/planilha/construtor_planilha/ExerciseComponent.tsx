@@ -54,7 +54,7 @@ const ExerciseComponent = ({ item, index, daysArray, dayIndex, setNewDayArray }:
                 <EditPencilSvg />
               </button>
               <button type="button" className="w-5 text-warning " onClick={() => { showDeleteModal(true); globalState?.isDragDisabledSwitch(true) }}>
-                <TrashSvg color="stroke-secondary" />
+                <TrashSvg   />
               </button>
             </div>
             {editModal &&
@@ -160,7 +160,7 @@ const ConfirmDelete = ({ provided, itemName, handleDeleteExercise, showDeleteMod
       className="  w-60 pb-4 text-neutral flex flex-col items-center text-lg justify-between gap-4 shadow-lg rounded-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
       <div className="bg-secondary rounded-t-md w-full flex justify-center items-center h-14">
         <div className="w-8 rounded-md text-white border-2 border-white  ">
-          <TrashSvg color="stroke-secondary"></TrashSvg>
+          <TrashSvg  ></TrashSvg>
         </div>
       </div>
       <div>

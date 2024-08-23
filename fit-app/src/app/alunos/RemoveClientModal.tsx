@@ -31,7 +31,7 @@ const RemoveClientModal = ({ showConfirmDeleteModal, selectedClientEmail, trigge
       <div className="absolute rounded-t-md  flex items-center justify-between left-0 top-0 bg-secondary w-full h-14 p-4  ">
         <div className="flex justify-center items-center font-sans   self-center  uppercase gap-1 text-white ">
           <div className="w-10 text-white p-2 ">
-            <TrashSvg color="stroke-warning"></TrashSvg>
+            <TrashSvg  ></TrashSvg>
           </div>
           Remover Cliente
         </div>

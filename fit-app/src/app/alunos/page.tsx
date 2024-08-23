@@ -77,7 +77,7 @@ const ManageClients = () => {
                         <EditSpreadsheetSvg></EditSpreadsheetSvg>
                       </button></td>
                       <td><button onClick={() => { handleRemoveClientModal(ele.email) }} type="button" className="my-btn w-[50px] peer stroke-secondary  ">
-                        <TrashSvg color="stroke-secondary"></TrashSvg>
+                        <TrashSvg  ></TrashSvg>
                       </button></td>
                     </tr>
                   )

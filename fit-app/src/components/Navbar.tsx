@@ -66,7 +66,7 @@ export const Navbar = () => {
             <FitAndAppLogo></FitAndAppLogo>
           </a>
         </div>
-        <div aria-label="teste" className='hidden  md:flex basis-full justify-between md:gap-4 text-xs md:text-sm lg:text-lg'>
+        <div className='hidden  md:flex basis-full justify-between md:gap-4 text-xs md:text-sm lg:text-lg'>
           <div>
             <div className="dropdown dropdown-end dropdown-hover">
               <label tabIndex={0} className={` m-1 cursor-pointer hover:text-secondary my-list-item flex items-center`}>Ferramentas

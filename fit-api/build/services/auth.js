@@ -40,9 +40,15 @@ const auth = {
         const token = jsonwebtoken_1.default.sign(payload, secret, { expiresIn: "10 days" });
         return token;
     }),
-    checkDemonstrationProfile: (user) => {
-        if (user.name === "Cliente" || user.name === "Treinador" || user.name === "Cliente2") {
-            throw new AppError_1.AppError(403, "Sem permissão, conta demonstrativa");
+    checkDemonstrationProfile: (req, res) => {
+        console.log("TESTE AUTHHHHHHHHHHHHHHHHH");
+        const secret = process.env.SECRET;
+        const token = req.cookies.authcookie;
+        if (token) {
+            const user = jsonwebtoken_1.default.verify(token, secret);
+            if (user.name === "Cliente" || user.name === "Treinador" || user.name === "Cliente2") {
+                return res.status(200).json({ msg: "Sem permissão, conta demonstrativa" });
+            }
         }
     }
 };

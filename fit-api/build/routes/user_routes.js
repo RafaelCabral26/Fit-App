@@ -56,7 +56,6 @@ router.post("/login", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, v
     return res.status(200).json({ msg: "Usuário Logado!" });
 })));
 router.post("/check_user", (0, tryCatch_1.tryCatch)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.method);
     const secret = process.env.SECRET;
     const token = req.cookies.authcookie;
     if (token) {

@@ -21,7 +21,8 @@ services:
     networks:
         - backend
 
-  backendc:
+  backend:
+    container_name: backend
     depends_on:
       mysqldb:
         condition: service_healthy
@@ -46,9 +47,9 @@ services:
       - ./fit-api:/fit-api
       - /fit-api/node_modules
   frontend:
-    container_name: react_c
+    container_name: frontend 
     depends_on:
-      - backendc 
+      - backend 
     build: 
       context: ./fit-app
       args: 
@@ -70,7 +71,7 @@ services:
         - "443:443"
     depends_on:
         - frontend 
-        - backendc
+        - backend
     volumes:
         - ./nginx/conf/:/etc/nginx/conf.d/
         - ./certbot/www:/var/www/certbot/:ro

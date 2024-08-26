@@ -42,4 +42,5 @@ jobs:
             docker pull rafaelcabral26/fit-and-app:front
             docker pull rafaelcabral26/fit-and-app:back
             cd Fit-App
+            docker compose down
             docker compose up -d --build

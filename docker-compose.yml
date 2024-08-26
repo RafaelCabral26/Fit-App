@@ -22,7 +22,6 @@ services:
         - backend
 
   backendc:
-    image: rafaelcabral26/fit-and-app:back
     depends_on:
       mysqldb:
         condition: service_healthy
@@ -47,7 +46,6 @@ services:
       - ./fit-api:/fit-api
       - /fit-api/node_modules
   frontend:
-    image: rafaelcabral26/fit-and-app:front
     depends_on:
       - backendc 
     build: 
@@ -56,9 +54,6 @@ services:
         - REACT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
         - NEXT_APP_API_BASE_URL:${CLIENT_API_BASE_URL}
     container_name: fitapp-react_c
-    volumes:
-      - ./fit-app:/fit-app
-      - /fit-app/node_modules
     networks:
       - nginx_net
   nginx:
